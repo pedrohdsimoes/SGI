@@ -16,7 +16,7 @@ export class Lamp1 extends CGFobject {
   }
   display() {
     this.scene.pushMatrix();
-    this.scene.translate(-5, 3.65, -4.1);
+    this.scene.translate(-5, 3.45, -4.1);
     this.lamp1.display();
     this.scene.popMatrix();
   }

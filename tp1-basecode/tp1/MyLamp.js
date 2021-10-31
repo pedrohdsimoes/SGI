@@ -20,22 +20,22 @@ export class MyLamp extends CGFobject {
     // Base
     this.scene.pushMatrix();
     this.scene.translate(0, 0.25, 0);
-    this.scene.scale(0.2, 0.5, 0.2);
+    this.scene.scale(0.3, 0.1, 0.3);
     this.cube.display();
     this.scene.popMatrix();
 
     // Pé
     this.scene.pushMatrix();
-    this.scene.translate(0, 0.5, 0);
-    this.scene.scale(0.05, 0.5, 0.05);
+    this.scene.translate(0, 0.7, 0);
+    this.scene.scale(0.05, 0.8, 0.05);
     this.cube.display();
     this.scene.popMatrix();
 
     // Quebra-luz
 
     this.scene.pushMatrix();
-    this.scene.translate(0, 0.75, 0);
-    this.scene.scale(0.4, 0.5, 0.4);
+    this.scene.translate(0, 0.95, 0);
+    this.scene.scale(0.8, 1, 0.8);
     this.pyramid.display();
     this.scene.popMatrix();
 

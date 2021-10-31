@@ -6,7 +6,7 @@ import { MyQuad } from "./MyQuad.js";
  * @constructor
  * @param scene - Reference to MyScene object
  */
-export class Floor extends CGFobject {
+export class MyFloor extends CGFobject {
   constructor(scene) {
     super(scene);
 

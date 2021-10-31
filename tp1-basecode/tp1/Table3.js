@@ -1,5 +1,5 @@
 import { CGFobject } from "../lib/CGF.js";
-import { MyCube } from "./MyCube.js";
+import { MyTable } from "./MyTable.js";
 
 /**
  * MyTable
@@ -11,53 +11,21 @@ export class Table3 extends CGFobject {
   constructor(scene) {
     super(scene);
 
-    this.face = new MyCube(scene);
+    this.table = new MyTable(scene);
   }
   display() {
-    // Tampo
     this.scene.pushMatrix();
-    this.scene.translate(5, 3.5, 7);
-    this.scene.scale(5, 0.3, 3);
-    this.face.display();
+    this.scene.translate(5, 0, 7);
+    this.scene.rotate(Math.PI / 3.7, 0, 1, 0);
+    this.table.display();
     this.scene.popMatrix();
-
-    // Pernas
-    this.scene.pushMatrix();
-    this.scene.translate(2.65, 1.75, 5.65);
-    this.scene.scale(0.3, 3.5, 0.3);
-    this.face.display();
-    this.scene.popMatrix();
-
-    this.scene.pushMatrix();
-    this.scene.translate(2.65, 1.75, 8.35);
-    this.scene.scale(0.3, 3.5, 0.3);
-    this.face.display();
-    this.scene.popMatrix();
-
-    this.scene.pushMatrix();
-    this.scene.translate(7.35, 1.75, 5.65);
-    this.scene.scale(0.3, 3.5, 0.3);
-    this.face.display();
-    this.scene.popMatrix();
-
-    this.scene.pushMatrix();
-    this.scene.translate(7.35, 1.75, 8.35);
-    this.scene.scale(0.3, 3.5, 0.3);
-    this.face.display();
-    this.scene.popMatrix();
-
-    // this.scene.pushMatrix();
-    // this.scene.translate(-6.35, 1.75, -4.35);
-    // this.scene.scale(0.3, 3.5, 0.3);
-    // this.face.display();
-    // this.scene.popMatrix();
   }
 
   // These are only needed if you are enabling normal visualization in compound objects
   enableNormalViz() {
-    this.face.enableNormalViz();
+    this.table.enableNormalViz();
   }
   disableNormalViz() {
-    this.face.disableNormalViz();
+    this.table.disableNormalViz();
   }
 }

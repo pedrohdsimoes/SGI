@@ -7,6 +7,10 @@ import { Wall1 } from "./Wall1.js";
 import { Wall2 } from "./Wall2.js";
 import { Wall3 } from "./Wall3.js";
 import { Wall4 } from "./Wall4.js";
+import { Chair1 } from "./Chair1.js";
+import { Chair2 } from "./Chair2.js";
+import { MyPyramid4 } from "./MyPyramid4.js";
+
 
 /**
 * MyScene
@@ -40,6 +44,9 @@ export class MyScene extends CGFscene {
         this.wall2 = new Wall2(this);
         this.wall3 = new Wall3(this);
         this.wall4 = new Wall4(this);
+        this.chair1 = new Chair1(this);
+        this.chair2 = new Chair2(this);
+        this.lamp1 = new MyPyramid4(this);
         
         //Variables connected to MyInterface
         this.displayAxis = true;
@@ -125,6 +132,9 @@ export class MyScene extends CGFscene {
         this.wall2.display();
         this.wall3.display();
         this.wall4.display();
+        this.chair1.display();
+        this.chair2.display();
+        this.lamp1.display();
 
         // ---- END Primitive drawing section
     }
@@ -140,6 +150,9 @@ export class MyScene extends CGFscene {
             this.wall2.enableNormalViz();
             this.wall3.enableNormalViz();
             this.wall4.enableNormalViz();
+            this.chair1.enableNormalViz();
+            this.chair2.enableNormalViz();
+            this.lamp1.enableNormalViz();
         }
         else {
             this.table1.disableNormalViz();
@@ -150,6 +163,9 @@ export class MyScene extends CGFscene {
             this.wall2.disableNormalViz();
             this.wall3.disableNormalViz();
             this.wall4.disableNormalViz();
+            this.chair1.disableNormalViz();
+            this.chair2.disableNormalViz();
+            this.lamp1.disableNormalViz();
         }
     }
 

@@ -9,7 +9,8 @@ import { Wall3 } from "./Wall3.js";
 import { Wall4 } from "./Wall4.js";
 import { Chair1 } from "./Chair1.js";
 import { Chair2 } from "./Chair2.js";
-import { MyPyramid4 } from "./MyPyramid4.js";
+import { Lamp1 } from "./Lamp1.js";
+
 
 
 /**
@@ -46,7 +47,7 @@ export class MyScene extends CGFscene {
         this.wall4 = new Wall4(this);
         this.chair1 = new Chair1(this);
         this.chair2 = new Chair2(this);
-        this.lamp1 = new MyPyramid4(this);
+        this.lamp1 = new Lamp1(this);
         
         //Variables connected to MyInterface
         this.displayAxis = true;

@@ -42,8 +42,10 @@ export class MyLamp extends CGFobject {
   // These are only needed if you are enabling normal visualization in compound objects
   enableNormalViz() {
     this.cube.enableNormalViz();
+    this.pyramid.enableNormalViz();
   }
   disableNormalViz() {
     this.cube.disableNormalViz();
+    this.pyramid.enableNormalViz();
   }
 }

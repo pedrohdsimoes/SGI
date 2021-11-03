@@ -16,6 +16,7 @@ export class Table2 extends CGFobject {
   display() {
     this.scene.pushMatrix();
     this.scene.translate(6, 0, -3);
+    this.scene.scale(1,0.6,1.7);
     this.scene.rotate(Math.PI / 2, 0, 1, 0);
     this.table.display();
     this.scene.popMatrix();

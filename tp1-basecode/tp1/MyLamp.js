@@ -46,6 +46,6 @@ export class MyLamp extends CGFobject {
   }
   disableNormalViz() {
     this.cube.disableNormalViz();
-    this.pyramid.enableNormalViz();
+    this.pyramid.disableNormalViz();
   }
 }

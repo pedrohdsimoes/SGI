@@ -34,15 +34,15 @@ export class Wall4 extends CGFobject {
     this.scene.pushMatrix();
     this.scene.translate(-10, 7, -9);
     this.scene.rotate(Math.PI / 2, 0, 1, 0);
-    this.scene.scale(2, 3, 20);
+    this.scene.scale(2, 2, 20);
     this.face.display();
     this.scene.popMatrix();
 
     // Parte esquerda da janela
     this.scene.pushMatrix();
-    this.scene.translate(-10, 7, -1);
+    this.scene.translate(-10, 7, -0.5);
     this.scene.rotate(Math.PI / 2, 0, 1, 0);
-    this.scene.scale(10, 3, 20);
+    this.scene.scale(9, 2, 20);
     this.face.display();
     this.scene.popMatrix();
 
@@ -56,9 +56,9 @@ export class Wall4 extends CGFobject {
 
     // Parte de cima da porta
     this.scene.pushMatrix();
-    this.scene.translate(-10, 8, 6);
+    this.scene.translate(-10, 7.5, 6);
     this.scene.rotate(Math.PI / 2, 0, 1, 0);
-    this.scene.scale(4, 2, 20);
+    this.scene.scale(4, 1, 20);
     this.face.display();
     this.scene.popMatrix();
   }

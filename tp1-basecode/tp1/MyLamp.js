@@ -9,15 +9,14 @@ import { MyPyramid4 } from "./MyPyramid4.js";
  */
 
 export class MyLamp extends CGFobject {
-  constructor(scene,material) {
+  constructor(scene,lamp,base) {
     super(scene);
-    this.material = material;
-
-    this.cube = new MyCube(scene);
-    this.pyramid = new MyPyramid4(scene);
+    this.lamp = lamp;
+    this.base = base;
+    this.cube = new MyCube(scene,base);
+    this.pyramid = new MyPyramid4(scene,lamp);
   }
   display() {
-    this.material.apply();
     // Base
     this.scene.pushMatrix();
     this.scene.translate(0, 0.25, 0);

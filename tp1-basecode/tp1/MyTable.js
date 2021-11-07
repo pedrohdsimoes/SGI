@@ -10,12 +10,12 @@ import { MyCube } from "./MyCube.js";
 export class MyTable extends CGFobject {
   constructor(scene,material) {
     super(scene);
-
-    this.cube = new MyCube(scene);
     this.material = material;
+    this.cube = new MyCube(scene);
+    
   }
   display() {
-    this.material.apply();
+    //this.material.apply();
     // Tampo
     this.scene.pushMatrix();
     this.scene.translate(0, 3.5, 0);

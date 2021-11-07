@@ -9,16 +9,11 @@ import { MyQuad } from "./MyQuad.js";
 export class MyCube extends CGFobject {
   constructor(scene) {
     super(scene);
-
+    //this.material = material;
     this.cube = new MyQuad(scene);
   }
   display() {
-    /* the following example illustrates composition
-           with geometric transformations: 3 instances of a 
-           face geometry - a quad - are created and placed
-           in the appropriate places to form one of the top corners
-           of the cube */
-
+   // this.material.apply();
     // quad facing +ZZ
     this.scene.pushMatrix();
     this.scene.translate(0, 0, 0.5);

@@ -38,24 +38,24 @@ export class MyScene extends CGFscene {
     this.setGlobalAmbientLight(0.2, 0.2, 0.2, 1.0);
 
     this.lights[0].setPosition( -5.0, 4.4, -4.1 ,1.0);
-    this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-    this.lights[0].setSpecular(1.0, 1.0, 1.0, 1.0);
+    this.lights[0].setDiffuse(0.7, 0.7, 0.7, 1.0);
+    this.lights[0].setSpecular(0.2, 0.7, 0.2, 1.0);
     this.lights[0].enable();
-    this.lights[0].setVisible(true);
+    this.lights[0].setVisible(false);
     this.lights[0].update();
 
-    this.lights[1].setPosition(0.0, 10.0, 0.0, 1.0);
-    this.lights[1].setDiffuse(0.5, 0.5, 0.5, 1.0);
-    this.lights[1].setSpecular(0.5, 0.5, 0.0, 1.0);
+    this.lights[1].setPosition(5.0, 10.0, 5.0, 1.0);
+    this.lights[1].setDiffuse(0.8, 0.8, 0.8, 1.0);
+    this.lights[1].setSpecular(0.5, 0.5, 0.5, 1.0);
     this.lights[1].enable();
-    this.lights[1].setVisible(true);
+    this.lights[1].setVisible(false);
     this.lights[1].update();
 
-    this.lights[2].setPosition(9.0, 3.0, -1.0, 1.0);
+    this.lights[2].setPosition(9.0, 3.8, 7.8, 1.0);
     this.lights[2].setDiffuse(0.3, 0.3, 0.3, 1.0);
-    this.lights[2].setSpecular(0.2, 0.2, 0.0, 1.0);
+    this.lights[2].setSpecular(0.2, 0.2, 0.3, 1.0);
     this.lights[2].enable();
-    this.lights[2].setVisible(true);
+    this.lights[2].setVisible(false);
     this.lights[2].update();
   }
   initCameras() {
@@ -83,10 +83,10 @@ export class MyScene extends CGFscene {
 
   initMaterials() {
     this.material = new CGFappearance(this);
-    this.material.setAmbient(0.1, 0.1, 0.1, 1);
-    this.material.setDiffuse(0.9, 0.9, 0.9, 1);
-    this.material.setSpecular(0.1, 0.1, 0.1, 1);
-    this.material.setShininess(10.0);
+    this.material.setAmbient(0.3,0.3,0.3,1);
+    this.material.setDiffuse(0.70,0.40,0,1.0);
+    this.material.setSpecular(0,0,0,0,1.0);
+    this.material.setShininess(110.0);
     
 }
   display() {

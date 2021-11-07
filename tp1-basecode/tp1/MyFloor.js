@@ -7,12 +7,13 @@ import { MyQuad } from "./MyQuad.js";
  * @param scene - Reference to MyScene object
  */
 export class MyFloor extends CGFobject {
-  constructor(scene) {
+  constructor(scene,material) {
     super(scene);
-
+    this.material = material;
     this.face = new MyQuad(scene);
   }
   display() {
+    this.material.apply();
     this.scene.pushMatrix();
     this.scene.translate(0, 0, 0);
     this.scene.scale(20, 20, 20);

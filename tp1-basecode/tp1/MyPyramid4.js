@@ -9,14 +9,15 @@ import { MyTriangule } from "./MyTriangule.js";
  */
 
 export class MyPyramid4 extends CGFobject {
-  constructor(scene) {
+  constructor(scene,material) {
     super(scene);
-
+    this.material = material;
     this.quad = new MyQuad(scene);
     this.triangule = new MyTriangule(scene);
   }
 
   display() {
+    this.material.apply();
     // quad facing +ZZ
     this.scene.pushMatrix();
     this.scene.translate(0, 0.5, 0.0);

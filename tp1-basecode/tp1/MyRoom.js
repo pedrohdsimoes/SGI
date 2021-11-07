@@ -17,25 +17,49 @@ export class MyRoom extends CGFobject {
     super(scene);
     this.initMaterials(scene);
     
-    this.table = new MyTable(scene,this.wood);
-    this.floor = new MyFloor(scene);
-    this.wall = new MyWall(scene);
-    this.doorWall = new MyWall(scene);
-    this.lamp = new MyLamp(scene);
-    this.chair = new MyChair(scene);
+    this.table = new MyTable(scene,this.brown);
+    this.floor = new MyFloor(scene,this.darkGrey);
+    this.wall = new MyWall(scene,this.white);
+    this.doorWall = new MyWall(scene,this.white);
+    this.lamp = new MyLamp(scene,this.blue,this.black);
+    this.chair = new MyChair(scene,this.wood);
   }
   initMaterials(scene) {
     this.wood = new CGFappearance(scene);
-    this.wood.setAmbient(0.1,0.1,0.1,1);
-    this.wood.setDiffuse(1*0.7,0,0,1.0);
-    this.wood.setSpecular(1,0,0,1.0,1.0);
-    this.wood.setShininess(10.0);
+    this.wood.setAmbient(0.3,0.3,0.3,1);
+    this.wood.setDiffuse(0.80,0.40,0,2.0);
+    this.wood.setSpecular(0,0,0,1.0,1.0);
+    this.wood.setShininess(110.0);
+
+    this.brown = new CGFappearance(scene);
+    this.brown.setAmbient(0.3,0.3,0.3,1);
+    this.brown.setDiffuse(0.70,0.40,0,1.0);
+    this.brown.setSpecular(0,0,0,0,1.0);
+    this.brown.setShininess(110.0);
+
+    this.blue = new CGFappearance(scene);
+    this.blue.setAmbient(0.3,0.3,0.3,1);
+    this.blue.setDiffuse(0.20,0.40,1.0,1.0);
+    this.blue.setSpecular(0,0,0,0,1.0);
+    this.blue.setShininess(110.0);
 
     this.white = new CGFappearance(scene);
     this.white.setAmbient(0.1, 0.1, 0.1, 1);
     this.white.setDiffuse(0.9, 0.9, 0.9, 1);
     this.white.setSpecular(0.1, 0.1, 0.1, 1);
     this.white.setShininess(10.0);
+
+    this.darkGrey = new CGFappearance(scene);
+    this.darkGrey.setAmbient(0.1, 0.1, 0.1, 1);
+    this.darkGrey.setDiffuse(0.4, 0.4, 0.4, 1);
+    this.darkGrey.setSpecular(0.1, 0.1, 0.1, 1);
+    this.darkGrey.setShininess(10.0);
+
+    this.black = new CGFappearance(scene);
+    this.black.setAmbient(0.1, 0.1, 0.1, 1);
+    this.black.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.black.setSpecular(0.1, 0.1, 0.1, 1);
+    this.black.setShininess(100.0);
   }
   display() {
     //table1

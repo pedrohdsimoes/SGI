@@ -46,13 +46,13 @@ export class MyScene extends CGFscene {
 
     this.lights[1].setPosition(5.0, 10.0, 5.0, 1.0);
     this.lights[1].setDiffuse(0.8, 0.8, 0.8, 1.0);
-    this.lights[1].setSpecular(0.5, 0.5, 0.5, 1.0);
+    //this.lights[1].setSpecular(0.5, 0.5, 0.5, 1.0);
     this.lights[1].enable();
     this.lights[1].setVisible(false);
     this.lights[1].update();
 
     this.lights[2].setPosition(9.0, 3.8, 7.8, 1.0);
-    this.lights[2].setDiffuse(0.3, 0.3, 0.3, 1.0);
+    //this.lights[2].setDiffuse(0.3, 0.3, 0.3, 1.0);
     this.lights[2].setSpecular(0.2, 0.2, 0.3, 1.0);
     this.lights[2].enable();
     this.lights[2].setVisible(false);

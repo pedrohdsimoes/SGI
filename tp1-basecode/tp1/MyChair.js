@@ -9,13 +9,14 @@ import { MyTable } from "./MyTable.js";
  */
 
 export class MyChair extends CGFobject {
-  constructor(scene) {
+  constructor(scene,material) {
     super(scene);
-
+    this.material = material;
     this.seat = new MyTable(scene);
     this.cube = new MyCube(scene);
   }
   display() {
+    this.material.apply();
     // Back
     this.scene.pushMatrix();
     this.scene.translate(0.675, 3.1, 0.675);

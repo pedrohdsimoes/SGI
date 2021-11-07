@@ -10,8 +10,15 @@ import { MyTable } from "./MyTable.js";
 export class Table1 extends CGFobject {
   constructor(scene) {
     super(scene);
-
     this.table = new MyTable(scene);
+  }
+  initMaterials(scene){
+    //wood color
+    this.woodMaterial = new CGFappearance(scene);
+    this.woodMaterial.setAmbient(0.1,0.1,0.1,1);
+    this.woodMaterial.setDiffuse(1*0.7,0,0,1.0);
+    this.woodMaterial.setSpecular(1,0,0,1.0,1.0);
+    this.woodMaterial.setShininess(10.0);
   }
   display() {
     this.scene.pushMatrix();

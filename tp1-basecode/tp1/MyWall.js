@@ -1,5 +1,6 @@
 import { CGFobject } from "../lib/CGF.js";
-import { MyTable } from "./MyTable.js";
+import { MyQuad } from "./MyQuad.js";
+
 
 /**
  * MyTable
@@ -7,27 +8,26 @@ import { MyTable } from "./MyTable.js";
  * @param scene - Reference to MyScene object
  */
 
-export class Table2 extends CGFobject {
-  constructor(scene) {
+export class MyWall extends CGFobject {
+  constructor(scene,material) {
     super(scene);
 
-    this.table = new MyTable(scene);
+    this.wall = new MyQuad(scene);
+    this.material = material;
   }
   display() {
+    this.material.apply();
+    
     this.scene.pushMatrix();
-    this.scene.translate(6, 0, -3);
-    this.scene.scale(1,0.6,1.7);
-    this.scene.rotate(Math.PI / 2, 0, 1, 0);
-    this.table.display();
+    this.wall.display();
     this.scene.popMatrix();
   }
 
   // These are only needed if you are enabling normal visualization in compound objects
   enableNormalViz() {
-    this.table.enableNormalViz();
+    this.wall.enableNormalViz();
   }
   disableNormalViz() {
-    this.table.disableNormalViz();
+    this.wall.disableNormalViz();
   }
 }
-

@@ -1,15 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
-import { Table1 } from "./Table1.js";
-import { Table2 } from "./Table2.js";
-import { Table3 } from "./Table3.js";
-import { Floor } from "./Floor.js";
-import { Wall1 } from "./Wall1.js";
-import { Wall2 } from "./Wall2.js";
-import { Wall3 } from "./Wall3.js";
-import { Wall4 } from "./Wall4.js";
-import { Chair1 } from "./Chair1.js";
-import { Chair2 } from "./Chair2.js";
-import { Lamp1 } from "./Lamp1.js";
+import { MyRoom } from "./MyRoom.js";
+
 
 /**
  * MyScene
@@ -35,17 +26,7 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.table1 = new Table1(this);
-    this.table2 = new Table2(this);
-    this.table3 = new Table3(this);
-    this.floor = new Floor(this);
-    this.wall1 = new Wall1(this);
-    this.wall2 = new Wall2(this);
-    this.wall3 = new Wall3(this);
-    this.wall4 = new Wall4(this);
-    this.chair1 = new Chair1(this);
-    this.chair2 = new Chair2(this);
-    this.lamp1 = new Lamp1(this);
+    this.room = new MyRoom(this);
 
     //Variables connected to MyInterface
     this.displayAxis = true;
@@ -56,19 +37,26 @@ export class MyScene extends CGFscene {
   initLights() {
     this.setGlobalAmbientLight(0.2, 0.2, 0.2, 1.0);
 
-    this.lights[0].setPosition(2.0, 2.0, -1.0, 1.0);
+    this.lights[0].setPosition( -5.0, 4.4, -4.1 ,1.0);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
     this.lights[0].setSpecular(1.0, 1.0, 1.0, 1.0);
     this.lights[0].enable();
-    this.lights[0].setVisible(false);
+    this.lights[0].setVisible(true);
     this.lights[0].update();
 
-    this.lights[1].setPosition(0.0, -1.0, 2.0, 1.0);
+    this.lights[1].setPosition(0.0, 10.0, 0.0, 1.0);
     this.lights[1].setDiffuse(0.5, 0.5, 0.5, 1.0);
     this.lights[1].setSpecular(0.5, 0.5, 0.0, 1.0);
     this.lights[1].enable();
-    this.lights[1].setVisible(false);
+    this.lights[1].setVisible(true);
     this.lights[1].update();
+
+    this.lights[2].setPosition(9.0, 3.0, -1.0, 1.0);
+    this.lights[2].setDiffuse(0.3, 0.3, 0.3, 1.0);
+    this.lights[2].setSpecular(0.2, 0.2, 0.0, 1.0);
+    this.lights[2].enable();
+    this.lights[2].setVisible(true);
+    this.lights[2].update();
   }
   initCameras() {
     this.camera = new CGFcamera(
@@ -94,19 +82,13 @@ export class MyScene extends CGFscene {
   }
 
   initMaterials() {
-    // Custom material (can be changed in the interface)
-    // initially midrange values on ambient, diffuse and specular, on R, G and B respectively
-
-    this.customMaterialValues = {
-      Ambient: "#0000ff",
-      Diffuse: "#ff0000",
-      Specular: "#000000",
-      Shininess: 10,
-    };
-    this.customMaterial = new CGFappearance(this);
-
-    this.updateCustomMaterial();
-  }
+    this.material = new CGFappearance(this);
+    this.material.setAmbient(0.1, 0.1, 0.1, 1);
+    this.material.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.material.setSpecular(0.1, 0.1, 0.1, 1);
+    this.material.setShininess(10.0);
+    
+}
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -122,54 +104,24 @@ export class MyScene extends CGFscene {
 
     this.lights[0].update();
     this.lights[1].update();
+    this.lights[2].update();
 
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
+    this.material.apply();
 
-    this.customMaterial.apply();
-
-    this.table1.display();
-    this.table2.display();
-    this.table3.display();
-    this.floor.display();
-    this.wall1.display();
-    this.wall2.display();
-    this.wall3.display();
-    this.wall4.display();
-    this.chair1.display();
-    this.chair2.display();
-    this.lamp1.display();
+    this.room.display();
 
     // ---- END Primitive drawing section
   }
 
   updateNormalViz() {
     if (this.displayNormals) {
-      this.table1.enableNormalViz();
-      this.table2.enableNormalViz();
-      this.table3.enableNormalViz();
-      this.floor.enableNormalViz();
-      this.wall1.enableNormalViz();
-      this.wall2.enableNormalViz();
-      this.wall3.enableNormalViz();
-      this.wall4.enableNormalViz();
-      this.chair1.enableNormalViz();
-      this.chair2.enableNormalViz();
-      this.lamp1.enableNormalViz();
+      this.room.enableNormalViz();
     } else {
-      this.table1.disableNormalViz();
-      this.table2.disableNormalViz();
-      this.table3.disableNormalViz();
-      this.floor.disableNormalViz();
-      this.wall1.disableNormalViz();
-      this.wall2.disableNormalViz();
-      this.wall3.disableNormalViz();
-      this.wall4.disableNormalViz();
-      this.chair1.disableNormalViz();
-      this.chair2.disableNormalViz();
-      this.lamp1.disableNormalViz();
+      this.room.disableNormalViz();
     }
   }
 

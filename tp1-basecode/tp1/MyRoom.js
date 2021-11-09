@@ -38,8 +38,8 @@ export class MyRoom extends CGFobject {
     this.brown.setShininess(110.0);
 
     this.blue = new CGFappearance(scene);
-    this.blue.setAmbient(0.1, 0.4, 0.1, 1);
-    this.blue.setDiffuse(0.1, 0.4, 0.9, 1.0);
+    this.blue.setAmbient(0.1, 0.4, 0.7, 1);
+    this.blue.setDiffuse(0.1, 0.4, 0.7, 1.0);
     this.blue.setSpecular(0, 0, 0, 0, 1.0);
     this.blue.setShininess(110.0);
 

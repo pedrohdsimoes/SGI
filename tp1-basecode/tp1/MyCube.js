@@ -7,13 +7,13 @@ import { MyQuad } from "./MyQuad.js";
  * @param scene - Reference to MyScene object
  */
 export class MyCube extends CGFobject {
-  constructor(scene) {
+  constructor(scene, material) {
     super(scene);
-    //this.material = material;
+    this.material = material;
     this.cube = new MyQuad(scene);
   }
   display() {
-   // this.material.apply();
+    this.material.apply();
     // quad facing +ZZ
     this.scene.pushMatrix();
     this.scene.translate(0, 0, 0.5);
@@ -32,14 +32,14 @@ export class MyCube extends CGFobject {
     this.scene.translate(0, 0.5, 0);
     this.scene.rotate(-Math.PI / 2, 1, 0, 0);
     this.cube.display();
-	this.scene.popMatrix();
-	  
-	//-------------
-    
-	// quad facing -ZZ
+    this.scene.popMatrix();
+
+    //-------------
+
+    // quad facing -ZZ
     this.scene.pushMatrix();
-	this.scene.translate(0, 0, -0.5);
-	this.scene.rotate(Math.PI, 0, 1, 0);
+    this.scene.translate(0, 0, -0.5);
+    this.scene.rotate(Math.PI, 0, 1, 0);
     this.cube.display();
     this.scene.popMatrix();
 

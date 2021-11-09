@@ -21,14 +21,14 @@ export class MyRoom extends CGFobject {
     this.floor = new MyFloor(scene, this.darkGrey);
     this.wall = new MyWall(scene, this.white);
     this.doorWall = new MyWall(scene, this.white);
-    this.lamp = new MyLamp(scene, this.blue, this.black);
+    this.lamp = new MyLamp(scene, this.blue, this.darkGrey);
     this.chair = new MyChair(scene, this.wood);
   }
 	
   initMaterials(scene) {
     this.wood = new CGFappearance(scene);
     this.wood.setAmbient(0.3, 0.3, 0.3, 1);
-    this.wood.setDiffuse(0.8, 0.4, 0, 2.0);
+    this.wood.setDiffuse(0.8, 0.45, 0, 2.0);
     this.wood.setSpecular(0, 0, 0, 1.0, 1.0);
     this.wood.setShininess(110.0);
 
@@ -52,15 +52,15 @@ export class MyRoom extends CGFobject {
 
     this.darkGrey = new CGFappearance(scene);
     this.darkGrey.setAmbient(0.1, 0.1, 0.1, 1);
-    this.darkGrey.setDiffuse(0.4, 0.4, 0.4, 1);
+    this.darkGrey.setDiffuse(0.5, 0.5, 0.5, 1);
     this.darkGrey.setSpecular(0.1, 0.1, 0.1, 1);
     this.darkGrey.setShininess(10.0);
 
-    this.black = new CGFappearance(scene);
-    this.black.setAmbient(0.1, 0.1, 0.1, 1);
-    this.black.setDiffuse(0.9, 0.9, 0.9, 1);
-    this.black.setSpecular(0.1, 0.1, 0.1, 1);
-    this.black.setShininess(100.0);
+    // this.black = new CGFappearance(scene);
+    // this.black.setAmbient(0.1, 0.1, 0.1, 1);
+    // this.black.setDiffuse(0.9, 0.9, 0.9, 1);
+    // this.black.setSpecular(0.1, 0.1, 0.1, 1);
+    // this.black.setShininess(100.0);
   }
 	
   display() {

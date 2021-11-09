@@ -8,14 +8,13 @@ import { MyCube } from "./MyCube.js";
  */
 
 export class MyTable extends CGFobject {
-  constructor(scene,material) {
+  constructor(scene, material) {
     super(scene);
     this.material = material;
-    this.cube = new MyCube(scene);
-    
+    this.cube = new MyCube(scene, material);
   }
   display() {
-    //this.material.apply();
+    this.material.apply();
     // Tampo
     this.scene.pushMatrix();
     this.scene.translate(0, 3.5, 0);

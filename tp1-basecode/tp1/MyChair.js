@@ -9,11 +9,11 @@ import { MyTable } from "./MyTable.js";
  */
 
 export class MyChair extends CGFobject {
-  constructor(scene,material) {
+  constructor(scene, material) {
     super(scene);
     this.material = material;
-    this.seat = new MyTable(scene);
-    this.cube = new MyCube(scene);
+    this.seat = new MyTable(scene, material);
+    this.cube = new MyCube(scene, material);
   }
   display() {
     this.material.apply();
@@ -29,7 +29,7 @@ export class MyChair extends CGFobject {
     this.scene.scale(0.15, 2.2, 0.15);
     this.cube.display();
     this.scene.popMatrix();
-        //Support
+    //Support
     this.scene.pushMatrix();
     this.scene.translate(0, 3.8, 0.68);
     this.scene.scale(1.8, 0.6, 0.15);
@@ -41,7 +41,6 @@ export class MyChair extends CGFobject {
     this.scene.scale(0.3, 0.6, 0.5);
     this.seat.display();
     this.scene.popMatrix();
-
   }
 
   // These are only needed if you are enabling normal visualization in compound objects

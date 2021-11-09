@@ -2,7 +2,6 @@ import { CGFappearance, CGFobject } from "../lib/CGF.js";
 import { MyChair } from "./MyChair.js";
 import { MyFloor } from "./MyFloor.js";
 import { MyLamp } from "./MyLamp.js";
-import { MyQuad } from "./MyQuad.js";
 import { MyTable } from "./MyTable.js";
 import { MyWall } from "./MyWall.js";
 
@@ -21,7 +20,7 @@ export class MyRoom extends CGFobject {
     this.floor = new MyFloor(scene, this.darkGrey);
     this.wall = new MyWall(scene, this.white);
     this.doorWall = new MyWall(scene, this.white);
-    this.lamp = new MyLamp(scene, this.blue, this.darkGrey);
+    this.lamp = new MyLamp(scene, this.blue, this.beige);
     this.chair = new MyChair(scene, this.wood);
   }
 	
@@ -56,11 +55,11 @@ export class MyRoom extends CGFobject {
     this.darkGrey.setSpecular(0.1, 0.1, 0.1, 1);
     this.darkGrey.setShininess(10.0);
 
-    // this.black = new CGFappearance(scene);
-    // this.black.setAmbient(0.1, 0.1, 0.1, 1);
-    // this.black.setDiffuse(0.9, 0.9, 0.9, 1);
-    // this.black.setSpecular(0.1, 0.1, 0.1, 1);
-    // this.black.setShininess(100.0);
+    this.beige = new CGFappearance(scene);
+    this.beige.setAmbient(0.5, 0.1, 0.1, 1);
+    this.beige.setDiffuse(0.9, 0.8, 0.5, 1.0);
+    this.beige.setSpecular(1, 1, 1, 1, 1.0);
+    this.beige.setShininess(10.0);
   }
 	
   display() {

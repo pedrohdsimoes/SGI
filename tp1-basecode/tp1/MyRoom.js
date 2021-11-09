@@ -26,9 +26,9 @@ export class MyRoom extends CGFobject {
 	
   initMaterials(scene) {
     this.wood = new CGFappearance(scene);
-    this.wood.setAmbient(0.3, 0.3, 0.3, 1);
+    this.wood.setAmbient(0.15, 0.15, 0.15, 1);
     this.wood.setDiffuse(0.8, 0.45, 0, 2.0);
-    this.wood.setSpecular(0, 0, 0, 1.0, 1.0);
+    this.wood.setSpecular(1, 1, 1, 1.0, 1.0);
     this.wood.setShininess(110.0);
 
     this.brown = new CGFappearance(scene);
@@ -40,7 +40,7 @@ export class MyRoom extends CGFobject {
     this.blue = new CGFappearance(scene);
     this.blue.setAmbient(0.1, 0.4, 0.7, 1);
     this.blue.setDiffuse(0.1, 0.4, 0.7, 1.0);
-    this.blue.setSpecular(0, 0, 0, 0, 1.0);
+    this.blue.setSpecular(0.1, 0.1, 0.1, 0.1, 1.0);
     this.blue.setShininess(110.0);
 
     this.white = new CGFappearance(scene);

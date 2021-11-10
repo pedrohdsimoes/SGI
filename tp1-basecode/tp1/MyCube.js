@@ -10,28 +10,28 @@ export class MyCube extends CGFobject {
   constructor(scene, material) {
     super(scene);
     this.material = material;
-    this.cube = new MyQuad(scene);
+    this.face = new MyQuad(scene);
   }
   display() {
     this.material.apply();
     // quad facing +ZZ
     this.scene.pushMatrix();
     this.scene.translate(0, 0, 0.5);
-    this.cube.display();
+    this.face.display();
     this.scene.popMatrix();
 
     // quad facing -XX
     this.scene.pushMatrix();
     this.scene.translate(-0.5, 0, 0);
     this.scene.rotate(-Math.PI / 2, 0, 1, 0);
-    this.cube.display();
+    this.face.display();
     this.scene.popMatrix();
 
     // quad facing +YY
     this.scene.pushMatrix();
     this.scene.translate(0, 0.5, 0);
     this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-    this.cube.display();
+    this.face.display();
     this.scene.popMatrix();
 
     //-------------
@@ -40,21 +40,21 @@ export class MyCube extends CGFobject {
     this.scene.pushMatrix();
     this.scene.translate(0, 0, -0.5);
     this.scene.rotate(Math.PI, 0, 1, 0);
-    this.cube.display();
+    this.face.display();
     this.scene.popMatrix();
 
     // quad facing +XX
     this.scene.pushMatrix();
     this.scene.translate(0.5, 0, 0);
     this.scene.rotate(Math.PI / 2, 0, 1, 0);
-    this.cube.display();
+    this.face.display();
     this.scene.popMatrix();
 
     // quad facing -YY
     this.scene.pushMatrix();
     this.scene.translate(0, -0.5, 0);
     this.scene.rotate(Math.PI / 2, 1, 0, 0);
-    this.cube.display();
+    this.face.display();
     this.scene.popMatrix();
 
     /* NOTE: WHEN PERFORMING THE ENTIRE CUBE IT IS EXPECTED 
@@ -63,9 +63,9 @@ export class MyCube extends CGFobject {
 
   // These are only needed if you are enabling normal visualization in compound objects
   enableNormalViz() {
-    this.cube.enableNormalViz();
+    this.face.enableNormalViz();
   }
   disableNormalViz() {
-    this.cube.disableNormalViz();
+    this.face.disableNormalViz();
   }
 }

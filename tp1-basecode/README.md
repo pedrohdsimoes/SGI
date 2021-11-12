@@ -1,19 +1,36 @@
-# TP1
+# SGI 2021/2022 - Project 1
 
-Primeiro projeto para a UC Sistemas De Gráficos Interativos(SGI) da Faculdade de Engenharia da Universidade do Porto
+# Group T2G2
 
-## Snapshots
+| Name             | Number    |
+| ---------------- | --------- | 
+| José Ferrão      | 201805386 | 
+| Pedro Simões     | 201805387 |
 
-![](/tp1-basecode/tp1/screenshots/Scene1.png?raw=true)
+## Project Notes
 
-![](/tp1-basecode/tp1/screenshots/Scene2.png?raw=true)
+In this project, we built a room shaped with a floor, 3 simple walls and one complex wall with an opening for a door and a window. The room also has 3 tables with different orientations and sizes, 2 chairs, one beeing on the floor giving the impression that it fell, a lamp coloured in blue and the base in beige.
 
-![](/tp1-basecode/tp1/screenshots/Scene3.png?raw=true)
+At first, our main difficulty was applying the materials correctly. Then, finding a good lighting disposition to make the room more appealing by hiding the vertices exposed on the complex wall. 
 
-![](/tp1-basecode/tp1/screenshots/Scene4.png?raw=true)
+## Screenhots
 
-## Autores
+### 1 - Top View
+View from the top showcasing the effect of the lights on the floor
+![Screenshot 1](/tp1-basecode/tp1/screenshots/Scene1.png?raw=true)
 
-José Ferrão up201805386
+### 2 - Main Table View
+A closer look to the table with the chair and the lamp
 
-Pedro Simões up201805387
+![Screenshot 2](/tp1-basecode/tp1/screenshots/Scene2.png?raw=true)
+
+### 3 - Different Room Perpective 
+A different perspective of the room, showcasing the fallen chair
+
+![Screenshot 3](/tp1-basecode/tp1/screenshots/Scene3.png?raw=true)
+
+### 4 - Enabled Lamp
+The scene only illuminated by the lamp
+
+![Screenshot 4](/tp1-basecode/tp1/screenshots/Scene4.png?raw=true)
+

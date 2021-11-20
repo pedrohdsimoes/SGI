@@ -57,6 +57,11 @@
         <!-- <primitive id="Cylinder">
             <cylinder base="1" top="1" height="3.0" slices="10000" stacks="1" />
         </primitive> -->
+
+        <primitive id="Sphere">
+            <sphere radius="1.0" slices="50" stacks="50" />
+        </primitive>
+
     </primitives>
 
     <components>
@@ -73,6 +78,7 @@
                 <primitiveref id="Rectangle" />
                 <primitiveref id="Triangle"/>
                 <primitiveref id="Cylinder"/>
+                <primitiveref id="Sphere"/>
             </children>
         </component>
     </components>

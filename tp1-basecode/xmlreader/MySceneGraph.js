@@ -3,6 +3,7 @@ import { MyRectangle } from "./MyRectangle.js";
 import { MyTriangle } from "./MyTriangle.js";
 import { MyCylinder } from "./MyCylinder.js";
 import { MySphere } from "./MySphere.js";
+import { MyPlane } from "./MyPlane.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -682,7 +683,7 @@ export class MySceneGraph {
 
         // slices
         var slices = this.reader.getFloat(grandChildren[0], "slices");
-        if (!(slices != null && !isNaN(slices)))
+        if (!(slices != null && !isNaN(slices) && slices % 1 == 0))
           return (
             "unable to parse slices of the primitive coordinates for ID = " +
             primitiveId
@@ -690,7 +691,7 @@ export class MySceneGraph {
 
         // stacks
         var stacks = this.reader.getFloat(grandChildren[0], "stacks");
-        if (!(stacks != null && !isNaN(stacks)))
+        if (!(stacks != null && !isNaN(stacks) && stacks % 1 == 0))
           return (
             "unable to parse stacks of the primitive coordinates for ID = " +
             primitiveId
@@ -721,7 +722,7 @@ export class MySceneGraph {
 
         // slices
         var slices = this.reader.getFloat(grandChildren[0], "slices");
-        if (!(slices != null && !isNaN(slices)))
+        if (!(slices != null && !isNaN(slices) && slices % 1 == 0))
           return (
             "unable to parse slices of the primitive coordinates for ID = " +
             primitiveId
@@ -729,30 +730,42 @@ export class MySceneGraph {
 
         // stacks
         var stacks = this.reader.getFloat(grandChildren[0], "stacks");
-        if (!(stacks != null && !isNaN(stacks)))
+        if (!(stacks != null && !isNaN(stacks) && stacks % 1 == 0))
           return (
             "unable to parse stacks of the primitive coordinates for ID = " +
             primitiveId
           );
 
-        var sph = new MySphere(
-          this.scene,
-          primitiveId,
-          radius,
-          slices,
-          stacks
-        );
+        var sph = new MySphere(this.scene, primitiveId, radius, slices, stacks);
 
         this.primitives[primitiveId] = sph;
       }
 
-      // TORUS
-
       // PLANE
+      else if (primitiveType == "plane") {
+        // npartsU
+        var npartsU = this.reader.getFloat(grandChildren[0], "npartsU");
+        if (!(npartsU != null && !isNaN(npartsU) && npartsU % 1 == 0))
+          return (
+            "unable to parse npartsU of the primitive coordinates for ID = " +
+            primitiveId
+          );
+
+        // npartsV
+        var npartsV = this.reader.getFloat(grandChildren[0], "npartsV");
+        if (!(npartsV != null && !isNaN(npartsV) && npartsV % 1 == 0))
+          return ("unable to parse npartsV of the primitive coordinates for ID = " + primitiveId);
+
+        var pla = new MyPlane(this.scene, primitiveId, npartsU, npartsV);
+
+        this.primitives[primitiveId] = pla;
+      }
 
       // PATCH
 
       // CYLINDER2
+		  
+		  
       else {
         console.warn("To do: Parse other primitives.");
       }
@@ -935,6 +948,7 @@ export class MySceneGraph {
     // this.primitives["Rectangle"].display();
     // this.primitives["Triangle"].display();
     // this.primitives["Cylinder"].display();
-    this.primitives["Sphere"].display();
+    // this.primitives["Sphere"].display();
+    this.primitives["Plane"].display();
   }
 }

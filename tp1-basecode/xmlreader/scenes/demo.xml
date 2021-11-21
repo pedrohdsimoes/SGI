@@ -58,9 +58,13 @@
             <cylinder base="1" top="1" height="3.0" slices="10000" stacks="1" />
         </primitive> -->
 
-        <primitive id="Sphere">
+        <!-- <primitive id="Sphere">
             <sphere radius="1.0" slices="50" stacks="50" />
-        </primitive>
+        </primitive> -->
+
+        <!-- <primitive id="Plane">
+            <plane npartsU="20" npartsV="20" />
+        </primitive> -->
 
     </primitives>
 
@@ -79,6 +83,7 @@
                 <primitiveref id="Triangle"/>
                 <primitiveref id="Cylinder"/>
                 <primitiveref id="Sphere"/>
+                <primitiveref id="Plane" />
             </children>
         </component>
     </components>

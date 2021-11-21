@@ -7,6 +7,7 @@ import { CGFobject } from "../lib/CGF.js";
  * @param slices - number of sides around the Z axis
  * @param stacks - number of divisions from the center to the poles (half of sphere)
  */
+
 export class MySphere extends CGFobject {
   constructor(scene, id, radius, slices, stacks) {
     super(scene);
@@ -44,13 +45,13 @@ export class MySphere extends CGFobject {
       textureLong = 0;
 
       for (let longitude = 0; longitude <= this.longDivs; longitude++) {
-        //--- Vertices coordinates
+        // Vertices coordinates
         var x = Math.cos(theta) * sinPhi * this.radius;
         var y = Math.sin(theta) * sinPhi * this.radius;
         var z = cosPhi * this.radius;
         this.vertices.push(x, y, z);
 
-        //--- Indices
+        // Indices
         if (latitude < this.latDivs && longitude < this.longDivs) {
           var current = latitude * latVertices + longitude;
           var next = current + latVertices;
@@ -62,7 +63,7 @@ export class MySphere extends CGFobject {
           this.indices.push(current + 1, next, next + 1);
         }
 
-        //--- Normals
+        // Normals
         // at each vertex, the direction of the normal is equal to
         // the vector from the center of the sphere to the vertex.
         // in a sphere of radius equal to one, the vector length is one.

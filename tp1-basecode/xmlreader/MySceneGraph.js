@@ -767,6 +767,8 @@ export class MySceneGraph {
       // PATCH
 
       // CYLINDER2
+		  
+		  
       else {
         console.warn("To do: Parse other primitives.");
       }

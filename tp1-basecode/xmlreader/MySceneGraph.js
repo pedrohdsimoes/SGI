@@ -486,13 +486,50 @@ export class MySceneGraph {
               coordinates
             );
             break;
-          case "scale":
-            this.onXMLMinorError("To do: Parse scale transformations.");
-            break;
-          case "rotate":
-            // angle
-            this.onXMLMinorError("To do: Parse rotate transformations.");
-            break;
+            case "scale":
+              let sx = this.reader.getFloat(grandChildren[j], "sx");
+              let sy = this.reader.getFloat(grandChildren[j], "sy");
+              let sz = this.reader.getFloat(grandChildren[j], "sz");
+  
+              if (
+                sx == null ||
+                sy == null ||
+                sz == null ||
+                isNaN(sx) ||
+                isNaN(sy) ||
+                isNaN(sz)
+              )
+                this.onXMLError(
+                  "[NODE] missing/not number values for scale node"
+                );
+  
+              transfMatrix = mat4.scale(
+                transfMatrix,
+                transfMatrix,
+                new vec3.fromValues(sx, sy, sz)
+              );
+              break;
+  
+            case "rotate":
+              let axis = this.reader.getString(grandChildren[j], "axis");
+              let angle = this.reader.getString(grandChildren[j], "angle");
+  
+              if (
+                axis == null ||
+                (axis != "x" && axis != "y" && axis != "z") ||
+                angle == null ||
+                isNaN(angle)
+              )
+                this.onXMLError("Wrong axis or angle on rotation node: ");
+  
+              angle = angle * DEGREE_TO_RAD;
+              transfMatrix = mat4.rotate(
+                transfMatrix,
+                transfMatrix,
+                angle,
+                this.axisCoords[axis]
+              );
+              break;
         }
       }
       this.transformations[transformationID] = transfMatrix;
@@ -948,10 +985,10 @@ export class MySceneGraph {
   displayScene() {
     //To do: Create display loop for transversing the scene graph
     //To test the parsing/creation of the primitives, call the display function directly
-    // this.primitives["Rectangle"].display();
+     this.primitives["Rectangle"].display();
     // this.primitives["Triangle"].display();
     // this.primitives["Cylinder"].display();
     // this.primitives["Sphere"].display();
-    this.primitives["Plane"].display();
+    // this.primitives["Plane"].display();
   }
 }

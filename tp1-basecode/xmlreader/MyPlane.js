@@ -8,46 +8,38 @@ import { CGFobject } from "../lib/CGF.js";
  */
 
 export class MyPlane extends CGFobject {
-  constructor(scene, id, npartsU, npartsV) {
+  constructor(scene, npartsU, npartsV) {
     super(scene);
     this.npartsU = npartsU;
     this.npartsV = npartsV;
 
     this.initBuffers();
+    this.defineNurb();
   }
 
   initBuffers() {
-    this.nurbsSurface = [
-      // U = 0
-      // V = [0..1]
+    this.initControlPoints = [
       [
-        [-0.5, 0.0, 0.5, 1],
-        [-0.5, 0.0, -0.5, 1],
-      ][
-        // U = 1
-        ([0.5, 0.0, 0.5, 1], [0.5, 0.0, -0.5, 1])
+        [0.5, 0.0, -0.5, 1],
+        [0.5, 0.0, 0.5, 1],
       ],
+      [ 
+        [-0.5, 0.0, -0.5, 1],
+        [-0.5, 0.0, 0.5, 1],
+      ]
+
     ];
-
-    let nurbs = new CGFnurbsSurface(1, 1, this.nurbsSurface);
-
-    this.plane = new CGFnurbsObject(this.scene,this.nPartsU,this.nPartsV,nurbs);
-
-    this.primitiveType = this.scene.gl.TRIANGLES;
-    this.initGLBuffers();
   }
 
-//   display() {
-//     this.plane.display();
-//   }
+    defineNurb() {
+      var nurbSurface =
+          new CGFnurbsSurface(1,1, this.controlPoints);
+  
+      this.nurbObject =
+          new CGFnurbsObject(this.scene, this.uDivs, this.vDivs, nurbSurface);
+    }
 
-  /**
-   * @method updateTexCoords
-   * Updates the list of texture coordinates of the rectangle
-   * @param {Array} coords - Array of texture coordinates
-   */
-  updateTexCoords(coords) {
-    this.texCoords = [...coords];
-    this.updateTexCoordsGLBuffers();
-  }
+
+    display() { this.nurbObject.display(); }
+  
 }

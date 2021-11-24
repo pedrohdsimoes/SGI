@@ -37,9 +37,9 @@
         </transformation>
     </transformations>
     <primitives>
-        <!--  <primitive id="Rectangle">
+         <primitive id="Rectangle">
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
-        </primitive>  -->
+        </primitive> 
 
         <!--  <primitive id ="Triangle">
             <triangle x1="2" y1="0" z1="0"

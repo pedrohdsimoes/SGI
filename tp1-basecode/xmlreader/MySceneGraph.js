@@ -478,14 +478,12 @@ export class MySceneGraph {
               grandChildren[j],
               "translate transformation for ID " + transformationID
             );
-            if (!Array.isArray(coordinates)) return coordinates;
+				if (!Array.isArray(coordinates))
+					return coordinates;
 
-            transfMatrix = mat4.translate(
-              transfMatrix,
-              transfMatrix,
-              coordinates
-            );
-            break;
+            transfMatrix = mat4.translate(transfMatrix,transfMatrix,coordinates);
+			break;
+			
             case "scale":
               let sx = this.reader.getFloat(grandChildren[j], "sx");
               let sy = this.reader.getFloat(grandChildren[j], "sy");
@@ -499,15 +497,9 @@ export class MySceneGraph {
                 isNaN(sy) ||
                 isNaN(sz)
               )
-                this.onXMLError(
-                  "[NODE] missing/not number values for scale node"
-                );
+                this.onXMLError("Missing/not number values for scale node");
   
-              transfMatrix = mat4.scale(
-                transfMatrix,
-                transfMatrix,
-                new vec3.fromValues(sx, sy, sz)
-              );
+            	transfMatrix = mat4.scale(transfMatrix,transfMatrix,new vec3.fromValues(sx, sy, sz));
               break;
   
             case "rotate":
@@ -522,16 +514,14 @@ export class MySceneGraph {
               )
                 this.onXMLError("Wrong axis or angle on rotation node: ");
   
-              angle = angle * DEGREE_TO_RAD;
-              transfMatrix = mat4.rotate(
-                transfMatrix,
-                transfMatrix,
-                angle,
-                this.axisCoords[axis]
-              );
+              	angle = angle * DEGREE_TO_RAD;
+				transfMatrix = mat4.rotate(transfMatrix, transfMatrix, angle, this.axisCoords[axis]);
+				
+				//this.transformations[transformationID].push(transfMatrix);
               break;
         }
-      }
+	  }
+		
       this.transformations[transformationID] = transfMatrix;
     }
 
@@ -779,27 +769,27 @@ export class MySceneGraph {
       }
 
       // PLANE
-      else if (primitiveType == "plane") {
-        // npartsU
-        var npartsU = this.reader.getFloat(grandChildren[0], "npartsU");
-        if (!(npartsU != null && !isNaN(npartsU) && npartsU % 1 == 0))
-          return (
-            "unable to parse npartsU of the primitive coordinates for ID = " +
-            primitiveId
-          );
+    //   else if (primitiveType == "plane") {
+    //     // npartsU
+    //     var npartsU = this.reader.getFloat(grandChildren[0], "npartsU");
+    //     if (!(npartsU != null && !isNaN(npartsU) && npartsU % 1 == 0))
+    //       return (
+    //         "unable to parse npartsU of the primitive coordinates for ID = " +
+    //         primitiveId
+    //       );
 
-        // npartsV
-        var npartsV = this.reader.getFloat(grandChildren[0], "npartsV");
-        if (!(npartsV != null && !isNaN(npartsV) && npartsV % 1 == 0))
-          return (
-            "unable to parse npartsV of the primitive coordinates for ID = " +
-            primitiveId
-          );
+    //     // npartsV
+    //     var npartsV = this.reader.getFloat(grandChildren[0], "npartsV");
+    //     if (!(npartsV != null && !isNaN(npartsV) && npartsV % 1 == 0))
+    //       return (
+    //         "unable to parse npartsV of the primitive coordinates for ID = " +
+    //         primitiveId
+    //       );
 
-        var pla = new MyPlane(this.scene, primitiveId, npartsU, npartsV);
+    //     var pla = new MyPlane(this.scene, primitiveId, npartsU, npartsV);
 
-        this.primitives[primitiveId] = pla;
-      }
+    //     this.primitives[primitiveId] = pla;
+    //   }
 
       // PATCH
 
@@ -810,8 +800,6 @@ export class MySceneGraph {
         console.warn("To do: Parse other primitives.");
       }
     }
-
-    this.log("Parsed primitives");
     return null;
   }
 
@@ -859,9 +847,20 @@ export class MySceneGraph {
       var textureIndex = nodeNames.indexOf("texture");
       var childrenIndex = nodeNames.indexOf("children");
 
-      this.onXMLMinorError("To do: Parse components.");
+      //this.onXMLMinorError("To do: Parse components.");
+		
       // Transformations
+      let matrix = mat4.create();
+            let transformations;
+            if (transformationIndex == -1) {
+                this.onXMLMinorError("[NODE] Transformations not defined for node id: " + transformationID);
+            }
+            else {
+                transformations = grandChildren[transformationIndex];
 
+                matrix = this.parseTransformations(transformations);
+			}
+		
       // Materials
 
       // Texture
@@ -985,10 +984,12 @@ export class MySceneGraph {
   displayScene() {
     //To do: Create display loop for transversing the scene graph
     //To test the parsing/creation of the primitives, call the display function directly
-     this.primitives["Rectangle"].display();
+     //this.primitives["Rectangle"].display();
     // this.primitives["Triangle"].display();
     // this.primitives["Cylinder"].display();
     // this.primitives["Sphere"].display();
     // this.primitives["Plane"].display();
+    console.log(this.components["MyFloor"]);
+	  this.components["MyFloor"].display();
   }
 }

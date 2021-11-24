@@ -30,10 +30,11 @@
         </material>
     </materials>
     <transformations>
-        <transformation id="demoTransform">
-            <scale x="5" y="1" z="5" />
-            <rotate axis="x" angle="-45" />
-            <rotate axis="z" angle="-45" />
+        <transformation id="floor">
+            <translate x="-5" y="2" z="3"/>
+            <!-- <scale x="5" y="1" z="5" /> -->
+            <!-- <rotate axis="x" angle="-45" />
+            <rotate axis="z" angle="-45" /> -->
         </transformation>
     </transformations>
     <primitives>
@@ -60,6 +61,7 @@
         </primitive>  -->
     </primitives>
     <components>
+
         <component id="demoRoot">
             <transformation>
                 <translate x="0" y="0" z="1" />
@@ -77,5 +79,16 @@
                 <primitiveref id="Plane" />
             </children>
         </component>
+
+        <component id="MyFloor">
+            <transformation>
+                <transformationref id="floor" />
+            </transformation>
+            <children>
+                <componentref id="MyFloor" />
+                <primitiveref id="Rectangle"/>
+            </children>
+        </component>
+
     </components>
 </lxs>

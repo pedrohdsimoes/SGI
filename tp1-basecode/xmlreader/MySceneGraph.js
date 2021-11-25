@@ -4,6 +4,7 @@ import { MyTriangle } from "./MyTriangle.js";
 import { MyCylinder } from "./MyCylinder.js";
 import { MySphere } from "./MySphere.js";
 import { MyPlane } from "./MyPlane.js";
+import { MyComponent } from "./MyComponent.js";
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -443,8 +444,9 @@ export class MySceneGraph {
   parseTransformations(transformationsNode) {
     var children = transformationsNode.children;
 
-    this.transformations = [];
+    if (children.length == 0) this.onXMLError("No transformations found");
 
+    this.transformations = [];
     var grandChildren = [];
 
     // Any number of transformations.
@@ -468,65 +470,83 @@ export class MySceneGraph {
 
       grandChildren = children[i].children;
       // Specifications for the current transformation.
+      if (grandChildren.length == 0) {
+        this.onXMLError(
+          "No transformations found for transformation " + transformationID
+        );
+      }
 
-      var transfMatrix = mat4.create();
+      this.transformations[transformationID] =
+        this.parseTransformationsAux(grandChildren);
+    }
+    this.log("Parsed transformations")
+    return null;
+  }
 
-      for (var j = 0; j < grandChildren.length; j++) {
-        switch (grandChildren[j].nodeName) {
-          case "translate":
-            var coordinates = this.parseCoordinates3D(
-              grandChildren[j],
-              "translate transformation for ID " + transformationID
-            );
-				if (!Array.isArray(coordinates))
-					return coordinates;
+  parseTransformationsAux(grandChildren) {
+    var transfMatrix = mat4.create();
 
-            transfMatrix = mat4.translate(transfMatrix,transfMatrix,coordinates);
-			break;
-			
-            case "scale":
-              let sx = this.reader.getFloat(grandChildren[j], "sx");
-              let sy = this.reader.getFloat(grandChildren[j], "sy");
-              let sz = this.reader.getFloat(grandChildren[j], "sz");
-  
-              if (
-                sx == null ||
-                sy == null ||
-                sz == null ||
-                isNaN(sx) ||
-                isNaN(sy) ||
-                isNaN(sz)
-              )
-                this.onXMLError("Missing/not number values for scale node");
-  
-            	transfMatrix = mat4.scale(transfMatrix,transfMatrix,new vec3.fromValues(sx, sy, sz));
+    for (var j = 0; j < grandChildren.length; j++) {
+      var coordinates;
+      switch (grandChildren[j].nodeName) {
+        case "translate":
+          coordinates = this.parseCoordinates3D(
+            grandChildren[j],
+              "translate transformation");
+              
+          if (!Array.isArray(coordinates)) return coordinates;
+
+          transfMatrix = mat4.translate(
+            transfMatrix,
+            transfMatrix,
+            coordinates
+          );
+          break;
+
+        case "scale":
+          coordinates = this.parseCoordinates3D(
+            grandChildren[j],
+              "scale transformation");
+              
+          if (!Array.isArray(coordinates)) return coordinates;
+
+          transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
+          break;
+
+        case "rotate":
+          let axis = this.reader.getString(grandChildren[j], "axis");
+          let angle = this.reader.getString(grandChildren[j], "angle");
+
+          if (axis == null || axis.length != 1)
+            this.onXMLError("unable to parse axis of the rotation");
+
+          if (angle == null || isNaN(angle))
+            this.onXMLError("unable to parse angle of the rotation");
+
+          angle = angle * DEGREE_TO_RAD;
+
+          switch (axis) {
+            case "x":
+              transfMatrix = mat4.rotateX(transfMatrix, transfMatrix, angle);
               break;
-  
-            case "rotate":
-              let axis = this.reader.getString(grandChildren[j], "axis");
-              let angle = this.reader.getString(grandChildren[j], "angle");
-  
-              if (
-                axis == null ||
-                (axis != "x" && axis != "y" && axis != "z") ||
-                angle == null ||
-                isNaN(angle)
-              )
-                this.onXMLError("Wrong axis or angle on rotation node: ");
-  
-              	angle = angle * DEGREE_TO_RAD;
-				transfMatrix = mat4.rotate(transfMatrix, transfMatrix, angle, this.axisCoords[axis]);
-				
-				//this.transformations[transformationID].push(transfMatrix);
+            case "y":
+              transfMatrix = mat4.rotateY(transfMatrix, transfMatrix, angle);
               break;
-        }
-	  }
-		
-      this.transformations[transformationID] = transfMatrix;
+            case "z":
+              transfMatrix = mat4.rotateZ(transfMatrix, transfMatrix, angle);
+              break;
+            default:
+              return "unable to parse axis of the rotation";
+          }
+          break;
+        default:
+          this.onXMLError(
+            "The transformation must be one of three types (translate, rotate, scale)."
+          );
+      }
     }
 
-    this.log("Parsed transformations");
-    return null;
+    return transfMatrix;
   }
 
   /**
@@ -535,6 +555,8 @@ export class MySceneGraph {
    */
   parsePrimitives(primitivesNode) {
     var children = primitivesNode.children;
+
+    if (children.length == 0) this.onXMLError("No primitives found");
 
     this.primitives = [];
 
@@ -568,9 +590,11 @@ export class MySceneGraph {
           grandChildren[0].nodeName != "triangle" &&
           grandChildren[0].nodeName != "cylinder" &&
           grandChildren[0].nodeName != "sphere" &&
-          grandChildren[0].nodeName != "plane")
+          grandChildren[0].nodeName != "plane" &&
+          grandChildren[0].nodeName != "patch" &&
+          grandChildren[0].nodeName != "cylinder2")
       ) {
-        return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or plane)";
+        return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, plane, patch or cylinder2)";
       }
 
       // Specifications for the current primitive.
@@ -619,7 +643,7 @@ export class MySceneGraph {
       // TRIANGLE
       else if (primitiveType == "triangle") {
         // x1
-        var x1 = this.reader.getFloat(grandChildren[0], "x1");
+        x1 = this.reader.getFloat(grandChildren[0], "x1");
         if (!(x1 != null && !isNaN(x1)))
           return (
             "unable to parse x1 of the primitive coordinates for ID = " +
@@ -627,7 +651,7 @@ export class MySceneGraph {
           );
 
         // y1
-        var y1 = this.reader.getFloat(grandChildren[0], "y1");
+        y1 = this.reader.getFloat(grandChildren[0], "y1");
         if (!(y1 != null && !isNaN(y1)))
           return (
             "unable to parse y1 of the primitive coordinates for ID = " +
@@ -635,7 +659,7 @@ export class MySceneGraph {
           );
 
         // x2
-        var x2 = this.reader.getFloat(grandChildren[0], "x2");
+        x2 = this.reader.getFloat(grandChildren[0], "x2");
         if (!(x2 != null && !isNaN(x2)) && x2 > x1)
           // x2 > x1 para ficar voltado para +ZZ
           return (
@@ -644,7 +668,7 @@ export class MySceneGraph {
           );
 
         // y2
-        var y2 = this.reader.getFloat(grandChildren[0], "y2");
+        y2 = this.reader.getFloat(grandChildren[0], "y2");
         if (!(y2 != null && !isNaN(y2)))
           return (
             "unable to parse y2 of the primitive coordinates for ID = " +
@@ -748,7 +772,7 @@ export class MySceneGraph {
           );
 
         // slices
-        var slices = this.reader.getFloat(grandChildren[0], "slices");
+        slices = this.reader.getFloat(grandChildren[0], "slices");
         if (!(slices != null && !isNaN(slices) && slices % 1 == 0))
           return (
             "unable to parse slices of the primitive coordinates for ID = " +
@@ -756,7 +780,7 @@ export class MySceneGraph {
           );
 
         // stacks
-        var stacks = this.reader.getFloat(grandChildren[0], "stacks");
+        stacks = this.reader.getFloat(grandChildren[0], "stacks");
         if (!(stacks != null && !isNaN(stacks) && stacks % 1 == 0))
           return (
             "unable to parse stacks of the primitive coordinates for ID = " +
@@ -769,37 +793,36 @@ export class MySceneGraph {
       }
 
       // PLANE
-    //   else if (primitiveType == "plane") {
-    //     // npartsU
-    //     var npartsU = this.reader.getFloat(grandChildren[0], "npartsU");
-    //     if (!(npartsU != null && !isNaN(npartsU) && npartsU % 1 == 0))
-    //       return (
-    //         "unable to parse npartsU of the primitive coordinates for ID = " +
-    //         primitiveId
-    //       );
+      //   else if (primitiveType == "plane") {
+      //     // npartsU
+      //     var npartsU = this.reader.getFloat(grandChildren[0], "npartsU");
+      //     if (!(npartsU != null && !isNaN(npartsU) && npartsU % 1 == 0))
+      //       return (
+      //         "unable to parse npartsU of the primitive coordinates for ID = " +
+      //         primitiveId
+      //       );
 
-    //     // npartsV
-    //     var npartsV = this.reader.getFloat(grandChildren[0], "npartsV");
-    //     if (!(npartsV != null && !isNaN(npartsV) && npartsV % 1 == 0))
-    //       return (
-    //         "unable to parse npartsV of the primitive coordinates for ID = " +
-    //         primitiveId
-    //       );
+      //     // npartsV
+      //     var npartsV = this.reader.getFloat(grandChildren[0], "npartsV");
+      //     if (!(npartsV != null && !isNaN(npartsV) && npartsV % 1 == 0))
+      //       return (
+      //         "unable to parse npartsV of the primitive coordinates for ID = " +
+      //         primitiveId
+      //       );
 
-    //     var pla = new MyPlane(this.scene, primitiveId, npartsU, npartsV);
+      //     var pla = new MyPlane(this.scene, primitiveId, npartsU, npartsV);
 
-    //     this.primitives[primitiveId] = pla;
-    //   }
+      //     this.primitives[primitiveId] = pla;
+      //   }
 
       // PATCH
 
       // CYLINDER2
-		  
-		  
       else {
-        console.warn("To do: Parse other primitives.");
+        console.warn("Unable to identify primitive");
       }
     }
+    this.log("Parsed primitives");
     return null;
   }
 
@@ -809,15 +832,16 @@ export class MySceneGraph {
    */
   parseComponents(componentsNode) {
     var children = componentsNode.children;
-
+    var childID;
     this.components = [];
-
+    var transformation;
     var grandChildren = [];
     var grandgrandChildren = [];
     var nodeNames = [];
 
     // Any number of components.
     for (var i = 0; i < children.length; i++) {
+      let x;
       if (children[i].nodeName != "component") {
         this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
         continue;
@@ -848,25 +872,114 @@ export class MySceneGraph {
       var childrenIndex = nodeNames.indexOf("children");
 
       //this.onXMLMinorError("To do: Parse components.");
-		
-      // Transformations
-      let matrix = mat4.create();
-            let transformations;
-            if (transformationIndex == -1) {
-                this.onXMLMinorError("[NODE] Transformations not defined for node id: " + transformationID);
-            }
-            else {
-                transformations = grandChildren[transformationIndex];
 
-                matrix = this.parseTransformations(transformations);
-			}
-		
+      // Transformations
+      if (transformationIndex != 0)
+        this.onXMLError(
+          "Transformations for component " + componentID + " not found"
+        );
+
+      if (grandChildren[transformationIndex].children.length == 0)
+        transformation = mat4.create();
+      else if (
+        grandChildren[transformationIndex].children[0].nodeName ==
+        "transformationref"
+      ) {
+        var id = this.reader.getString(
+          grandChildren[transformationIndex].children[0],
+          "id"
+        );
+
+        if (this.transformations[id] != null) {
+          transformation = this.transformations[id];
+        } else this.onXMLMinorError("No trasformation for ID : " + id);
+      } else
+        transformation = this.parseTransformationsAux(
+          grandChildren[transformationIndex].children
+        );
+
       // Materials
+      if (materialsIndex != 1 && materialsIndex != 2)
+        this.onXMLError("Material for component " + componentID + " not found");
+
+      var materialID = [];
+
+      for (x = 0; x < grandChildren[materialsIndex].children.length; x++) {
+        materialID[x] = this.reader.getString(
+          grandChildren[materialsIndex].children[x],
+          "id"
+        );
+        if (
+          materialID[x] != "inherit" &&
+          this.materials[materialID[x]] == null) {
+          this.onXMLMinorError("No material for ID : " + materialID[x]);
+        }
+      }
 
       // Texture
+      if (textureIndex != 2 && textureIndex != 3)
+        this.onXMLError("Texture for component " + componentID + " not found");
+      const textureID = this.reader.getString(
+        grandChildren[textureIndex],
+        "id"
+      );
+      if (
+        textureID != "none" &&
+        textureID != "inherit" &&
+        this.textures[textureID] == null
+      ) {
+        this.onXMLMinorError("No texture for ID : " + textureID);
+      }
+      var textureLenghtS = this.reader.getFloat(
+        grandChildren[textureIndex],
+        "length_s",
+        false
+      );
+      var textureLenghtT = this.reader.getFloat(
+        grandChildren[textureIndex],
+        "length_t",
+        false
+      );
 
       // Children
+      if (childrenIndex != 3 && childrenIndex != 4)
+        this.onXMLError("Children for component " + componentID + " not found");
+
+      grandgrandChildren = grandChildren[childrenIndex].children;
+
+      var leaves = [];
+      var componentchildren = [];
+
+      for (x = 0; x < grandgrandChildren.length; x++) {
+        if (grandgrandChildren[x].nodeName == "componentref") {
+          childID = this.reader.getString(grandgrandChildren[x], "id");
+          componentchildren.push(childID);
+        } else if (grandgrandChildren[x].nodeName == "primitiveref") {
+          childID = this.reader.getString(grandgrandChildren[x], "id");
+          if (this.primitives[childID] == null)
+            this.onXMLMinorError("No primitive for ID : " + childID);
+          leaves.push(childID);
+        } else {
+          this.onXMLMinorError(
+            "unknown tag <" + grandgrandChildren[x].nodeName + ">"
+          );
+        }
+      }
+
+      var component = new MyComponent(
+        this.scene,
+        componentID,
+        transformation,
+        materialID,
+        textureID,
+        textureLenghtS,
+        textureLenghtT,
+        componentchildren,
+        leaves
+      );
+      this.components[componentID] = component;
     }
+    this.log("Parsed components");
   }
 
   /**
@@ -984,12 +1097,61 @@ export class MySceneGraph {
   displayScene() {
     //To do: Create display loop for transversing the scene graph
     //To test the parsing/creation of the primitives, call the display function directly
-     //this.primitives["Rectangle"].display();
+    //this.primitives["Rectangle"].display();
     // this.primitives["Triangle"].display();
     // this.primitives["Cylinder"].display();
     // this.primitives["Sphere"].display();
     // this.primitives["Plane"].display();
-    console.log(this.components["MyFloor"]);
-	  this.components["MyFloor"].display();
+    // console.log(this.components["MyFloor"]);
+    // this.components["MyFloor"].display();
+
+    this.displayComponent(this.idRoot, null, null, 1, 1);
+  }
+
+  displayComponent(componentID, material, texture, s, t) {
+    let i;
+    if (this.components[componentID] == null)
+      this.onXMLMinorError("No component for ID : " + componentID);
+
+    var component = this.components[componentID];
+
+    this.scene.pushMatrix();
+    this.scene.multMatrix(component.transformation);
+
+    if (component.currentMaterialID != "inherit")
+      material = this.materials[component.currentMaterialID];
+
+    if (component.texture == "inherit") {
+      material.setTexture(this.textures[texture]);
+      component.length_s = s;
+      component.length_t = t;
+    } else if (component.texture == "none") material.setTexture(null);
+    else {
+      texture = component.texture;
+      material.setTexture(this.textures[texture]);
+    }
+    material.apply();
+    material.setTexture(null);
+
+    for (i in component.leaves) {
+      if (component.length_s == null || component.length_t == null)
+        this.primitives[component.leaves[i]].updateTexCoords(1, 1);
+      else
+        this.primitives[component.leaves[i]].updateTexCoords(
+          component.length_s,
+          component.length_t
+        );
+
+      this.primitives[component.leaves[i]].display();
+    }
+
+    for (i in component.children)
+      this.displayComponent(component.children[i], material, texture, s, t);
+
+    this.scene.popMatrix();
+  }
+
+  changeTexture() {
+    for (let i in this.components) this.components[i].updateMaterial();
   }
 }

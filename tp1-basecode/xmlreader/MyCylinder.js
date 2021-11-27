@@ -12,11 +12,11 @@ import { CGFobject } from "../lib/CGF.js";
 export class MyCylinder extends CGFobject {
   constructor(scene, id, height, top, base, slices, stacks) {
     super(scene);
-    this.height = height;
-    this.top = top;
-    this.base = base;
     this.slices = slices;
     this.stacks = stacks;
+    this.height = height;
+    this.base = base;
+    this.top = base;
 
     this.initBuffers();
   }
@@ -27,55 +27,50 @@ export class MyCylinder extends CGFobject {
     this.normals = [];
     this.texCoords = [];
 
-    var ang = (2.0 * Math.PI) / this.slices;
+    var radiusDif = this.base - this.top;
+    let ang = 0;
+    var alphaAng = (2 * Math.PI) / this.slices;
+    this.stackHeight = this.height / this.stacks;
+    let radius = this.base;
+    this.pointsPerStack = this.slices + 1;
 
-    for (var stack = 0; stack <= this.stacks; stack++) {
-      var aux_ang = 0.0;
-      var r = (this.top - this.base) * (stack / this.stacks) + this.base;
-      var z = (this.height * stack) / this.stacks;
+    for (let x = 0; x <= this.stacks; x++) {
+      ang = 0;
+      for (let i = 0; i < this.pointsPerStack; i++) {
+        this.vertices.push(
+          radius * Math.cos(ang),
+          -Math.sin(ang) * radius,
+          this.stackHeight * x
+        );
+        if (x > 0 && i > 0) {
+          this.indices.push(
+            (x - 1) * this.pointsPerStack + i - 1,
+            x * this.pointsPerStack + i - 1,
+            x * this.pointsPerStack + i
+          );
+          this.indices.push(
+            (x - 1) * this.pointsPerStack + i - 1,
+            x * this.pointsPerStack + i,
+            (x - 1) * this.pointsPerStack + i
+          );
+        }
 
-      for (slice = 0; slice <= this.slices; slice++) {
-        var x = Math.cos(aux_ang) * r;
-        var y = Math.sin(aux_ang) * r;
-
-        this.vertices.push(x, y, z);
-        let size = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-        this.normals.push(x / size, y / size, 0);
-        // this.normals.push(x, y, 0);
-
-        aux_ang += ang;
+        this.texCoords.push(i / this.slices, x * this.stackHeight);
+        ang += alphaAng;
       }
-    }
-
-    for (var stack = 0; stack < this.stacks; stack++) {
-      for (var slice = 0; slice < this.slices; slice++) {
-        var i1 = slice + stack * (this.slices + 1);
-        var i2 = slice + stack * (this.slices + 1) + 1;
-        var i3 = slice + (stack + 1) * (this.slices + 1);
-        var i4 = slice + (stack + 1) * (this.slices + 1) + 1;
-        this.indices.push(i4, i3, i1);
-        this.indices.push(i1, i2, i4);
-      }
-    }
-
-    for (var stack = 0; stack <= this.stacks; stack++) {
-      for (var slice = 0; slice <= this.slices; slice++) {
-        this.texCoords.push(1 - slice / this.slices, 1 - stack / this.stacks);
-      }
+      radius -= radiusDif / this.stacks;
     }
 
     this.primitiveType = this.scene.gl.TRIANGLES;
-    //this.enableNormalViz();
     this.initGLBuffers();
   }
 
-  /**
-   * @method updateTexCoords
-   * Updates the list of texture coordinates of the rectangle
-   * @param {Array} coords - Array of texture coordinates
-   */
-  updateTexCoords(coords) {
-    this.texCoords = [...coords];
-    this.updateTexCoordsGLBuffers();
+  updateTexCoords(s, t) {
+    this.texCoords = [];
+    for (var x = 0; x <= this.stacks; x++) {
+      for (var i = 0; i < this.pointsPerStack; i++) {
+        this.texCoords.push(i / this.slices / s, (x * this.stackHeight) / t);
+      }
+    }
   }
 }

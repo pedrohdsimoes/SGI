@@ -1,4 +1,4 @@
-import { CGFobject } from "../lib/CGF.js";
+import { CGFobject, CGFnurbsObject, CGFnurbsSurface } from "../lib/CGF.js";
 /**
  * MyPlane
  * @constructor
@@ -38,8 +38,4 @@ export class MyPlane extends CGFobject {
       this.nurbObject =
           new CGFnurbsObject(this.scene, this.uDivs, this.vDivs, nurbSurface);
     }
-
-
-    display() { this.nurbObject.display(); }
-  
 }

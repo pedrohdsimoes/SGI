@@ -11,91 +11,55 @@ import { CGFobject } from "../lib/CGF.js";
 export class MySphere extends CGFobject {
   constructor(scene, id, radius, slices, stacks) {
     super(scene);
+    this.id = id;
     this.radius = radius;
-    this.latDivs = stacks * 2;
-    this.longDivs = slices;
+    this.slices = slices;
+    this.stacks = stacks;
+
+    this.vertices = [];
+    this.indices = [];
+    this.texCoords = [];
 
     this.initBuffers();
   }
 
+  // Creates vertices, indices, normals and texCoords
+
   initBuffers() {
-    this.vertices = [];
-    this.indices = [];
-    this.normals = [];
-    this.texCoords = [];
+    const s = (2 * Math.PI) / this.slices;
+    const l = Math.PI / this.stacks;
 
-    var phi = 0;
-    var theta = 0;
-    var phiInc = Math.PI / this.latDivs;
-    var thetaInc = (2 * Math.PI) / this.longDivs;
-    var latVertices = this.longDivs + 1;
-
-    var textureLong = 0;
-    var textureLat = 0;
-    var genericTextureLong = 1 / this.longDivs;
-    var genericTextureLat = 1 / this.latDivs;
-
-    // build an all-around stack at a time, starting on "north pole" and proceeding "south"
-    for (let latitude = 0; latitude <= this.latDivs; latitude++) {
-      var sinPhi = Math.sin(phi);
-      var cosPhi = Math.cos(phi);
-
-      // in each stack, build all the slices around, starting on longitude 0
-      theta = 0;
-      textureLong = 0;
-
-      for (let longitude = 0; longitude <= this.longDivs; longitude++) {
-        // Vertices coordinates
-        var x = Math.cos(theta) * sinPhi * this.radius;
-        var y = Math.sin(theta) * sinPhi * this.radius;
-        var z = cosPhi * this.radius;
-        this.vertices.push(x, y, z);
-
-        // Indices
-        if (latitude < this.latDivs && longitude < this.longDivs) {
-          var current = latitude * latVertices + longitude;
-          var next = current + latVertices;
-          // pushing two triangles using indices from this round (current, current+1)
-          // and the ones directly south (next, next+1)
-          // (i.e. one full round of slices ahead)
-
-          this.indices.push(current + 1, current, next);
-          this.indices.push(current + 1, next, next + 1);
-        }
-
-        // Normals
-        // at each vertex, the direction of the normal is equal to
-        // the vector from the center of the sphere to the vertex.
-        // in a sphere of radius equal to one, the vector length is one.
-        // therefore, the value of the normal is equal to the position vector
-        let normalizationAux = Math.sqrt(x * x + y * y + z * z);
-
-        this.normals.push(
-          x / normalizationAux,
-          y / normalizationAux,
-          z / normalizationAux
+    for (let i = 0; i <= this.stacks; i++) {
+      for (let j = 0; j <= this.slices; j++) {
+        this.vertices.push(
+          this.radius * Math.cos(s * j) * Math.sin(l * i),
+          this.radius * Math.cos(l * i),
+          this.radius * Math.sin(s * j) * Math.sin(l * i)
         );
 
-        this.texCoords.push(textureLong, textureLat);
+        if (i != this.stacks && j != this.slices) {
+          this.indices.push(
+            i * (this.slices + 1) + j,
+            i * (this.slices + 1) + j + this.slices + 2,
+            i * (this.slices + 1) + j + this.slices + 1
+          );
+          this.indices.push(
+            i * (this.slices + 1) + j,
+            i * (this.slices + 1) + j + 1,
+            i * (this.slices + 1) + j + 2 + this.slices
+          );
+        }
 
-        theta += thetaInc;
-        textureLong += genericTextureLong;
+        this.texCoords.push(
+          1 - i * (1 / this.stacks),
+          1 - j * (1 / this.slices)
+        );
       }
-      phi += phiInc;
-      textureLat += genericTextureLat;
     }
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
 
-  /**
-   * @method updateTexCoords
-   * Updates the list of texture coordinates of the rectangle
-   * @param {Array} coords - Array of texture coordinates
-   */
-  updateTexCoords(coords) {
-    this.texCoords = [...coords];
-    this.updateTexCoordsGLBuffers();
-  }
+   updateTexCoords(s, t) {}
 }

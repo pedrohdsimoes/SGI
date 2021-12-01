@@ -26,8 +26,8 @@ export class MySphere extends CGFobject {
 	// Creates vertices, indices, normals and texCoords
 
 	initBuffers() {
-		const s = (2 * Math.PI) / this.slices;
-		const l = Math.PI / this.stacks;
+		var s = (2 * Math.PI) / this.slices;
+		var l = Math.PI / this.stacks;
 
 		for (let i = 0; i <= this.stacks; i++) {
 			for (let j = 0; j <= this.slices; j++) {

@@ -3,58 +3,42 @@ import { CGFobject, CGFnurbsObject, CGFnurbsSurface } from "../lib/CGF.js";
  * MyPatch
  * @constructor
  * @param scene - Reference to MyScene object
- * @param pointsU
- * @param pointsV
- * @param npartsU - divisões na direção U
- * @param npartsV - divisões na direção V
+ * @param npointsU - number of points of the patch on U domain
+ * @param npointsV - number of points of the patch on V domain
+ * @param npartsU - number of parts of the patch on U domain
+ * @param npartsV -- number of parts of the patch on V domain
  * @param controlPoints
  */
 
 export class MyPatch extends CGFobject {
-  constructor(scene, pointsU, pointsV, npartsU, npartsV, controlPoints) {
-    super(scene);
-    this.pointsU = pointsU;
-    this.pointsV = pointsV;
-    this.npartsU = npartsU;
-    this.npartsV = npartsV;
-    this.controlPoints = controlPoints;
+	constructor(scene, npointsU, npointsV, npartsU, npartsV, controlPoints) {
+		super(scene);
+		this.npointsU = npointsU;
+		this.npointsV = npointsV;
+		this.npartsU = npartsU;
+		this.npartsV = npartsV;
+		this.controlPoints = controlPoints;
 
-    this.vertices = [];
-    this.indices = [];
+		this.vertices = [];
+		this.indices = [];
 
-    this.initBuffers();
-  }
+		this.creatSurface();
+	}
 
-  initBuffers() {
-    this.controlPointsAux = [];
+	creatSurface() {
 
-    for (var i = 0; i < this.pointsU; i++) {
-      var point = [];
-      for (var j = 0; j < this.pointsV; j++) {
-        point.push([
-          this.controlPoints[i * this.pointsV + j][0],
-          this.controlPoints[i * this.pointsV + j][1],
-          this.controlPoints[i * this.pointsV + j][2],
-          1,
-        ]);
-      }
-      this.controlPointsAux.push(point);
-    }
+		var nurbSurface = new CGFnurbsSurface(this.npointsU ,this.npointsV ,this.controlPointsAux);
 
-    var nurbSurface = new CGFnurbsSurface(this.pointsU-1, this.pointsV - 1, this.controlPointsAux);
+		this.patch = new CGFnurbsObject(this.scene,this.npartsU,this.npartsV,nurbSurface);
+	}
 
-    this.plane = new CGFnurbsObject(
-      this.scene,
-      this.npartsU,
-      this.npartsV,
-      nurbSurface
-    );
-  }
+	display() {
+		this.patch.display();
+	}
 
-  /**
-   * @method updateTexCoords
-   * @param {Array} coords - Array of texture coordinates
-   */
-  updateTexCoords(s,t) {
-  }
+	/**
+	 * @method updateTexCoords
+	 * @param {Array} coords - Array of texture coordinates
+	 */
+	updateTexCoords(s, t) { };
 }

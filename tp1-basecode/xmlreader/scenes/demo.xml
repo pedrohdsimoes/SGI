@@ -20,7 +20,7 @@
     </lights>
 
     <textures>
-        <texture id="demoTexture" file="./images/vidral.jpg" />
+        <texture id="bank" file="./images/bank.jpg" />
     </textures>
 
     <materials>
@@ -71,10 +71,27 @@
             <sphere radius="1.0" slices="50" stacks="50" />
         </primitive>
 
-        <!-- <primitive id="Plane">
-            <plane npartsU="20" npartsV="20" />
-        </primitive>  -->
-        
+        <primitive id="Plane">
+            <plane npartsU="1" npartsV="1" />
+        </primitive>
+
+        <primitive id="Patch">
+            <patch npointsU="3" npointsV="4" npartsU="5" npartsV="3">
+                <controlpoint xx="-1.5" yy="-1.5" zz="0.0" />
+                <controlpoint xx="-2.0" yy="-2.0" zz="2.0" />
+                <controlpoint xx="-2.0" yy="2.0" zz="2.0" />
+                <controlpoint xx="-1.5" yy="1.5" zz="0.0" />
+                <controlpoint xx="0.0" yy="0.0" zz="3.0" />
+                <controlpoint xx="0.0" yy="-2.0" zz="3.0" />
+                <controlpoint xx="0.0" yy="2.0" zz="3.0" />
+                <controlpoint xx="0.0" yy="0.0" zz="3.0" />
+                <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
+                <controlpoint xx="2.0" yy="-2.0" zz="2.0" />
+                <controlpoint xx="2.0" yy="2.0" zz="2.0" />
+                <controlpoint xx="1.5" yy="1.5" zz="0.0" />
+            </patch>
+        </primitive>
+
         <primitive id="Screens">
             <cylinder base="1" top="1" height="3.0" slices="6" stacks="1" />
         </primitive>
@@ -83,6 +100,19 @@
         </primitive>
     </primitives>
     <components>
+        <component id="test">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="brownMaterial" />
+            </materials>
+            <texture id="bank" />
+            <children>
+                <primitiveref id="Patch" />
+            </children>
+        </component>
+
         <component id="basket">
             <transformation>
                 <transformationref id="basketL" />
@@ -103,7 +133,7 @@
             <materials>
                 <material id="brownMaterial" />
             </materials>
-            <texture id="demoTexture" />
+            <texture id="bank" />
             <children>
                 <primitiveref id="Screens" />
             </children>
@@ -124,12 +154,12 @@
 
         <component id="floor">
             <transformation>
-                <transformationref id="court"/>    
+                <transformationref id="court" />
             </transformation>
             <materials>
                 <material id="brownMaterial" />
             </materials>
-            <texture id="demoTexture" />
+            <texture id="bank" />
             <children>
                 <primitiveref id="Rectangle" />
             </children>
@@ -145,8 +175,10 @@
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="floor"/>
-                <componentref id="basketball"/>
+                <!-- <primitiveref id="Patch"/> -->
+                <componentref id="test" />
+                <componentref id="floor" />
+                <componentref id="basketball" />
                 <componentref id="screens" />
                 <componentref id="basket" />
             </children>

@@ -42,6 +42,11 @@
 		<texture id="ball" file="scenes/images/ball.jpg" />
 		<texture id="ball2" file="scenes/images/ball2.jpg" />
 		<texture id="screen" file="scenes/images/screen.jpg" />
+		<texture id="sponsor" file="scenes/images/spalding.png" />
+		<texture id="tabela" file="scenes/images/tabela.jpg" />
+		<texture id="net" file="scenes/images/net.jpg" />
+		<texture id="timeboard" file="scenes/images/timeboard.jpg" />
+		<texture id="tabelaBack" file="scenes/images/tabelaBack.jpg" />
 
 	</textures>
 
@@ -54,14 +59,42 @@
 		</material>
 
 		<material id="ballMaterial" shininess="10">
-			<emission r="0.184" g="0.082" b="0.048" a="1.0" />
-			<ambient r="0.184" g="0.082" b="0.048" a="1.0" />
+			<emission r="0.4" g="0.4" b="0.4" a="1.0" />
+			<ambient r="0.3" g="0.2" b="0.1" a="1.0" />
 			<diffuse r="0.184" g="0.082" b="0.048" a="1.0" />
-			<specular r="0.0" g="0.00" b="0.00" a="1.0" />
+			<specular r="0.2" g="0.2" b="0.2" a="1.0" />
 		</material>
 
-		<material id="floorMaterial" shininess="10">
-			<emission r="0.228" g="0.207" b="0.178" a="1.0" />
+		<material id="rimMaterial" shininess="10">
+			<emission r="0.198" g="0.065" b="0.003" a="1.0" />
+			<ambient r="0.198" g="0.065" b="0.003" a="1.0" />
+			<diffuse r="0.198" g="0.065" b="0.003" a="1.0" />
+			<specular r="0.198" g="0.065" b="0.003" a="1.0" />
+		</material>
+
+		<material id="blueMaterial" shininess="10">
+			<emission r="0.025" g="0.058" b="0.122" a="1.0" />
+			<ambient r="0.025" g="0.058" b="0.122" a="1.0" />
+			<diffuse r="0.025" g="0.058" b="0.122" a="1.0" />
+			<specular r="0.025" g="0.058" b="0.122" a="1.0" />
+		</material>
+
+		<material id="redMaterial" shininess="10">
+			<emission r="0.199" g="0.019" b="0.043" a="1.0" />
+			<ambient r="0.199" g="0.019" b="0.043" a="1.0" />
+			<diffuse r="0.199" g="0.019" b="0.043" a="1.0" />
+			<specular r="0.199" g="0.019" b="0.043" a="1.0" />
+		</material>
+
+		<material id="whiteMaterial" shininess="100">
+			<emission r="0.5" g="0.5" b="0.5" a="1.0" />
+			<ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+			<diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+			<specular r="1" g="1" b="1" a="1.0" />
+		</material>
+
+		<material id="floorMaterial" shininess="5">
+			<emission r="0.5" g="0.5" b="0.5" a="1.0" />
 			<ambient r="0.228" g="0.207" b="0.178" a="1.0" />
 			<diffuse r="0.228" g="0.207" b="0.178" a="1.0" />
 			<specular r="0.228" g="0.207" b="0.178" a="1.0" />
@@ -69,11 +102,16 @@
 	</materials>
 
 	<transformations>
-
+		<transformation id="court">
+			<rotate axis="y" angle="90" />
+			<scale x="18" y="1" z="10" />
+			<rotate axis="x" angle="-90" />
+		</transformation>
+		<!-- 
 		<transformation id="court">
 			<scale x="8" y="1" z="8" />
 			<rotate axis="x" angle="-90" />
-		</transformation>
+		</transformation> -->
 
 		<transformation id="ball">
 			<translate x="-1" y="0.2" z="3" />
@@ -86,11 +124,47 @@
 			<scale x="1.5" y="1.5" z="0.5" />
 		</transformation>
 
-		<transformation id="basketL">
-			<translate x="0" y="0" z="7" />
+		<transformation id="net">
+			<translate x="-0.19" y="2.2" z="4.8" />
 			<rotate axis="x" angle="-90" />
+			<rotate axis="z" angle="45" />
+		</transformation>
+
+		<transformation id="tabelaFront">
+			<translate x="-0.19" y="3" z="5" />
+			<rotate axis="x" angle="180" />
 			<rotate axis="z" angle="90" />
-			<scale x="1.3" y="1.3" z="0.5" />
+		</transformation>
+
+		<transformation id="tabelaBack">
+			<translate x="-0.19" y="3" z="5.1" />
+			<!-- RETIRAR LINHA 136	 -->
+			<!-- <rotate axis="x" angle="180" /> -->
+			<rotate axis="z" angle="270" />
+		</transformation>
+
+		<transformation id="tabelaSides">
+			<scale x="1.5" y="1" z="1" />
+			<translate x="-0.12" y="3" z="5" />
+			<rotate axis="z" angle="45" />
+		</transformation>
+
+		<transformation id="basketBase">
+			<translate x="-0.19" y="0.5" z="6.8" />
+			<!-- <rotate axis="x" angle="-90" /> -->
+			<rotate axis="x" angle="10" />
+			<rotate axis="z" angle="45" />
+		</transformation>
+
+		<transformation id="baseRectangle">
+			<translate x="-0.19" y="0.18" z="8.62" />
+			<rotate axis="x" angle="10" />
+		</transformation>
+
+		<transformation id="basketHeight">
+			<translate x="-0.2" y="0" z="7.1" />
+			<rotate axis="x" angle="-90" />
+			<rotate axis="z" angle="45" />
 		</transformation>
 	</transformations>
 
@@ -107,7 +181,7 @@
 		</primitive>
 
 		<primitive id="Plane">
-			<plane npartsU="1" npartsV="1" />
+			<plane npartsU="100" npartsV="100" />
 		</primitive>
 
 		<primitive id="Patch">
@@ -127,11 +201,43 @@
 			</patch>
 		</primitive>
 
+		<!-- ECRAS -->
 		<primitive id="Screens">
-			<cylinder base="1" top="1" height="3.0" slices="6" stacks="1" />
+			<cylinder base="1" top="1.25" height="3.0" slices="6" stacks="1" />
 		</primitive>
-		<primitive id="BasketBase">
-			<cylinder base="1" top="1" height="2.0" slices="3" stacks="1" />
+
+		<!-- TABELA DE BASKET -->
+		<primitive id="basketBase">
+			<cylinder base="0.7" top="0.2" height="1.85" slices="4" stacks="1" />
+		</primitive>
+
+		<primitive id="baseRectangle">
+			<rectangle x1="-0.15" y1="-0.15" x2="0.15" y2="0.15" />
+		</primitive>
+
+		<primitive id="basketHeight">
+			<cylinder base="0.5" top="0.35" height="2.5" slices="4" stacks="1" />
+		</primitive>
+
+		<primitive id="tabela">
+			<rectangle x1="-0.45" y1="-0.7" x2="0.45" y2="0.7" />
+		</primitive>
+
+		<primitive id="tabelaSides">
+			<cylinder base="0.64" top="0.64" height="0.1" slices="4" stacks="1" />
+		</primitive>
+
+		<primitive id="net">
+			<cylinder base="0.12" top="0.2" height="0.4" slices="100" stacks="1" />
+		</primitive>
+
+		<!-- CHAIR -->
+		<primitive id="chairRectangle">
+			<rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
+		</primitive>
+
+		<primitive id="leg">
+			<cylinder base="0.1" top="0.1" height="1" slices="100" stacks="1" />
 		</primitive>
 	</primitives>
 
@@ -144,25 +250,259 @@
 			<materials>
 				<material id="floorMaterial" />
 			</materials>
-			<texture id="bank" />
+			<texture id="none" />
 			<children>
 				<primitiveref id="Patch" />
 			</children>
 		</component>
 
-		<!-- TABELA -->
-		<component id="basket">
+		<!-- CHAIR -->
+		<component id="leg1">
 			<transformation>
-				<transformationref id="basketL" />
+				<translate x="-0.4" y="0" z="-0.9" />
+				<rotate axis="x" angle="90" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="leg" />
+			</children>
+		</component>
+		<component id="leg2">
+			<transformation>
+				<translate x="0.4" y="0" z="-0.9" />
+				<rotate axis="x" angle="90" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="leg" />
+			</children>
+		</component>
+		<component id="leg3">
+			<transformation>
+				<translate x="-0.4" y="0" z="0.9" />
+				<rotate axis="x" angle="90" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="leg" />
+			</children>
+		</component>
+		<component id="leg4">
+			<transformation>
+				<translate x="0.4" y="0" z="0.9" />
+				<rotate axis="x" angle="90" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="leg" />
+			</children>
+		</component>
+		<component id="chairSeat">
+			<transformation>
+				<scale x="0.2" y="0.5" z="0.1" />
+				<rotate axis="x" angle="90" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="chairRectangle" />
+			</children>
+		</component>
+		<component id="chairSeat2">
+			<transformation>
+				<scale x="0.2" y="0.5" z="0.1" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="none" /> <!--para mostrar que ignora os valores -->
+			<children>
+				<primitiveref id="chairRectangle" />
+			</children>
+		</component>
+		<component id="chairBack">
+			<transformation>
+				<translate x="0" y="0.15" z="0.1" />
+				<scale x="0.2" y="0.15" z="0.1" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="chairRectangle" />
+			</children>
+		</component>
+		<component id="chairBack2">
+			<transformation>
+				
+				<translate x="0" y="0.15" z="0.1" />
+				<scale x="0.2" y="0.15" z="0.1" />
+				<rotate axis="y" angle="180" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="none" /> <!--para mostrar que ignora os valores -->
+			<children>
+				<primitiveref id="chairRectangle" />
+			</children>
+		</component>
+		<component id="chair">
+			<transformation>
+				<scale x="2" y="1.7" z="2" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<componentref id="chairSeat" />
+				<componentref id="chairSeat2" />
+				<componentref id="chairBack" />
+				<componentref id="chairBack2" />
+				<componentref id="leg1" />
+				<componentref id="leg2" />
+				<componentref id="leg3" />
+				<componentref id="leg4" />
+			</children>
+		</component>
+
+
+		<!-- NET -->
+		<component id="net">
+			<transformation>
+				<transformationref id="net" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="net" />
+			<children>
+				<primitiveref id="net" />
+			</children>
+		</component>
+
+		<!-- Parte da lado tabela -->
+		<component id="tabelaSides">
+			<transformation>
+				<transformationref id="tabelaSides" />
 			</transformation>
 			<materials>
 				<material id="floorMaterial" />
 			</materials>
 			<texture id="none" />
 			<children>
-				<primitiveref id="BasketBase" />
+				<primitiveref id="tabelaSides" />
 			</children>
 		</component>
+
+		<!-- Parte da frente tabela -->
+		<component id="tabelaFront">
+			<transformation>
+				<transformationref id="tabelaFront" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="tabela" length_s="0.9" length_t="1.5" />
+			<children>
+				<primitiveref id="tabela" />
+			</children>
+		</component>
+
+		<!-- Parte de trás tabela -->
+		<component id="tabelaBack">
+			<transformation>
+				<transformationref id="tabelaBack" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="tabelaBack" length_s="0.9" length_t="1.5" />
+			<children>
+				<primitiveref id="tabela" />
+			</children>
+		</component>
+
+		<!-- BASE DA TABELA -->
+		<component id="basketBase">
+			<transformation>
+				<transformationref id="basketBase" />
+			</transformation>
+			<materials>
+				<material id="blueMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="basketBase" />
+			</children>
+		</component>
+
+		<!-- RETANGULO DA BASE -->
+		<component id="baseRectangle">
+			<transformation>
+				<transformationref id="baseRectangle" />
+			</transformation>
+			<materials>
+				<material id="blueMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="baseRectangle" />
+			</children>
+		</component>
+
+		<!-- COLUNA DA TABELA  -->
+		<component id="basketHeight">
+			<transformation>
+				<transformationref id="basketHeight" />
+			</transformation>
+			<materials>
+				<material id="blueMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="basketHeight" />
+			</children>
+		</component>
+
+
+		<!-- TABELA -->
+		<component id="basket">
+			<transformation>
+				<translate x="0" y="0" z="0.45" />
+			</transformation>
+			<materials>
+				<material id="floorMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<componentref id="basketBase" />
+				<componentref id="basketHeight" />
+				<componentref id="baseRectangle" />
+				<componentref id="tabelaFront" />
+				<componentref id="tabelaBack" />
+				<componentref id="tabelaSides" />
+				<componentref id="net" />
+			</children>
+		</component>
+
 
 		<!-- ECRÃS -->
 		<component id="screens">
@@ -170,9 +510,9 @@
 				<transformationref id="screens" />
 			</transformation>
 			<materials>
-				<material id="floorMaterial" />
+				<material id="whiteMaterial" />
 			</materials>
-			<texture id="screen" length_s="1" length_t="100000"/>
+			<texture id="screen" length_s="1" length_t="100000" />
 			<children>
 				<primitiveref id="Screens" />
 			</children>
@@ -202,7 +542,7 @@
 			</materials>
 			<texture id="court" length_s="1" length_t="2" />
 			<children>
-				<primitiveref id="Rectangle" />
+				<primitiveref id="Plane" />
 			</children>
 		</component>
 
@@ -222,6 +562,7 @@
 				<componentref id="ball" />
 				<componentref id="screens" />
 				<componentref id="basket" />
+				<componentref id="chair" />
 			</children>
 		</component>
 

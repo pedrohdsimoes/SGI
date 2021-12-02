@@ -230,8 +230,6 @@ export class MySceneGraph {
 	 * @param {view block element} viewsNode
 	 */
 	parseView(viewsNode) {
-		//   this.onXMLMinorError("To do: Parse views and create cameras.");
-
 		var from;
 		var to;
 		var up;
@@ -287,7 +285,8 @@ export class MySceneGraph {
 				cam = new CGFcamera(angle * DEGREE_TO_RAD, near, far, from, to);
 
 				this.views[viewId] = cam;
-			} else if (view.nodeName == "ortho") {
+			}
+			else if (view.nodeName == "ortho") {
 				// near
 				var near = this.reader.getFloat(view, "near");
 				if (!(near != null && !isNaN(near)))
@@ -513,14 +512,13 @@ export class MySceneGraph {
 	 * @param {textures block element} texturesNode
 	 */
 	parseTextures(texturesNode) {
-		//For each texture in textures block, check ID and file URL
-
 		this.textures = [];
 		var children = texturesNode.children;
 
 		if (children.length == 0)
 			this.onXMLError("No textures found");
 
+		//For each texture in textures block, check ID and file URL
 		for (let i = 0; i < children.length; i++) {
 			var textureID = this.reader.getString(children[i], "id");
 

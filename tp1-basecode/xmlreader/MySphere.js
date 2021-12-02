@@ -52,7 +52,7 @@ export class MySphere extends CGFobject {
 
 				this.texCoords.push(
 					1 - i * (1 / this.stacks),
-					1 - j * (1 / this.slices)
+					1 - j * (2 / this.slices)
 				);
 			}
 		}

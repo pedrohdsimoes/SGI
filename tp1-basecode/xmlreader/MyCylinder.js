@@ -16,7 +16,7 @@ export class MyCylinder extends CGFobject {
 		this.stacks = stacks;
 		this.height = height;
 		this.base = base;
-		this.top = base;
+		this.top = top;
 
 		this.initBuffers();
 	}

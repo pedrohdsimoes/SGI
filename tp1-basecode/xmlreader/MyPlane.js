@@ -10,31 +10,36 @@ import { CGFobject, CGFnurbsObject, CGFnurbsSurface } from "../lib/CGF.js";
 export class MyPlane extends CGFobject {
 	constructor(scene, id, npartsU, npartsV) {
 		super(scene);
-		this.vertices = [];
-		this.indices = [];
-		this.texCoords = [];
+		this.scene = scene;
+		this.npartsU = npartsU;
+		this.npartsV = npartsV;
 
-		this.initBuffers(npartsU + 1, npartsV + 1);
+		this.initBuffers();
 	}
 
-	initBuffers(npartsU, npartsV) {
-		let x, y;
-		var xdiff = 1.0 / (npartsU - 1);
-		var ydiff = 1.0 / (npartsV - 1);
+	initBuffers() {
 
-		for (y = 0; y < npartsV; y++) {
-			for (x = 0; x < npartsU; x++) {
-				this.vertices.push((xdiff * x) - 0.5, -(ydiff * y) + 0.5, 0);
-				this.texCoords.push(xdiff * x, ydiff * y);
-				if (x > 0 && y > 0) {
-					this.indices.push(npartsU * y + x, npartsU * (y - 1) + x - 1, npartsU * y + x - 1);
-					this.indices.push(npartsU * y + x, npartsU * (y - 1) + x, npartsU * (y - 1) + x - 1);
-				}
-			}
-		}
+		this.controlPoints = [	// U = 0
+			[	// V = 0..1
+				[-0.5, -0.5, 0.0, 0.5],
+				[-0.5, 0.5, 0.0, 0.5]
 
-		this.primitiveType = this.scene.gl.TRIANGLES;
-		this.initGLBuffers();
+			],
+			// U = 1
+			[ // V = 0..1
+				[0.5, -0.5, 0.0, 0.5],
+				[0.5, 0.5, 0.0, 0.5]
+			]
+		];
+
+		this.nurbsSurface = new CGFnurbsSurface(1, 1, this.controlPoints);
+
+		this.object = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, this.nurbsSurface);
+
+	}
+
+	display() {
+		this.object.display();
 	}
 
 	updateTexCoords(s, t) { }

@@ -36,16 +36,21 @@ export class XMLscene extends CGFscene {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
 
+        this.lightValues = [];
+    
         this.axis = new CGFaxis(this);
+        this.displayLights = false;
+        
         this.setUpdatePeriod(100);
     }
-
     /**
-     * Initializes the scene cameras.
-     */
+* Initializes the default camera.
+*/
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.interface.setActiveCamera(this.camera);
     }
+
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -71,8 +76,14 @@ export class XMLscene extends CGFscene {
                     this.lights[i].setSpotExponent(light[7]);
                     this.lights[i].setSpotDirection(light[8][0], light[8][1], light[8][2]);
                 }
-
                 this.lights[i].setVisible(true);
+
+                if(this.displayLights){
+                    this.lights[i].setVisible(true);
+                }
+                else
+                    this.lights[i].setVisible(false);
+
                 if (light[0])
                     this.lights[i].enable();
                 else
@@ -84,6 +95,49 @@ export class XMLscene extends CGFscene {
             }
         }
     }
+
+        /**
+         * Initializes the scene cameras.
+         */
+    
+        initXMLCameras(){
+            this.cameraID=this.graph.defaultCameraId;
+            this.camera = this.graph.views[this.graph.defaultCameraId];
+            this.interface.setActiveCamera(this.default);
+        }
+
+        /**
+     * Update the current camera according to a change in the  cameras dropdown in the interface
+     */
+         updateCamera(newCamera) {
+            this.cameraID = newCamera;
+            this.camera = this.graph.views[this.cameraID];
+            this.interface.setActiveCamera(this.camera);
+        }
+        /**
+         * Enables the lights accordingly to the lights chosen in the interface
+         */
+        setLights() {
+            var i = 0;
+            // Lights index.
+            
+            // Reads the lights from the lightValues map.
+            for (var key in this.lightValues) {
+                if (this.lightValues.hasOwnProperty(key)) {
+                    this.lights[i].setVisible(this.displayLights);
+                    if (this.lightValues[key]){
+                        this.lights[i].enable();
+                    }
+                    else{
+                        this.lights[i].disable();
+                    }		
+        
+                    this.lights[i].update();
+        
+                    i++;
+                }
+            }
+        }
 
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -101,6 +155,14 @@ export class XMLscene extends CGFscene {
 
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
 
+        //cameras
+         this.initCameras();
+
+        //this.initXMLCameras();
+
+        //initializing the interface elements
+        this.interface.createInterface(this.graph.views); 
+
         this.initLights();
 
         this.sceneInited = true;
@@ -111,7 +173,7 @@ export class XMLscene extends CGFscene {
      */
     display() {
         // ---- BEGIN Background, camera and axis setup
-
+       // this.selectView(this.interface.currentCameraId);
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -122,6 +184,8 @@ export class XMLscene extends CGFscene {
 
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
+
+        this.setLights();
 
         this.pushMatrix();
         this.axis.display();
@@ -138,7 +202,6 @@ export class XMLscene extends CGFscene {
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
         }
-
         this.popMatrix();
         // ---- END Background, camera and axis setup
     }

@@ -6,39 +6,49 @@ import { CGFobject, CGFnurbsObject, CGFnurbsSurface } from "../lib/CGF.js";
  * @param npointsU - number of points of the patch on U domain
  * @param npointsV - number of points of the patch on V domain
  * @param npartsU - number of parts of the patch on U domain
- * @param npartsV -- number of parts of the patch on V domain
+ * @param npartsV - number of parts of the patch on V domain
  * @param controlPoints
  */
 
 export class MyPatch extends CGFobject {
-	constructor(scene, npointsU, npointsV, npartsU, npartsV, controlPoints) {
+	constructor(scene, id, npointsU, npointsV, npartsU, npartsV, controlPoints) {
 		super(scene);
+
 		this.npointsU = npointsU;
 		this.npointsV = npointsV;
 		this.npartsU = npartsU;
 		this.npartsV = npartsV;
 		this.controlPoints = controlPoints;
 
-		this.vertices = [];
-		this.indices = [];
-
-		this.creatSurface();
+		this.initBuffers();
 	}
 
-	creatSurface() {
+	initBuffers() {
 
-		var nurbSurface = new CGFnurbsSurface(this.npointsU ,this.npointsV ,this.controlPointsAux);
+		this.controlPointsAux = [];
 
-		this.patch = new CGFnurbsObject(this.scene,this.npartsU,this.npartsV,nurbSurface);
+		for (var i = 0; i < this.npointsU; i++) {
+			var point = [];
+			for (var j = 0; j < this.npointsV; j++) {
+				point.push([
+					this.controlPoints[i * this.npointsV + j][0],
+					this.controlPoints[i * this.npointsV + j][1],
+					this.controlPoints[i * this.npointsV + j][2],
+					1]);
+			}
+			this.controlPointsAux.push(point);
+		}
+
+		this.surface = new CGFnurbsSurface(this.npointsU - 1, this.npointsV - 1, this.controlPointsAux);
+
+		this.patch = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, this.surface);
+
 	}
 
 	display() {
 		this.patch.display();
 	}
 
-	/**
-	 * @method updateTexCoords
-	 * @param {Array} coords - Array of texture coordinates
-	 */
-	updateTexCoords(s, t) { };
+	updateTexCoords(s, t) {
+	};
 }

@@ -23,7 +23,7 @@ export class MySphere extends CGFobject {
 		this.initBuffers();
 	}
 
-	// Creates vertices, indices, normals and texCoords
+	// Creates vertices, indices and texCoords
 
 	initBuffers() {
 		var s = (2 * Math.PI) / this.slices;

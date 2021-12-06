@@ -1,16 +1,13 @@
-import {
-	CGFXMLreader,
-	CGFappearance,
-	CGFtexture,
-	CGFcamera,
-} from "../lib/CGF.js";
+import {CGFXMLreader,CGFappearance,CGFtexture,CGFcamera,} from "../lib/CGF.js";
 import { MyRectangle } from "./MyRectangle.js";
 import { MyTriangle } from "./MyTriangle.js";
 import { MyCylinder } from "./MyCylinder.js";
 import { MySphere } from "./MySphere.js";
 import { MyPlane } from "./MyPlane.js";
-import { MyComponent } from "./MyComponent.js";
 import { MyPatch } from "./MyPatch.js";
+import { MyCylinder2 } from "./MyCylinder2.js";
+import { MyComponent } from "./MyComponent.js";
+
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -239,6 +236,9 @@ export class MySceneGraph {
 		var view;
 
 		this.defaultCameraId = this.reader.getString(viewsNode, "default");
+
+		if (this.defaultCameraId == null)
+			this.onXMLError("[VIEWS] No default view defined, using a default");
 
 		if (children.length == 0) this.onXMLError("No views found");
 
@@ -937,14 +937,43 @@ export class MySceneGraph {
 					points.push(point);
 				}
 
-				var pat = new MyPatch(this.scene, primitiveId, npointsU, npointsV, npartsU, npartsV, points);
+				var patch = new MyPatch(this.scene, primitiveId, npointsU, npointsV, npartsU, npartsV, points);
 
-				this.primitives[primitiveId] = pat;
+				this.primitives[primitiveId] = patch;
 			}
 
 			// CYLINDER2
+			else if (primitiveType == "cylinder2") {
+				// height
+				var height = this.reader.getFloat(grandChildren[0], "height");
+				if (!(height != null && !isNaN(height)))
+					return ("unable to parse height of the primitive coordinates for ID = " + primitiveId);
 
+				// top
+				var top = this.reader.getFloat(grandChildren[0], "top");
+				if (!(top != null && !isNaN(top)))
+					return ("unable to parse top of the primitive coordinates for ID = " + primitiveId);
 
+				// base
+				var base = this.reader.getFloat(grandChildren[0], "base");
+				if (!(base != null && !isNaN(base)))
+					return ("unable to parse base of the primitive coordinates for ID = " + primitiveId);
+
+				// slices
+				var slices = this.reader.getInteger(grandChildren[0], "slices");
+				if (!(slices != null && !isNaN(slices)))
+					return ("unable to parse slices of the primitive coordinates for ID = " + primitiveId);
+
+				// stacks
+				var stacks = this.reader.getInteger(grandChildren[0], "stacks");
+				if (!(stacks != null && !isNaN(stacks)))
+					return ("unable to parse stacks of the primitive coordinates for ID = " + primitiveId);
+
+				var cylin2 = new MyCylinder2(this.scene, primitiveId, slices, stacks, height, base, top);
+
+				this.primitives[primitiveId] = cylin2;
+			}
+				
 			else {
 				console.warn("Unable to identify primitive");
 			}

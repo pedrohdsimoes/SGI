@@ -26,7 +26,7 @@ export class MyInterface extends CGFinterface {
         // add a group of controls (and open/expand by defult)
 
         this.initKeys();
-
+    
         return true;
     }
 
@@ -50,4 +50,49 @@ export class MyInterface extends CGFinterface {
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
     }
+      /**
+     * 
+     * @param {*} views - views defined in the scene
+     */
+    createInterface(views) {
+        //this.addLightsCheckbox();
+        this.addLightsFolder();
+        //this.addCamerasDropDown(views);
+    }
+
+    addLightsFolder(){
+        var  group = this.gui.addFolder("Lights");
+        //group.open(), is comment for preference, can be uncommented
+        const lights = this.scene.graph.lights;
+        for(var key in lights){
+            if(lights.hasOwnProperty(key)){
+                /*Forming a map this.scene.lightValues that store in the enable value of a given key */
+                this.scene.lightValues[key] = lights[key][0];
+                group.add(this.scene.lightValues, key).onChange(this.scene.setLights.bind(this.scene));
+            }
+        }   
+        
+    }
+    /**
+     * 
+     * @param {*} views - views defined in the scene
+     */
+    addCamerasDropDown(views){
+        var viewValues = [];
+        for(var key in views){
+            if(views.hasOwnProperty(key)){
+                viewValues.push(key)
+            }   
+        }
+        //setting the cameras dropdown 
+        this.gui.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera(val)).name("Camera");
+        //this.gui.add(this.scene, 'camera', this.scene.objectIDs).name('Selected Object').onChange(this.scene.updateObjectComplexity.bind(this.scene));
+    }
+
+
+    addLightsCheckbox(){
+        //setting the displaylights checkbox
+        this.gui.add(this.scene,'displayLights').name("Display Lights").onChange(val => this.scene.setLights());
+    }
+
 }

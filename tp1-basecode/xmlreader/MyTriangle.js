@@ -32,12 +32,12 @@ export class MyTriangle extends CGFobject {
 
 	initBuffers() {
 		this.vertices = [
-			this.x1, this.y1, this.z1, // 0
-			this.x2, this.y1, this.z2, // 1
-			this.x3, this.y3, this.z3, // 2
-			this.x1, this.y1, this.z1, // 0
-			this.x2, this.y1, this.z2, // 1
-			this.x3, this.y3, this.z3, // 2
+			this.x1, this.y1, this.z1,
+			this.x2, this.y1, this.z2,
+			this.x3, this.y3, this.z3,
+			this.x1, this.y1, this.z1,
+			this.x2, this.y1, this.z2,
+			this.x3, this.y3, this.z3, 
 		];
 
 		this.indices = [

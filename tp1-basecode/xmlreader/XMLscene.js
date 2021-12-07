@@ -158,7 +158,7 @@ export class XMLscene extends CGFscene {
         //cameras
          this.initCameras();
 
-        //this.initXMLCameras();
+        this.initXMLCameras();
 
         //initializing the interface elements
         this.interface.createInterface(this.graph.views); 
@@ -198,6 +198,9 @@ export class XMLscene extends CGFscene {
         if (this.sceneInited) {
             // Draw axis
             this.setDefaultAppearance();
+
+             //set the active camera, necessary for being able to move the camera around
+             this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();

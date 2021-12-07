@@ -1,4 +1,4 @@
-import {CGFXMLreader,CGFappearance,CGFtexture,CGFcamera,} from "../lib/CGF.js";
+import { CGFXMLreader, CGFappearance, CGFtexture, CGFcamera, CGFcameraOrtho } from "../lib/CGF.js";
 import { MyRectangle } from "./MyRectangle.js";
 import { MyTriangle } from "./MyTriangle.js";
 import { MyCylinder } from "./MyCylinder.js";
@@ -796,6 +796,10 @@ export class MySceneGraph {
 				if (!(y1 != null && !isNaN(y1)))
 					return ("unable to parse y1 of the primitive coordinates for ID = " + primitiveId);
 
+				var z1 = this.reader.getFloat(grandChildren[0], "z1");
+				if (!(z1 != null && !isNaN(z1)))
+					return ("unable to parse z1 of the primitive coordinates for ID = " + primitiveId);
+
 				// x2
 				x2 = this.reader.getFloat(grandChildren[0], "x2");
 				if (!(x2 != null && !isNaN(x2)) && x2 > x1)
@@ -806,6 +810,10 @@ export class MySceneGraph {
 				y2 = this.reader.getFloat(grandChildren[0], "y2");
 				if (!(y2 != null && !isNaN(y2)))
 					return ("unable to parse y2 of the primitive coordinates for ID = " + primitiveId);
+
+				var z2 = this.reader.getFloat(grandChildren[0], "z2");
+				if (!(z2 != null && !isNaN(z2)))
+					return ("unable to parse z2 of the primitive coordinates for ID = " + primitiveId);
 
 				// x3
 				var x3 = this.reader.getFloat(grandChildren[0], "x3");
@@ -818,7 +826,11 @@ export class MySceneGraph {
 					// y3 > 0 para ficar voltado para +ZZ e ser triângulo
 					return ("unable to parse y3 of the primitive coordinates for ID = " + primitiveId);
 
-				var triang = new MyTriangle(this.scene, primitiveId, x1, y1, x2, y2, x3, y3);
+				var z3 = this.reader.getFloat(grandChildren[0], "z3");
+				if (!(z3 != null && !isNaN(z3)))
+					return ("unable to parse z3 of the primitive coordinates for ID = " + primitiveId);
+
+				var triang = new MyTriangle(this.scene, primitiveId, x1, y1, z1, x2, y2, z2, x3, y3, z3);
 
 				this.primitives[primitiveId] = triang;
 			}
@@ -973,7 +985,7 @@ export class MySceneGraph {
 
 				this.primitives[primitiveId] = cylin2;
 			}
-				
+
 			else {
 				console.warn("Unable to identify primitive");
 			}

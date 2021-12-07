@@ -55,9 +55,9 @@ export class MyInterface extends CGFinterface {
      * @param {*} views - views defined in the scene
      */
     createInterface(views) {
-        //this.addLightsCheckbox();
-        this.addLightsFolder();
-        //this.addCamerasDropDown(views);
+        this.addLightsCheckbox();
+         this.addLightsFolder();
+        this.addCamerasDropDown(views);
     }
 
     addLightsFolder(){

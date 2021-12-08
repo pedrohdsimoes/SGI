@@ -1,10 +1,30 @@
 <lxs>
 	<scene root="demoRoot" axis_length="5" />
 	<!-- ___________________________________VIEWS______________________________________ -->
-	<views default="overview">
-		<perspective id="overview" near="0.1" far="500" angle="45">
+	<views default="sideView">
+		<perspective id="overView" near="0.1" far="500" angle="45">
 			<from x="10" y="15" z="10" />
 			<to x="0" y="-2" z="0" />
+		</perspective>
+
+		<perspective id="sideView" near="0.1" far="500" angle="45">
+			<from x="17" y="7" z="0" />
+			<to x="0" y="4" z="0" />
+		</perspective>
+
+		<perspective id="topView" near="0.1" far="500" angle="90">
+			<from x="0" y="12" z="0" />
+			<to x="-1" y="0" z="0" />
+		</perspective>
+
+		<perspective id="basketView" near="0.1" far="500" angle="45">
+			<from x="0" y="1" z="-5" />
+			<to x="0" y="3" z="4" />
+		</perspective>
+
+		<perspective id="fanView" near="0.8" far="100" angle="45">
+			<from x="10.5" y="2" z="-5" />
+			<to x="0" y="5" z="0" />
 		</perspective>
 
 		<ortho id="orthoScreenView" near="0.1" far="500" left="-3.0" right="3.0" top="3.0" bottom="-3.0">
@@ -49,33 +69,20 @@
 		</omni>
 
 		<omni id="CenteredLight" enabled="1">
-            <location x="0" y="14" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- specular component -->
+            <location x="0" y="14" z="0" w="1.0" /> 
+            <ambient r="0" g="0" b="0" a="1.0" /> 
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> 
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" /> 
         </omni>
-		<!-- <omni id="basketLightLeft" enabled="1">
-			<location x="-0.5" y="4" z="5.5" w="1.0" />
-			<ambient r="0" g="0" b="0" a="1.0" />
-			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
-			<specular r="1" g="1" b="1" a="1.0" />
-		</omni>
+		<!-- <spot id="spotLight" enabled="1" angle="90" exponent="50">
+           
+            <location x="0" y="4" z="0" w="0.0" />
+            <target x="-0.5" y="3" z="12" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+        </spot> -->
 
-		<omni id="basketLightRight" enabled="1">
-			<location x="-0.5" y="4" z="-5.5" w="1.0" />
-			<ambient r="0" g="0" b="0" a="1.0" />
-			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
-			<specular r="1" g="1" b="1" a="1.0" />
-		</omni> -->
-
-		<!-- <spot id="spotLight" enabled="1" angle="0" exponent="10">
-			<location x="0" y="4" z="2" w="0.0" />
-			<target x="0" y="4" z="7" />
-			<ambient r="0.0" g="0.0" b="0.0" a="1" />
-			<diffuse r="0.7" g="0.5" b="0.7" a="1.0" />
-			<specular r="1" g="1" b="1" a="1.0" />
-			<attenuation constant="0" linear="0" quadratic="1" />
-		</spot> -->
 	</lights>
 	<!-- ___________________________________TEXTURES______________________________________ -->
 	<textures>
@@ -83,7 +90,7 @@
 		<texture id="ball" file="scenes/images/ball.jpg" />
 		<texture id="ball2" file="scenes/images/ball2.jpg" />
 		<texture id="screen" file="scenes/images/screen.jpg" />
-		<texture id="sponsor" file="scenes/images/spalding.png" />
+		<texture id="sponsor" file="scenes/images/nba.png" />
 		<texture id="tabela" file="scenes/images/tabela.jpg" />
 		<texture id="net" file="scenes/images/net.jpg" />
 		<texture id="rimSupport" file="scenes/images/rimSupport.jpg" />
@@ -107,17 +114,17 @@
 		</material>
 
 		<material id="rimMaterial" shininess="10">
-			<emission r="0" g="0" b="0" a="1.0" />
-			<ambient r="0.2" g="0.08" b="0" a="1.0" />
-			<diffuse r="0.255" g="0.078" b="0" a="1.0" />
-			<specular r="0.255" g="0.078" b="0" a="1.0" />
+			<emission r="0.3" g="0.3" b="0.3" a="1.0" />
+			<ambient r="1" g="1" b="1" a="1.0" />
+			<diffuse r="1" g="1" b="1" a="1.0" />
+			<specular r="0" g="0" b="0" a="1.0" />
 		</material>
 
 		<material id="blueMaterial" shininess="10">
-			<emission r="0.0" g="0.0" b="0" a="1.0" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="0.025" g="0.058" b="0.122" a="1.0" />
-			<specular r="0.2" g="0.2" b="0.2" a="1.0" />
+			<emission r="0" g="0" b="0" a="1.0" />
+			<ambient r="0.05" g="0.05" b="0.255" a="1.0" />
+			<diffuse r="0.038" g="0.144" b="0.255" a="1.0" />
+			<specular r="0.159" g="0.160" b="0.197" a="1.0" />
 		</material>
 
 		<material id="redMaterial" shininess="10">
@@ -131,18 +138,18 @@
 			<emission r="0.0" g="0.0" b="0.0" a="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
-			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
+			<specular r="0.164" g="0" b="0.042" a="1.0" />
 		</material>
 
 		<material id="whiteMaterial" shininess="100">
 			<emission r="0" g="0" b="0" a="1.0" />
-			<ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-			<diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
+			<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+			<diffuse r="0.255" g="0.255" b="0.255" a="1.0" />
 			<specular r="0.7" g="0.7" b="0.7" a="1.0" />
 		</material>
 
 		<material id="screenMaterial" shininess="100">
-			<emission r="0.5" g="0.5" b="0.5" a="1.0" />
+			<emission r="0.8" g="0.8" b="0.8" a="1.0" />
 			<ambient r="0.8" g="0.8" b="0.8" a="1.0" />
 			<diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
 			<specular r="1" g="1" b="1" a="1.0" />
@@ -239,6 +246,22 @@
 			<scale x="1" y="1" z="1" />
 		</transformation>
 
+		<transformation id="sponsorL">
+			<translate x="0.3" y="0" z="7.05" />
+			<rotate axis="y" angle="180" />
+			<rotate axis="x" angle="-10" />
+		</transformation>
+
+		<transformation id="sponsorR">
+			<translate x="-0.7" y="0" z="-7.05" />
+			<rotate axis="x" angle="-10" />
+		</transformation>
+
+		<transformation id="cesto_c2">
+			<translate x="2.5" y="0" z="8.00" />
+			<rotate axis="x" angle="-90" />
+		</transformation>
+
 	</transformations>
 	<!-- ___________________________________PRIMITIVES______________________________________ -->
 	<primitives>
@@ -247,7 +270,7 @@
 		</primitive>
 
 		<primitive id="Triangle">
-			<triangle x1="0" y1="0" z1="0" x2="3" y2="0" z2="0" x3="1.5" y3="2" z3="0" />
+			<triangle x1="0" y1="0" z1="0" x2="1" y2="0" z2="0" x3="0.5" y3="1.1" z3="0" />
 		</primitive>
 
 		<primitive id="Sphere">
@@ -280,7 +303,7 @@
 		</primitive>
 
 		<primitive id="Cylinder2">
-			<cylinder2 base="1" top="1" height="2" slices="4" stacks="2" />
+			<cylinder2 base="0.35" top="0.4" height="0.8" slices="6" stacks="5" />
 		</primitive>
 
 		<!-- ECRAS -->
@@ -338,17 +361,44 @@
 	<!-- ___________________________________COMPONENTS______________________________________ -->
 	<components>
 		<!-- BASKET SPONSOR -->
-		<component id="sponsor">
+		<component id="sponsorL">
 			<transformation>
-				<translate x="-0.08" y="0" z="-0.08" />
-				<!-- <rotate axis="x" angle="90" /> -->
+				<transformationref id="sponsorL"/>
 			</transformation>
 			<materials>
-				<material id="redMaterial" />
+				<material id="whiteMaterial" />
 			</materials>
-			<texture id="net" />
+			<texture id="sponsor" length_s="1" length_t="0.96"/>
 			<children>
 				<primitiveref id="Triangle" />
+			</children>
+		</component>
+
+		<component id="sponsorR">
+			<transformation>
+				<transformationref id="sponsorR" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="sponsor" length_s="1" length_t="0.96" />
+			<children>
+				<primitiveref id="Triangle" />
+			</children>
+		</component>
+
+		<!-- CESTO PARA BOLAS -->
+		<component id="cesto_c2">
+			<transformation>
+				<transformationref id="cesto_c2" />
+			</transformation>
+			<materials>
+				<material id="floorMaterial" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="Cylinder2" />
+				<!-- <componentref id="ball" /> -->
 			</children>
 		</component>
 
@@ -1265,7 +1315,7 @@
 				<transformationref id="rimSupport" />
 			</transformation>
 			<materials>
-				<material id="whiteMaterial" />
+				<material id="rimMaterial" />
 			</materials>
 			<texture id="rimSupport" />
 			<children>
@@ -1279,7 +1329,7 @@
 				<transformationref id="net" />
 			</transformation>
 			<materials>
-				<material id="whiteMaterial" />
+				<material id="rimMaterial" />
 			</materials>
 			<texture id="net" />
 			<children>
@@ -1307,7 +1357,7 @@
 				<transformationref id="tabelaFront" />
 			</transformation>
 			<materials>
-				<material id="whiteMaterial" />
+				<material id="rimMaterial" />
 			</materials>
 			<texture id="tabela" length_s="0.9" length_t="1.5" />
 			<children>
@@ -1426,7 +1476,7 @@
 		<component id="basketRight">
 			<transformation>
 				<rotate axis="y" angle="180" />
-				<translate x="0" y="0" z="0.45" />
+				<translate x="0.4" y="0" z="0.45" />
 			</transformation>
 			<materials>
 				<material id="floorMaterial" />
@@ -1514,9 +1564,9 @@
 			</materials>
 			<texture id="none" />
 			<children>
-				<!-- <primitiveref id="Cylinder2" /> -->
-				<!-- <primitiveref id="Triangle" /> -->
-				<componentref id="sponsor" />
+				<componentref id="cesto_c2" />
+				<componentref id="sponsorL" />
+				<componentref id="sponsorR" />
 				<componentref id="topScreen" />
 				<componentref id="floor" />
 				<componentref id="ball" />

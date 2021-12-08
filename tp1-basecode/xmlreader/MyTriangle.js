@@ -37,12 +37,11 @@ export class MyTriangle extends CGFobject {
 			this.x3, this.y3, this.z3,
 			this.x1, this.y1, this.z1,
 			this.x2, this.y1, this.z2,
-			this.x3, this.y3, this.z3, 
+			this.x3, this.y3, this.z3,
 		];
 
 		this.indices = [
-			0, 1, 2,
-			0, 2, 1,
+			0, 1, 2
 		];
 
 		// Distance calculation between vertices
@@ -56,10 +55,7 @@ export class MyTriangle extends CGFobject {
 		this.textCoords = [
 			0, 0,
 			this.a, 0,
-			this.c * this.cos, this.c * this.sin,
-			1, 0,
-			1 - this.a, 0,
-			1 - this.c * this.cos, this.c * this.sin
+			this.c * this.cos, this.c * this.sin
 		];
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
@@ -73,14 +69,10 @@ export class MyTriangle extends CGFobject {
 	 */
 
 	updateTexCoords(s, t) {
-
 		this.texCoords = [
-			0, 0,
-			this.a / s, 0,
-			(this.c * this.cos) / s, (this.c * this.sin) / t,
-			1, 0,
-			1 - this.a / s, 0,
-			1 - this.c * this.cos / s, this.c * this.sin / t
+			-1, 0,
+			-(1 - this.a / s), 0,
+			-(1 - this.c * this.cos / s), -(this.c * this.sin / t)
 		];
 
 		this.updateTexCoordsGLBuffers();

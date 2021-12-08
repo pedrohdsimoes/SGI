@@ -802,7 +802,7 @@ export class MySceneGraph {
 
 				// x2
 				x2 = this.reader.getFloat(grandChildren[0], "x2");
-				if (!(x2 != null && !isNaN(x2)) && x2 > x1)
+				if (!(x2 != null && !isNaN(x2)))
 					// x2 > x1 para ficar voltado para +ZZ
 					return ("unable to parse x2 of the primitive coordinates for ID = " + primitiveId);
 
@@ -822,7 +822,7 @@ export class MySceneGraph {
 
 				// y3
 				var y3 = this.reader.getFloat(grandChildren[0], "y3");
-				if (!(y3 != null && !isNaN(y3)) && y3 > 0)
+				if (!(y3 != null && !isNaN(y3)))
 					// y3 > 0 para ficar voltado para +ZZ e ser triângulo
 					return ("unable to parse y3 of the primitive coordinates for ID = " + primitiveId);
 

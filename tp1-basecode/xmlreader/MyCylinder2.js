@@ -44,16 +44,17 @@ export class MyCylinder2 extends CGFobject {
 
 		this.surface = new CGFnurbsSurface(3, 1, this.controlPoints);
 
-		this.obj = new CGFnurbsObject(this.scene, this.slices, this.stacks, this.surface);
+		this.obj = new CGFnurbsObject(this.scene, this.slices/2, this.stacks, this.surface);
 
 	}
 
 	display() {
+
 		this.obj.display();
-		// this.scene.pushMatrix();
-		// this.scene.rotate(Math.PI, 0, 0, 1);
-		// this.obj.display();
-		// this.scene.popMatrix();
+		this.scene.pushMatrix();
+		this.scene.rotate(Math.PI, 0.0, 0.0, 1.0);
+		this.obj.display();
+		this.scene.popMatrix();
 	}
 
 	updateTexCoords(s,t) { }

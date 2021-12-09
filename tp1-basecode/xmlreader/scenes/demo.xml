@@ -31,7 +31,7 @@
 			<from x="6" y="4" z="6" />
 			<to x="0" y="5" z="0" />
 		</ortho>
-	
+
 	</views>
 
 	<ambient>
@@ -41,39 +41,39 @@
 	<!-- ___________________________________LIGHTS______________________________________ -->
 	<lights>
 		<omni id="RightFarLight" enabled="1">
-			<location x="-5" y="8" z="-8" w="1.0" />
+			<location x="-5" y="8" z="-12" w="1.0" />
 			<ambient r="0" g="0" b="0" a="1.0" />
 			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
 			<specular r="1" g="1" b="1" a="1.0" />
 		</omni>
 
 		<omni id="RightNearLight" enabled="1">
-			<location x="5" y="8" z="-8" w="1.0" />
+			<location x="5" y="8" z="-12" w="1.0" />
 			<ambient r="0" g="0" b="0" a="1.0" />
 			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
 			<specular r="1" g="1" b="1" a="1.0" />
 		</omni>
 
 		<omni id="LeftNearLight" enabled="1">
-			<location x="5" y="8" z="8" w="1.0" />
+			<location x="5" y="8" z="12" w="1.0" />
 			<ambient r="0" g="0" b="0" a="1.0" />
 			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
 			<specular r="1" g="1" b="1" a="1.0" />
 		</omni>
 
 		<omni id="LeftFarLight" enabled="1">
-			<location x="-5" y="8" z="8" w="1.0" />
+			<location x="-5" y="8" z="12" w="1.0" />
 			<ambient r="0" g="0" b="0" a="1.0" />
 			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
 			<specular r="1" g="1" b="1" a="1.0" />
 		</omni>
 
 		<omni id="CenteredLight" enabled="1">
-            <location x="0" y="14" z="0" w="1.0" /> 
-            <ambient r="0" g="0" b="0" a="1.0" /> 
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> 
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" /> 
-        </omni>
+			<location x="0" y="14" z="0" w="1.0" />
+			<ambient r="0" g="0" b="0" a="1.0" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
+		</omni>
 		<!-- <spot id="spotLight" enabled="1" angle="90" exponent="50">
            
             <location x="0" y="4" z="0" w="0.0" />
@@ -96,6 +96,7 @@
 		<texture id="rimSupport" file="scenes/images/rimSupport.jpg" />
 		<texture id="timeboard" file="scenes/images/timeboard.jpg" />
 		<texture id="tabelaBack" file="scenes/images/tabelaBack.jpg" />
+		<texture id="cesta" file="scenes/images/cesta.jpg" />
 	</textures>
 	<!-- ___________________________________MATERIALS______________________________________ -->
 	<materials>
@@ -257,7 +258,7 @@
 			<rotate axis="x" angle="-10" />
 		</transformation>
 
-		<transformation id="cesto_c2">
+		<transformation id="cesta">
 			<translate x="2.5" y="0" z="8.00" />
 			<rotate axis="x" angle="-90" />
 		</transformation>
@@ -303,7 +304,7 @@
 		</primitive>
 
 		<primitive id="Cylinder2">
-			<cylinder2 base="0.35" top="0.4" height="0.8" slices="6" stacks="5" />
+			<cylinder2 base="0.35" top="0.4" height="0.8" slices="16" stacks="5" />
 		</primitive>
 
 		<!-- ECRAS -->
@@ -363,12 +364,12 @@
 		<!-- BASKET SPONSOR -->
 		<component id="sponsorL">
 			<transformation>
-				<transformationref id="sponsorL"/>
+				<transformationref id="sponsorL" />
 			</transformation>
 			<materials>
 				<material id="whiteMaterial" />
 			</materials>
-			<texture id="sponsor" length_s="1" length_t="0.96"/>
+			<texture id="sponsor" length_s="1" length_t="0.96" />
 			<children>
 				<primitiveref id="Triangle" />
 			</children>
@@ -387,21 +388,68 @@
 			</children>
 		</component>
 
-		<!-- CESTO PARA BOLAS -->
-		<component id="cesto_c2">
+		<!-- CESTA PARA BOLAS -->
+		<component id="cesta">
 			<transformation>
-				<transformationref id="cesto_c2" />
+				<transformationref id="cesta" />
 			</transformation>
 			<materials>
-				<material id="floorMaterial" />
+				<material id="whiteMaterial" />
 			</materials>
-			<texture id="none" />
+			<texture id="cesta" />
 			<children>
 				<primitiveref id="Cylinder2" />
-				<!-- <componentref id="ball" /> -->
+				<componentref id="ball_c1" />
+				<componentref id="ball_c2" />
 			</children>
 		</component>
 
+		<!-- 2 CESTA PARA BOLAS -->
+		<component id="cesta2">
+			<transformation>
+			<translate x="-2.5" y="0" z="-8.00" />
+			<rotate axis="x" angle="-90" />
+			</transformation>
+			<materials>
+				<material id="whiteMaterial" />
+			</materials>
+			<texture id="cesta" />
+			<children>
+				<primitiveref id="Cylinder2" />
+				<componentref id="ball_c1" />
+				<componentref id="ball_c2" />
+			</children>
+		</component>
+
+		<!-- BOLA C1-->
+		<component id="ball_c1">
+			<transformation>
+				<translate x="0" y="0" z="0.25" />
+				<scale x="0.2" y="0.2" z="0.2" />
+			</transformation>
+			<materials>
+				<material id="ballMaterial" />
+			</materials>
+			<texture id="ball2" length_s="100000" length_t="1000000" />
+			<children>
+				<primitiveref id="Sphere" />
+			</children>
+		</component>
+
+		<!-- BOLA C2-->
+		<component id="ball_c2">
+			<transformation>
+				<translate x="0.1" y="0.1" z="0.6" />
+				<scale x="0.2" y="0.2" z="0.2" />
+			</transformation>
+			<materials>
+				<material id="ballMaterial" />
+			</materials>
+			<texture id="ball2" length_s="100000" length_t="1000000" />
+			<children>
+				<primitiveref id="Sphere" />
+			</children>
+		</component>
 		<!-- CHAIR PARTS -->
 		<component id="leg1">
 			<transformation>
@@ -1564,7 +1612,8 @@
 			</materials>
 			<texture id="none" />
 			<children>
-				<componentref id="cesto_c2" />
+				<componentref id="cesta" />
+				<componentref id="cesta2" />
 				<componentref id="sponsorL" />
 				<componentref id="sponsorR" />
 				<componentref id="topScreen" />

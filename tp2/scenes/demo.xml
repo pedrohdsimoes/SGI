@@ -1,4 +1,4 @@
-<lxs>
+<SXG>
 	<scene root="demoRoot" axis_length="5" /> <!-- deve definir-se um objeto para raiz da arvore, assim -->
     <!-- como o comprimento dos tres eixos (cilindros) -->
 
@@ -1657,4 +1657,4 @@
 		</component>
 
 	</components>
-</lxs>
+</SXG>

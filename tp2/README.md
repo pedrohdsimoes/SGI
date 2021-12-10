@@ -17,20 +17,20 @@ At first, our main difficulty was applying the materials correctly. Then, findin
 
 ### 1 - Top View
 View from the top showcasing the effect of the lights on the floor
-![Screenshot 1](/tp1-basecode/tp1/screenshots/Scene1.png?raw=true)
+![Screenshot 1](/tp2/screenshots/overview.png?raw=true)
 
 ### 2 - Main Table View
 A closer look to the table with the chair and the lamp
 
-![Screenshot 2](/tp1-basecode/tp1/screenshots/Scene2.png?raw=true)
+![Screenshot 2](/tp2/screenshots/Scene2.png?raw=true)
 
 ### 3 - Different Room Perpective 
 A different perspective of the room, showcasing the fallen chair
 
-![Screenshot 3](/tp1-basecode/tp1/screenshots/Scene3.png?raw=true)
+![Screenshot 3](/tp2/screenshots/Scene3.png?raw=true)
 
 ### 4 - Enabled Lamp
 The scene only illuminated by the lamp
 
-![Screenshot 4](/tp1-basecode/tp1/screenshots/Scene4.png?raw=true)
+![Screenshot 4](/tp2/screenshots/Scene4.png?raw=true)
 

@@ -80,7 +80,7 @@ export class MySceneGraph {
 	 * @param {XML root element} rootElement
 	 */
 	parseXMLFile(rootElement) {
-		if (rootElement.nodeName != "lxs") return "root tag <lxs> missing";
+		if (rootElement.nodeName != "SXG") return "root tag <SXG> missing";
 
 		var nodes = rootElement.children;
 

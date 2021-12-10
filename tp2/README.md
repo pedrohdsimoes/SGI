@@ -15,22 +15,37 @@ At first, our main difficulty was applying the materials correctly. Then, findin
 
 ## Screenhots
 
-### 1 - Top View
+### 1 - OverView
 View from the top showcasing the effect of the lights on the floor
-![Screenshot 1](/tp2/screenshots/overview.png?raw=true)
+![Screenshot 1](/screenshots/overview.png?raw=true)
 
-### 2 - Main Table View
+### 2 - SideView
 A closer look to the table with the chair and the lamp
 
-![Screenshot 2](/tp2/screenshots/Scene2.png?raw=true)
+![Screenshot 2](/screenshots/sideview.png?raw=true)
 
-### 3 - Different Room Perpective 
+### 3 - Player Perpective 
 A different perspective of the room, showcasing the fallen chair
 
-![Screenshot 3](/tp2/screenshots/Scene3.png?raw=true)
+![Screenshot 3](/screenshots/basketview.png?raw=true)
 
-### 4 - Enabled Lamp
+### 4 - TopView with CenteredLight disabled
 The scene only illuminated by the lamp
 
-![Screenshot 4](/tp2/screenshots/Scene4.png?raw=true)
+![Screenshot 4](/screenshots/topview.png?raw=true)
+
+### 5 - Fan Perspective
+The scene only illuminated by the lamp
+
+![Screenshot 4](/screenshots/fanview.png?raw=true)
+
+### 6 - OrthoView of the Screens
+The scene only illuminated by the lamp
+
+![Screenshot 4](/screenshots/orthoview.png?raw=true)
+
+### 7 - Enabled Lamp
+The scene only illuminated by the lamp
+
+![Screenshot 4](/screenshots/lights.png?raw=true)
 

@@ -9,43 +9,43 @@
 
 ## Project Notes
 
-In this project, we built a room shaped with a floor, 3 simple walls and one complex wall with an opening for a door and a window. The room also has 3 tables with different orientations and sizes, 2 chairs, one beeing on the floor giving the impression that it fell, a lamp coloured in blue and the base in beige.
+In this project, we built a NBA court with giant screens, chairs for the fans and players, 2 NBA baskets each with a sponsor, 1 ball on the court and 2 baskets to store the balls. 
 
-At first, our main difficulty was applying the materials correctly. Then, finding a good lighting disposition to make the room more appealing by hiding the vertices exposed on the complex wall. 
+Our main difficulty was finding the perfect combination between the lights and materials to give the scene the best look possible.
 
 ## Screenhots
 
 ### 1 - OverView
-View from the top showcasing the effect of the lights on the floor
+Overall view showcasing the effect of the lights on the floor and the specularity on the nba baskets.
 ![Screenshot 1](/screenshots/overview.png?raw=true)
 
 ### 2 - SideView
-A closer look to the table with the chair and the lamp
+Different perspective of the scene
 
 ![Screenshot 2](/screenshots/sideview.png?raw=true)
 
-### 3 - Player Perpective 
-A different perspective of the room, showcasing the fallen chair
+### 3 - Player Perspective 
+Showcasing the player view giving a closer look to the nba basket
 
 ![Screenshot 3](/screenshots/basketview.png?raw=true)
 
 ### 4 - TopView with CenteredLight disabled
-The scene only illuminated by the lamp
+Top view showcasing the 4 corner lights
 
 ![Screenshot 4](/screenshots/topview.png?raw=true)
 
 ### 5 - Fan Perspective
-The scene only illuminated by the lamp
+A view displaying how the fans would see the court from the stands
 
-![Screenshot 4](/screenshots/fanview.png?raw=true)
+![Screenshot 5](/screenshots/fanview.png?raw=true)
 
 ### 6 - OrthoView of the Screens
-The scene only illuminated by the lamp
+Closer look to the broadcast screens.
 
-![Screenshot 4](/screenshots/orthoview.png?raw=true)
+![Screenshot 6](/screenshots/orthoview.png?raw=true)
 
-### 7 - Enabled Lamp
-The scene only illuminated by the lamp
+### 7 - Enabled Lights
+Top view with the spotlight disabled, highlighting the red specular material from the chairs
 
-![Screenshot 4](/screenshots/lights.png?raw=true)
+![Screenshot 7](/screenshots/lights.png?raw=true)
 

@@ -1,4 +1,4 @@
-import { CGFobject, CGFnurbsObject, CGFnurbsSurface } from "../lib/CGF.js";
+import { CGFobject, CGFnurbsObject, CGFnurbsSurface } from "../../lib/CGF.js";
 /**
  * MyPlane
  * @constructor

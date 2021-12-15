@@ -41,7 +41,6 @@ export class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.displayLights = false;
         
-        this.setUpdatePeriod(100);
     }
     /**
 * Initializes the default camera.

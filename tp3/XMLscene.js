@@ -18,6 +18,7 @@ import {
 import {
     MyWheel
 } from './elements/MyWheel.js';
+import { VehicleBody } from './elements/VehicleBody.js';
 import {
     MyRectangle
 } from './primitives/MyRectangle.js';
@@ -68,6 +69,7 @@ export class XMLscene extends CGFscene {
         this.powerup = new MyPowerUp(this);
         this.start = new MyStartLine(this);
         this.wheel = new MyWheel(this);
+        this.vehicleBody = new VehicleBody(this);
 
         super.setUpdatePeriod(100);
     }
@@ -236,11 +238,12 @@ export class XMLscene extends CGFscene {
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
 
-            //this.obstacle.display();
-            //this.powerup.display();
+            // this.obstacle.display();
+            // this.powerup.display();
             // this.start.display();
-            //this.vehicle.display();
-            this.wheel.display();
+            this.vehicle.display();
+            // this.wheel.display();
+            // this.vehicleBody.display();
 
 
         }

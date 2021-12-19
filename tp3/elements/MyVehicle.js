@@ -1,20 +1,9 @@
-import {
-    CGFobject,
-    CGFnurbsObject,
-    CGFnurbsSurface
-} from "../../lib/CGF.js";
-import {
-    MySceneGraph
-} from "../MySceneGraph.js";
-import {
-    MyCylinder
-} from "../primitives/MyCylinder.js";
-import {
-    MyStartLine
-} from "./MyStartLine.js";
-import {
-    MyWheel
-} from "./MyWheel.js";
+import { CGFobject, CGFnurbsObject, CGFnurbsSurface } from "../../lib/CGF.js";
+import { MySceneGraph } from "../MySceneGraph.js";
+import { MyCylinder } from "../primitives/MyCylinder.js";
+import { MyStartLine } from "./MyStartLine.js";
+import { MyWheel } from "./MyWheel.js";
+import { VehicleBody } from "./VehicleBody.js";
 
 /**
  * 
@@ -29,7 +18,9 @@ export class MyVehicle extends CGFobject {
         this.scene = scene;
 
         // this.carbody = scene.displayComponent('carbody', null ,null , 1, 1);
-        this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
+        // this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
+        
+        this.car = new VehicleBody(scene);
         this.wheel = new MyWheel(scene);
         this.test = new MyStartLine(scene);
         this.keyForward = false;
@@ -55,12 +46,41 @@ export class MyVehicle extends CGFobject {
 
         this.scene.rotate(this.direction * Math.PI / 180, 0, 1, 0);
 
+        // FL Wheel
         this.scene.pushMatrix();
+        this.scene.scale(0.2, 0.2, 0.2)
+        this.scene.translate(1, 0, 0)
+        this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.wheel.display();
         this.scene.popMatrix();
+
+        // FR Wheel
+        this.scene.pushMatrix();
+        this.scene.scale(0.2, 0.2, 0.2)
+        this.scene.translate(-1, 0, 0)
+        this.scene.rotate(-Math.PI / 2, 0, 1, 0);
+        this.wheel.display();
+        this.scene.popMatrix();
+
+        // RL Wheel
+        this.scene.pushMatrix();
+        this.scene.scale(0.2, 0.2, 0.2)
+        this.scene.translate(1, 0, -7)
+        this.scene.rotate(Math.PI / 2, 0, 1, 0);
+        this.wheel.display();
+        this.scene.popMatrix();
+
+        // RR Wheel
+        this.scene.pushMatrix();
+        this.scene.scale(0.2, 0.2, 0.2)
+        this.scene.translate(-1, 0, -7)
+        this.scene.rotate(-Math.PI / 2, 0, 1, 0);
+        this.wheel.display();
+        this.scene.popMatrix();
+
         //car body
         this.scene.pushMatrix();
-        this.test.display();
+        this.car.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();
@@ -92,13 +112,13 @@ export class MyVehicle extends CGFobject {
                 if (this.steeringAngle > -this.steeringAngleMax) this.steeringAngle -= this.steeringDelta;
             }
 
-        else {
-            //wheels going back to place when keys aren´t being pressed
-            if (!this.keyLeft && !this.keyRight) {
-                if (Math.abs(this.steeringAngle) > 0.001) this.steeringAngle = this.steeringAngle * 0.8;
-                if (Math.abs(this.steeringAngle) < 0.001) this.steeringAngle = 0;
+            else {
+                //wheels going back to place when keys aren´t being pressed
+                if (!this.keyLeft && !this.keyRight) {
+                    if (Math.abs(this.steeringAngle) > 0.001) this.steeringAngle = this.steeringAngle * 0.8;
+                    if (Math.abs(this.steeringAngle) < 0.001) this.steeringAngle = 0;
+                }
             }
-        }
 
         var direction = 0;
         //forward

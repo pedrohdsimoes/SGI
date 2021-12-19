@@ -39,52 +39,44 @@ export class MyWheel extends CGFobject {
         this.front.setDiffuse(1, 1, 1, 1);
         this.front.setSpecular(1, 1, 1, 1);
         this.front.setShininess(100.0);
-        this.front.loadTexture('scenes/images/test.png');
+        this.front.loadTexture('scenes/images/medium.png');
         this.front.setTextureWrap('REPEAT', 'REPEAT');
 
-        let controlpoints = [
-            [-1, 0.0, 0.0],
-            [-1, 0.0, -1.3333333333333333],
-            [1, 0.0, -1.3333333333333333],
-            [1, 0.0, 0.0],
-            [-1, 0.0, 0.0],
-            [-1, 1.1547005383792515, -0.6666666666666667],
-            [1, 1.1547005383792515, -0.6666666666666667],
-            [1, 0.0, 0.0],
-            [-1, 0.0, -0.0],
-            [-1, 1.1547005383792515, 0.6666666666666663],
-            [1, 1.1547005383792515, 0.6666666666666663],
-            [1, 0.0, -0.0],
-            [-1, 0.0, -0.0],
-            [-1, 1.6328623988631375e-16, 1.3333333333333333],
-            [1, 1.6328623988631375e-16, 1.3333333333333333],
-            [1, 0.0, 0.0]
-        ]
-        this.circle = new MyPatch(scene, "medium", 4, 4, 30, 30, controlpoints);
         this.cylinder = new MyCylinder2(scene, "sideMedium", 30, 30, 3, 2, 2);
+        this.circle = new MyCircle(scene, "medium", 40, 100);
 
     }
+    
     display() {
+        this.scene.pushMatrix();
         this.side.apply();
 
         this.scene.pushMatrix();
 
-        // this.scene.scale(3, 0, 3);
+        // this.scene.scale(3, 1, 3);
         this.scene.translate(0, 2, 0);
         this.cylinder.display();
         this.scene.popMatrix();
 
         this.front.apply();
 
+        // this.scene.pushMatrix();
+        // this.scene.translate(0, 2, 3);
+        // this.scene.rotate(Math.PI / 2, 1, 0, 0);
+        // this.scene.scale(2, 0, 2);
+        // this.scene.translate(0, 2, 0);
+        // this.patch.display();
+        // this.scene.popMatrix();
+
+
         this.scene.pushMatrix();
         this.scene.translate(0, 2, 3);
-        this.scene.rotate(Math.PI / 2, 1, 0, 0);
-        this.scene.scale(2, 0, 2);
-        this.scene.translate(0, 2, 0);
+        this.scene.scale(0.05, 0.05, 0.05);
+        // this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.circle.display();
         this.scene.popMatrix();
 
-
+        this.scene.popMatrix();
     }
 
 }

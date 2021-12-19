@@ -46,8 +46,14 @@ export class MyVehicle extends CGFobject {
 
         this.scene.rotate(this.direction * Math.PI / 180, 0, 1, 0);
 
+        //car body
+        this.scene.pushMatrix();
+        this.carbody.display();
+        this.scene.popMatrix();
+
         // FL Wheel
         this.scene.pushMatrix();
+        this.scene.translate(0.65,0,2);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(1, 0, 0)
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
@@ -56,6 +62,7 @@ export class MyVehicle extends CGFobject {
 
         // FR Wheel
         this.scene.pushMatrix();
+        this.scene.translate(-0.65,0,2);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(-1, 0, 0)
         this.scene.rotate(-Math.PI / 2, 0, 1, 0);
@@ -64,6 +71,7 @@ export class MyVehicle extends CGFobject {
 
         // RL Wheel
         this.scene.pushMatrix();
+        this.scene.translate(0.65,0,-2.8);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(1, 0, -7)
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
@@ -72,15 +80,11 @@ export class MyVehicle extends CGFobject {
 
         // RR Wheel
         this.scene.pushMatrix();
+        this.scene.translate(-0.65,0,-2.8);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(-1, 0, -7)
         this.scene.rotate(-Math.PI / 2, 0, 1, 0);
         this.wheel.display();
-        this.scene.popMatrix();
-
-        //car body
-        this.scene.pushMatrix();
-        this.carbody.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();

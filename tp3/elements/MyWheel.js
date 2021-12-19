@@ -26,6 +26,7 @@ import {
 export class MyWheel extends CGFobject {
     constructor(scene) {
         super(scene);
+        
         this.side = new CGFappearance(this.scene);
         this.side.setAmbient(1, 1, 1, 1);
         this.side.setDiffuse(1, 1, 1, 1);
@@ -42,7 +43,7 @@ export class MyWheel extends CGFobject {
         this.front.loadTexture('scenes/images/medium.png');
         this.front.setTextureWrap('REPEAT', 'REPEAT');
 
-        this.cylinder = new MyCylinder2(scene, "sideMedium", 30, 30, 3, 2, 2);
+        this.cylinder2 = new MyCylinder2(scene, "sideMedium", 30, 30, 3, 2, 2);
         this.circle = new MyCircle(scene, "medium", 40, 100);
 
     }
@@ -53,7 +54,7 @@ export class MyWheel extends CGFobject {
 
         // this.scene.scale(3, 1, 3);
         this.scene.translate(0, 2, 0);
-        this.cylinder.display();
+        this.cylinder2.display();
         this.scene.popMatrix();
 
 
@@ -65,15 +66,22 @@ export class MyWheel extends CGFobject {
         // this.patch.display();
         // this.scene.popMatrix();
 
-
+        // Front 
         this.scene.pushMatrix();
         this.front.apply();
         this.scene.translate(0, 2, 3);
         this.scene.scale(0.05, 0.05, 0.05);
-        // this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.circle.display();
         this.scene.popMatrix();
 
+        // Back
+        this.scene.pushMatrix();
+        this.front.apply();
+        this.scene.translate(0, 2, 0);
+        this.scene.scale(0.05, 0.05, 0.05);
+        this.scene.rotate(Math.PI, 0, 1, 0);
+        this.circle.display();
+        this.scene.popMatrix();
 
     }
 

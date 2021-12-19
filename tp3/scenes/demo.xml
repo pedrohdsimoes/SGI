@@ -1,440 +1,441 @@
 <SXG>
-	<scene root="demoRoot" axis_length="5" /> <!-- deve definir-se um objeto para raiz da arvore, assim -->
-	<!-- como o comprimento dos tres eixos (cilindros) -->
+    <scene root="demoRoot" axis_length="5" /> <!-- deve definir-se um objeto para raiz da arvore, assim -->
+    <!-- como o comprimento dos tres eixos (cilindros) -->
 
-	<!-- ___________________________________VIEWS______________________________________ -->
-	<views default="overView">
-		<!-- at least one of the following type of cameras must be declared -->
+    <!-- ___________________________________VIEWS______________________________________ -->
+    <views default="overView">
+        <!-- at least one of the following type of cameras must be declared -->
 
-		<!-- Vista Geral - default -->
-		<perspective id="overView" near="0.1" far="500" angle="45">
-			<from x="10" y="10" z="10" />
-			<to x="0" y="0" z="0" />
-		</perspective>
+        <!-- Vista Geral - default -->
+        <perspective id="overView" near="0.1" far="500" angle="45">
+            <from x="10" y="10" z="10" />
+            <to x="0" y="0" z="0" />
+        </perspective>
 
-		<!-- Vista de lado -->
-		<perspective id="sideView" near="0.1" far="500" angle="45">
-			<from x="17" y="7" z="0" />
-			<to x="0" y="4" z="0" />
-		</perspective>
+        <!-- Vista de lado -->
+        <perspective id="sideView" near="0.1" far="500" angle="45">
+            <from x="17" y="7" z="0" />
+            <to x="0" y="4" z="0" />
+        </perspective>
 
-		<!-- Vista de cima -->
-		<perspective id="topView" near="0.1" far="500" angle="90">
-			<from x="0" y="12" z="0" />
-			<to x="-1" y="0" z="0" />
-		</perspective>
+        <!-- Vista de cima -->
+        <perspective id="topView" near="0.1" far="500" angle="90">
+            <from x="0" y="12" z="0" />
+            <to x="-1" y="0" z="0" />
+        </perspective>
 
-		<!--Vista do meio campo para o cesto da esquerda -->
-		<perspective id="basketView" near="0.1" far="500" angle="45">
-			<from x="0" y="1" z="-5" />
-			<to x="0" y="3" z="4" />
-		</perspective>
+        <!--Vista do meio campo para o cesto da esquerda -->
+        <perspective id="basketView" near="0.1" far="500" angle="45">
+            <from x="0" y="1" z="-5" />
+            <to x="0" y="3" z="4" />
+        </perspective>
 
-		<!-- Vista que um fã teria de uma cadeira para os ecrãs gigantes e para o cesto -->
-		<perspective id="fanView" near="0.8" far="100" angle="45">
-			<from x="10.5" y="2" z="-5" />
-			<to x="0" y="5" z="0" />
-		</perspective>
+        <!-- Vista que um fã teria de uma cadeira para os ecrãs gigantes e para o cesto -->
+        <perspective id="fanView" near="0.8" far="100" angle="45">
+            <from x="10.5" y="2" z="-5" />
+            <to x="0" y="5" z="0" />
+        </perspective>
 
-		<!-- Vista "ortho" dos ecrãs gigantes -->
-		<ortho id="orthoScreenView" near="0.1" far="500" left="-3.0" right="3.0" top="3.0" bottom="-3.0">
-			<from x="6" y="4" z="6" />
-			<to x="0" y="5" z="0" />
-		</ortho>
+        <!-- Vista "ortho" dos ecrãs gigantes -->
+        <ortho id="orthoScreenView" near="0.1" far="500" left="-3.0" right="3.0" top="3.0" bottom="-3.0">
+            <from x="6" y="4" z="6" />
+            <to x="0" y="5" z="0" />
+        </ortho>
 
-	</views>
+    </views>
 
-	<ambient>
-		<ambient r="0.1" g="0.1" b="0.1" a="1.0" /> <!-- global ambient -->
-		<background r="0.2" g="0.2" b="0.2" a="1.0" /> <!-- background color -->
-	</ambient>
-	<!-- ___________________________________LIGHTS______________________________________ -->
-	<lights>
-		<!-- this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-		<omni id="RightFarLight" enabled="1">
-			<!-- light identifier; enable/disable -->
-			<location x="-5" y="8" z="-12" w="1.0" /> <!-- light location; w=1: point light; w=0: directional light -->
-			<ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
-			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" /> <!-- diffuse component -->
-			<specular r="1" g="1" b="1" a="1.0" /> <!-- specular component -->
-		</omni>
+    <ambient>
+        <ambient r="0.1" g="0.1" b="0.1" a="1.0" /> <!-- global ambient -->
+        <background r="0.2" g="0.2" b="0.2" a="1.0" /> <!-- background color -->
+    </ambient>
+    <!-- ___________________________________LIGHTS______________________________________ -->
+    <lights>
+        <!-- this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
+        <omni id="RightFarLight" enabled="1">
+            <!-- light identifier; enable/disable -->
+            <location x="-5" y="8" z="-12" w="1.0" /> <!-- light location; w=1: point light; w=0: directional light -->
+            <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" /> <!-- diffuse component -->
+            <specular r="1" g="1" b="1" a="1.0" /> <!-- specular component -->
+        </omni>
 
-		<omni id="RightNearLight" enabled="1">
-			<location x="5" y="8" z="-12" w="1.0" />
-			<ambient r="0" g="0" b="0" a="1.0" />
-			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
-			<specular r="1" g="1" b="1" a="1.0" />
-		</omni>
+        <omni id="RightNearLight" enabled="1">
+            <location x="5" y="8" z="-12" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+        </omni>
 
-		<omni id="LeftNearLight" enabled="1">
-			<location x="5" y="8" z="12" w="1.0" />
-			<ambient r="0" g="0" b="0" a="1.0" />
-			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
-			<specular r="1" g="1" b="1" a="1.0" />
-		</omni>
+        <omni id="LeftNearLight" enabled="1">
+            <location x="5" y="8" z="12" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+        </omni>
 
-		<omni id="LeftFarLight" enabled="1">
-			<location x="-5" y="8" z="12" w="1.0" />
-			<ambient r="0" g="0" b="0" a="1.0" />
-			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
-			<specular r="1" g="1" b="1" a="1.0" />
-		</omni>
+        <omni id="LeftFarLight" enabled="1">
+            <location x="-5" y="8" z="12" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+        </omni>
 
-		<omni id="CenteredLight" enabled="1">
-			<location x="0" y="14" z="0" w="0.0" />
-			<ambient r="0" g="0" b="0" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
-		</omni>
-		<spot id="spotLight" enabled="1" angle="90" exponent="50">
+        <omni id="CenteredLight" enabled="1">
+            <location x="0" y="14" z="0" w="0.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </omni>
+        <spot id="spotLight" enabled="1" angle="90" exponent="50">
 
-			<location x="0" y="4" z="0" w="0.0" />
-			<target x="-0.5" y="3" z="12" />
-			<ambient r="0.5" g="0.5" b="0.5" a="1" />
-			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
-			<specular r="1" g="1" b="1" a="1.0" />
-		</spot>
+            <location x="0" y="4" z="0" w="0.0" />
+            <target x="-0.5" y="3" z="12" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+        </spot>
 
-	</lights>
-	<!-- ___________________________________TEXTURES______________________________________ -->
-	<textures>
-		<!-- this block "TEXTURE" must be repeated as necessary with different "id" -->
-		<texture id="court" file="" />
-		<texture id="ball" file="" />
-		<texture id="ball2" file="" />
-		<texture id="screen" file="" />
-		<texture id="sponsor" file="" />
-		<texture id="tabela" file="" />
-		<texture id="net" file="" />
-		<texture id="rimSupport" file="" />
-		<texture id="timeboard" file="" />
-		<texture id="tabelaBack" file="" />
-		<texture id="cesta" file="" />
-	</textures>
-	<!-- ___________________________________MATERIALS______________________________________ -->
-	<materials>
-		<!-- the "MATERIAL" block may be repeated as required. Each defined material
+    </lights>
+    <!-- ___________________________________TEXTURES______________________________________ -->
+    <textures>
+        <!-- this block "TEXTURE" must be repeated as necessary with different "id" -->
+        <texture id="court" file="" />
+        <texture id="ball" file="" />
+        <texture id="ball2" file="" />
+        <texture id="screen" file="" />
+        <texture id="sponsor" file="" />
+        <texture id="tabela" file="" />
+        <texture id="net" file="" />
+        <texture id="rimSupport" file="" />
+        <texture id="timeboard" file="" />
+        <texture id="tabelaBack" file="" />
+        <texture id="cesta" file="" />
+    </textures>
+    <!-- ___________________________________MATERIALS______________________________________ -->
+    <materials>
+        <!-- the "MATERIAL" block may be repeated as required. Each defined material
          requires a distinct "id". At least one material should be present. -->
-		<material id="demoMaterial" shininess="10">
-			<emission r="0.0" g="0.0" b="0.0" a="1.0" /> <!-- emissive component -->
-			<ambient r="1.0" g="0.0" b="0.0" a="1.0" /> <!-- ambient reflection -->
-			<diffuse r="0.6" g="0.0" b="0.0" a="1.0" /> <!-- diffuse reflection -->
-			<specular r="0.0" g="0.0" b="0.0" a="1.0" /> <!-- specular reflection -->
-		</material>
+        <material id="demoMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" /> <!-- emissive component -->
+            <ambient r="1.0" g="0.0" b="0.0" a="1.0" /> <!-- ambient reflection -->
+            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" /> <!-- diffuse reflection -->
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" /> <!-- specular reflection -->
+        </material>
 
-		<material id="ballMaterial" shininess="10">
-			<emission r="0" g="0" b="0" a="1.0" />
-			<ambient r="0.3" g="0.2" b="0.1" a="1.0" />
-			<diffuse r="0.184" g="0.082" b="0.048" a="1.0" />
-			<specular r="0.7" g="0.7" b="0.7" a="1.0" />
-		</material>
+        <material id="ballMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.3" g="0.2" b="0.1" a="1.0" />
+            <diffuse r="0.184" g="0.082" b="0.048" a="1.0" />
+            <specular r="0.7" g="0.7" b="0.7" a="1.0" />
+        </material>
 
-		<material id="rimMaterial" shininess="10">
-			<emission r="0" g="0" b="0" a="1.0" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="0.35" g="0.35" b="0.35" a="1.0" />
-			<specular r="0" g="0" b="0" a="1.0" />
-		</material>
+        <material id="rimMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.35" g="0.35" b="0.35" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+        </material>
 
-		<material id="blueMaterial" shininess="10">
-			<emission r="0" g="0" b="0" a="1.0" />
-			<ambient r="0.015" g="0.0" b="0.167" a="1.0" />
-			<diffuse r="0.037" g="0.037" b="0.047" a="1.0" />
-			<specular r="0.057" g="0" b="0" a="1.0" />
-		</material>
+        <material id="blueMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.015" g="0.0" b="0.167" a="1.0" />
+            <diffuse r="0.037" g="0.037" b="0.047" a="1.0" />
+            <specular r="0.057" g="0" b="0" a="1.0" />
+        </material>
 
-		<material id="blueMaterialBase" shininess="10">
-			<emission r="0" g="0" b="0" a="1.0" />
-			<ambient r="0.015" g="0.0" b="0.167" a="1.0" />
-			<diffuse r="0.037" g="0.037" b="0.047" a="1.0" />
-			<specular r="0.0" g="0" b="0" a="1.0" />
-		</material>
+        <material id="blueMaterialBase" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.015" g="0.0" b="0.167" a="1.0" />
+            <diffuse r="0.037" g="0.037" b="0.047" a="1.0" />
+            <specular r="0.0" g="0" b="0" a="1.0" />
+        </material>
 
-		<material id="redMaterial" shininess="10">
-			<emission r="0" g="0" b="0" a="1.0" />
-			<ambient r="0.199" g="0.019" b="0.043" a="1.0" />
-			<diffuse r="0.199" g="0.019" b="0.043" a="1.0" />
-			<specular r="0.228" g="0.207" b="0.178" a="1.0" />
-		</material>
+        <material id="redMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.199" g="0.019" b="0.043" a="1.0" />
+            <diffuse r="0.199" g="0.019" b="0.043" a="1.0" />
+            <specular r="0.228" g="0.207" b="0.178" a="1.0" />
+        </material>
 
-		<material id="darkGreyMaterial" shininess="10">
-			<emission r="0.0" g="0.0" b="0.0" a="1.0" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
-			<specular r="0.164" g="0" b="0.042" a="1.0" />
-		</material>
+        <material id="darkGreyMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <specular r="0.164" g="0" b="0.042" a="1.0" />
+        </material>
 
-		<material id="whiteMaterial" shininess="100">
-			<emission r="0" g="0" b="0" a="1.0" />
-			<ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-			<diffuse r="0.255" g="0.255" b="0.255" a="1.0" />
-			<specular r="0.7" g="0.7" b="0.7" a="1.0" />
-		</material>
+        <material id="whiteMaterial" shininess="100">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.255" g="0.255" b="0.255" a="1.0" />
+            <specular r="0.7" g="0.7" b="0.7" a="1.0" />
+        </material>
 
-		<material id="screenMaterial" shininess="100">
-			<emission r="0.8" g="0.8" b="0.8" a="1.0" />
-			<ambient r="0.8" g="0.8" b="0.8" a="1.0" />
-			<diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
-			<specular r="1" g="1" b="1" a="1.0" />
-		</material>
+        <material id="screenMaterial" shininess="100">
+            <emission r="0.8" g="0.8" b="0.8" a="1.0" />
+            <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+        </material>
 
-		<material id="floorMaterial" shininess="50">
-			<emission r="0" g="0" b="0" a="1.0" />
-			<ambient r="0.228" g="0.207" b="0.178" a="1.0" />
-			<diffuse r="0.228" g="0.207" b="0.178" a="1.0" />
-			<specular r="0.5" g="0.5" b="0.5" a="1.0" />
-		</material>
-	</materials>
-	<!-- ___________________________________TRANSFORMATIONS______________________________________ -->
-	<transformations>
-		<!-- the "transformations" block may be repeated as required. Each defined transformation
+        <material id="floorMaterial" shininess="50">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.228" g="0.207" b="0.178" a="1.0" />
+            <diffuse r="0.228" g="0.207" b="0.178" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+        </material>
+    </materials>
+    <!-- ___________________________________TRANSFORMATIONS______________________________________ -->
+    <transformations>
+        <!-- the "transformations" block may be repeated as required. Each defined transformation
          requires a distinct "id". At least one material should be present. -->
-		<transformation id="court">
-			<rotate axis="y" angle="90" />
-			<scale x="18" y="1" z="10" />
-			<rotate axis="x" angle="-90" />
-		</transformation>
+        <transformation id="court">
+            <rotate axis="y" angle="90" />
+            <scale x="18" y="1" z="10" />
+            <rotate axis="x" angle="-90" />
+        </transformation>
 
-		<transformation id="ball">
-			<translate x="-1" y="0.2" z="3" />
-			<scale x="0.2" y="0.2" z="0.2" />
-		</transformation>
+        <transformation id="ball">
+            <translate x="-1" y="0.2" z="3" />
+            <scale x="0.2" y="0.2" z="0.2" />
+        </transformation>
 
-		<transformation id="screens">
-			<!-- identifier -->
-			<translate x="0" y="4" z="0" /> <!-- translate an object -->
-			<rotate axis="x" angle="-90" /> <!-- rotate an object -->
-			<scale x="1.5" y="1.5" z="0.5" /> <!-- scale an object -->
-		</transformation>
+        <transformation id="screens">
+            <!-- identifier -->
+            <translate x="0" y="4" z="0" /> <!-- translate an object -->
+            <rotate axis="x" angle="-90" /> <!-- rotate an object -->
+            <scale x="1.5" y="1.5" z="0.5" /> <!-- scale an object -->
+        </transformation>
 
-		<transformation id="rimSupport">
-			<scale x="1" y="1" z="1" />
-			<translate x="-0.19" y="2.7" z="4.85" />
-			<rotate axis="z" angle="45" />
-		</transformation>
+        <transformation id="rimSupport">
+            <scale x="1" y="1" z="1" />
+            <translate x="-0.19" y="2.7" z="4.85" />
+            <rotate axis="z" angle="45" />
+        </transformation>
 
-		<transformation id="net">
-			<translate x="-0.19" y="2.32" z="4.65" />
-			<rotate axis="x" angle="-90" />
-			<rotate axis="z" angle="45" />
-		</transformation>
+        <transformation id="net">
+            <translate x="-0.19" y="2.32" z="4.65" />
+            <rotate axis="x" angle="-90" />
+            <rotate axis="z" angle="45" />
+        </transformation>
 
-		<transformation id="tabelaFront">
-			<translate x="-0.19" y="3" z="5" />
-			<rotate axis="x" angle="180" />
-			<rotate axis="z" angle="90" />
-		</transformation>
+        <transformation id="tabelaFront">
+            <translate x="-0.19" y="3" z="5" />
+            <rotate axis="x" angle="180" />
+            <rotate axis="z" angle="90" />
+        </transformation>
 
-		<transformation id="tabelaBack">
-			<translate x="-0.19" y="3" z="5.1" />
-			<rotate axis="z" angle="270" />
-		</transformation>
+        <transformation id="tabelaBack">
+            <translate x="-0.19" y="3" z="5.1" />
+            <rotate axis="z" angle="270" />
+        </transformation>
 
-		<transformation id="tabelaSides">
-			<scale x="1.5" y="1" z="1" />
-			<translate x="-0.12" y="3" z="5" />
-			<rotate axis="z" angle="45" />
-		</transformation>
+        <transformation id="tabelaSides">
+            <scale x="1.5" y="1" z="1" />
+            <translate x="-0.12" y="3" z="5" />
+            <rotate axis="z" angle="45" />
+        </transformation>
 
-		<transformation id="baseRectangle">
-			<translate x="-0.19" y="0.18" z="8.62" />
-			<scale x="0.67" y="0.95" z="1" />
-			<rotate axis="x" angle="10" />
-		</transformation>
+        <transformation id="baseRectangle">
+            <translate x="-0.19" y="0.18" z="8.62" />
+            <scale x="0.67" y="0.95" z="1" />
+            <rotate axis="x" angle="10" />
+        </transformation>
 
-		<transformation id="basketBase">
-			<translate x="-0.19" y="0.5" z="6.8" />
-			<scale x="0.7" y="1" z="1" />
-			<rotate axis="x" angle="10" />
-			<rotate axis="z" angle="45" />
-		</transformation>
+        <transformation id="basketBase">
+            <translate x="-0.19" y="0.5" z="6.8" />
+            <scale x="0.7" y="1" z="1" />
+            <rotate axis="x" angle="10" />
+            <rotate axis="z" angle="45" />
+        </transformation>
 
-		<transformation id="basketHeight">
-			<translate x="-0.2" y="0" z="7.1" />
-			<scale x="0.7" y="1" z="0.6" />
-			<rotate axis="x" angle="-90" />
-			<rotate axis="z" angle="45" />
-		</transformation>
+        <transformation id="basketHeight">
+            <translate x="-0.2" y="0" z="7.1" />
+            <scale x="0.7" y="1" z="0.6" />
+            <rotate axis="x" angle="-90" />
+            <rotate axis="z" angle="45" />
+        </transformation>
 
-		<transformation id="topScreen">
-			<translate x="0" y="5.475" z="0" />
-			<scale x="1.88" y="1" z="1.83" />
-		</transformation>
+        <transformation id="topScreen">
+            <translate x="0" y="5.475" z="0" />
+            <scale x="1.88" y="1" z="1.83" />
+        </transformation>
 
-		<transformation id="basketArm">
-			<translate x="-0.2" y="2.75" z="5.1" />
-			<scale x="1" y="0.65" z="1" />
-			<rotate axis="z" angle="45" />
-		</transformation>
+        <transformation id="basketArm">
+            <translate x="-0.2" y="2.75" z="5.1" />
+            <scale x="1" y="0.65" z="1" />
+            <rotate axis="z" angle="45" />
+        </transformation>
 
-		<transformation id="armRectangle">
-			<translate x="-0.238" y="2.775" z="7.27" />
-			<scale x="1" y="1" z="1" />
-		</transformation>
+        <transformation id="armRectangle">
+            <translate x="-0.238" y="2.775" z="7.27" />
+            <scale x="1" y="1" z="1" />
+        </transformation>
 
-		<transformation id="sponsorL">
-			<translate x="0.3" y="0" z="7.05" />
-			<rotate axis="y" angle="180" />
-			<rotate axis="x" angle="-10" />
-		</transformation>
+        <transformation id="sponsorL">
+            <translate x="0.3" y="0" z="7.05" />
+            <rotate axis="y" angle="180" />
+            <rotate axis="x" angle="-10" />
+        </transformation>
 
-		<transformation id="sponsorR">
-			<translate x="-0.7" y="0" z="-7.05" />
-			<rotate axis="x" angle="-10" />
-		</transformation>
+        <transformation id="sponsorR">
+            <translate x="-0.7" y="0" z="-7.05" />
+            <rotate axis="x" angle="-10" />
+        </transformation>
 
-		<transformation id="cesta">
-			<translate x="2.5" y="0" z="8.00" />
-			<rotate axis="x" angle="-90" />
-		</transformation>
+        <transformation id="cesta">
+            <translate x="2.5" y="0" z="8.00" />
+            <rotate axis="x" angle="-90" />
+        </transformation>
 
-	</transformations>
-	<!-- ___________________________________PRIMITIVES______________________________________ -->
-	<primitives>
-		<!-- the "primitives" block may be repeated as required. Each defined primitive
+    </transformations>
+    <!-- ___________________________________PRIMITIVES______________________________________ -->
+    <primitives>
+        <!-- the "primitives" block may be repeated as required. Each defined primitive
 		requires a distinct "id". At least one material should be present. -->
-		<primitive id="Rectangle">
-			<rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
-		</primitive>
+        <primitive id="Rectangle">
+            <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
+        </primitive>
 
-		<primitive id="Triangle">
-			<triangle x1="0" y1="0" z1="0" x2="1" y2="0" z2="0" x3="0.5" y3="1.1" z3="0" />
-		</primitive>
+        <primitive id="Triangle">
+            <triangle x1="0" y1="0" z1="0" x2="1" y2="0" z2="0" x3="0.5" y3="1.1" z3="0" />
+        </primitive>
 
-		<primitive id="Sphere">
-			<sphere radius="1.0" slices="30" stacks="30" />
-		</primitive>
+        <primitive id="Sphere">
+            <sphere radius="1.0" slices="30" stacks="30" />
+        </primitive>
 
-		<primitive id="Plane">
-			<plane npartsU="100" npartsV="100" />
-		</primitive>
+        <primitive id="Plane">
+            <plane npartsU="100" npartsV="100" />
+        </primitive>
 
-		<primitive id="topScreen">
-			<patch npointsU="4" npointsV="4" npartsU="3" npartsV="3">
-				<controlpoint xx="-1" yy="0.0" zz="0.0" />
-				<controlpoint xx="-1" yy="0.0" zz="-1.3333333333333333" />
-				<controlpoint xx="1" yy="0.0" zz="-1.3333333333333333" />
-				<controlpoint xx="1" yy="0.0" zz="0.0" />
-				<controlpoint xx="-1" yy="0.0" zz="0.0" />
-				<controlpoint xx="-1" yy="1.1547005383792515" zz="-0.6666666666666667" />
-				<controlpoint xx="1" yy="1.1547005383792515" zz="-0.6666666666666667" />
-				<controlpoint xx="1" yy="0.0" zz="0.0" />
-				<controlpoint xx="-1" yy="0.0" zz="-0.0" />
-				<controlpoint xx="-1" yy="1.1547005383792515" zz="0.6666666666666663" />
-				<controlpoint xx="1" yy="1.1547005383792515" zz="0.6666666666666663" />
-				<controlpoint xx="1" yy="0.0" zz="-0.0" />
-				<controlpoint xx="-1" yy="0.0" zz="-0.0" />
-				<controlpoint xx="-1" yy="1.6328623988631375e-16" zz="1.3333333333333333" />
-				<controlpoint xx="1" yy="1.6328623988631375e-16" zz="1.3333333333333333" />
-				<controlpoint xx="1" yy="0.0" zz="0.0" />
-			</patch>
-		</primitive>
+        <primitive id="topScreen">
+            <patch npointsU="4" npointsV="4" npartsU="3" npartsV="3">
+                <controlpoint xx="-1" yy="0.0" zz="0.0" />
+                <controlpoint xx="-1" yy="0.0" zz="-1.3333333333333333" />
+                <controlpoint xx="1" yy="0.0" zz="-1.3333333333333333" />
+                <controlpoint xx="1" yy="0.0" zz="0.0" />
+                <controlpoint xx="-1" yy="0.0" zz="0.0" />
+                <controlpoint xx="-1" yy="1.1547005383792515" zz="-0.6666666666666667" />
+                <controlpoint xx="1" yy="1.1547005383792515" zz="-0.6666666666666667" />
+                <controlpoint xx="1" yy="0.0" zz="0.0" />
+                <controlpoint xx="-1" yy="0.0" zz="-0.0" />
+                <controlpoint xx="-1" yy="1.1547005383792515" zz="0.6666666666666663" />
+                <controlpoint xx="1" yy="1.1547005383792515" zz="0.6666666666666663" />
+                <controlpoint xx="1" yy="0.0" zz="-0.0" />
+                <controlpoint xx="-1" yy="0.0" zz="-0.0" />
+                <controlpoint xx="-1" yy="1.6328623988631375e-16" zz="1.3333333333333333" />
+                <controlpoint xx="1" yy="1.6328623988631375e-16" zz="1.3333333333333333" />
+                <controlpoint xx="1" yy="0.0" zz="0.0" />
+            </patch>
+        </primitive>
 
-		<primitive id="Cylinder2">
-			<cylinder2 base="0.35" top="0.4" height="0.8" slices="16" stacks="5" />
-		</primitive>
+        <primitive id="Cylinder2">
+            <cylinder2 base="0.35" top="0.4" height="0.8" slices="16" stacks="5" />
+        </primitive>
 
-		<!-- ECRAS -->
-		<primitive id="Screens">
-			<cylinder base="1" top="1.25" height="3.0" slices="6" stacks="1" />
-		</primitive>
-
-
-		<!-- TABELA DE BASKET -->
-		<primitive id="basketBase">
-			<cylinder base="0.7" top="0.2" height="1.85" slices="4" stacks="1" />
-		</primitive>
-
-		<primitive id="baseRectangle">
-			<rectangle x1="-0.15" y1="-0.15" x2="0.15" y2="0.15" />
-		</primitive>
-
-		<primitive id="basketHeight">
-			<cylinder base="0.95" top="0.4" height="2.63" slices="4" stacks="1" />
-		</primitive>
-
-		<primitive id="armRectangle">
-			<rectangle x1="-0.16" y1="-0.145" x2="0.235" y2="0.11" />
-		</primitive>
-
-		<primitive id="basketArm">
-			<cylinder base="0.28" top="0.28" height="2.17" slices="4" stacks="1" />
-		</primitive>
-
-		<primitive id="tabela">
-			<rectangle x1="-0.45" y1="-0.7" x2="0.45" y2="0.7" />
-		</primitive>
-
-		<primitive id="tabelaSides">
-			<cylinder base="0.64" top="0.64" height="0.1" slices="4" stacks="1" />
-		</primitive>
-
-		<primitive id="net">
-			<cylinder base="0.12" top="0.2" height="0.4" slices="100" stacks="1" />
-		</primitive>
-
-		<primitive id="rimSupport">
-			<cylinder base="0.03" top="0.03" height="0.15" slices="4" stacks="1" />
-		</primitive>
-
-		<!-- CHAIR -->
-		<primitive id="chairRectangle">
-			<rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
-		</primitive>
-
-		<primitive id="leg">
-			<cylinder base="0.02" top="0.02" height="0.2" slices="100" stacks="1" />
-		</primitive>
-	</primitives>
-	<!-- ___________________________________COMPONENTS______________________________________ -->
-	<components>
-		<!-- Uma "component" e' um objeto composto e pode ser -->
-		<!-- usada em nos intermédios -->
-		<!-- bloco "transformation" e' obrigatorio -->
+        <!-- ECRAS -->
+        <primitive id="Screens">
+            <cylinder base="1" top="1.25" height="3.0" slices="6" stacks="1" />
+        </primitive>
 
 
-		<!-- CHÃO -->
-		<component id="floor">
-			<transformation>
-				<transformationref id="court" />
-			</transformation>
-			<materials>
-				<material id="floorMaterial" />
-			</materials>
-			<texture id="court" length_s="1" length_t="2" />
-			<children>
-				<primitiveref id="Plane" />
-			</children>
-		</component>
+        <!-- TABELA DE BASKET -->
+        <primitive id="basketBase">
+            <cylinder base="0.7" top="0.2" height="1.85" slices="4" stacks="1" />
+        </primitive>
 
-		<component id="carbody">
-			<transformation>
-				<translate x="4.5" y="0.35" z="0.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="Plane" />
-			</children>
-		</component>
+        <primitive id="baseRectangle">
+            <rectangle x1="-0.15" y1="-0.15" x2="0.15" y2="0.15" />
+        </primitive>
 
-		<!-- Component Root onde são chamados todos os outros componentes  -->
-		<!-- ROOT -->
-		<component id="demoRoot">
-			<transformation>
-				<translate x="0" y="0" z="0" />
-				<scale x="1" y="1" z="1" />
-			</transformation>
-			<materials>
-				<material id="floorMaterial" />
-			</materials>
-			<texture id="none" />
-			<children></children>
-		</component>
+        <primitive id="basketHeight">
+            <cylinder base="0.95" top="0.4" height="2.63" slices="4" stacks="1" />
+        </primitive>
 
-	</components>
+        <primitive id="armRectangle">
+            <rectangle x1="-0.16" y1="-0.145" x2="0.235" y2="0.11" />
+        </primitive>
+
+        <primitive id="basketArm">
+            <cylinder base="0.28" top="0.28" height="2.17" slices="4" stacks="1" />
+        </primitive>
+
+        <primitive id="tabela">
+            <rectangle x1="-0.45" y1="-0.7" x2="0.45" y2="0.7" />
+        </primitive>
+
+        <primitive id="tabelaSides">
+            <cylinder base="0.64" top="0.64" height="0.1" slices="4" stacks="1" />
+        </primitive>
+
+        <primitive id="net">
+            <cylinder base="0.12" top="0.2" height="0.4" slices="100" stacks="1" />
+        </primitive>
+
+        <primitive id="rimSupport">
+            <cylinder base="0.03" top="0.03" height="0.15" slices="4" stacks="1" />
+        </primitive>
+
+        <!-- CHAIR -->
+        <primitive id="chairRectangle">
+            <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
+        </primitive>
+
+        <primitive id="leg">
+            <cylinder base="0.02" top="0.02" height="0.2" slices="100" stacks="1" />
+        </primitive>
+    </primitives>
+    <!-- ___________________________________COMPONENTS______________________________________ -->
+    <components>
+        <!-- Uma "component" e' um objeto composto e pode ser -->
+        <!-- usada em nos intermédios -->
+        <!-- bloco "transformation" e' obrigatorio -->
+
+
+        <!-- CHÃO -->
+        <component id="floor">
+            <transformation>
+                <transformationref id="court" />
+            </transformation>
+            <materials>
+                <material id="floorMaterial" />
+            </materials>
+            <texture id="court" length_s="1" length_t="2" />
+            <children>
+                <primitiveref id="Plane" />
+            </children>
+        </component>
+
+        <component id="carbody">
+            <transformation>
+                <translate x="4.5" y="0.35" z="0.5" />
+                <rotate axis="y" angle="90" />
+                <scale x="2" y="1.7" z="2" />
+            </transformation>
+            <materials>
+                <material id="darkGreyMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="Plane" />
+            </children>
+        </component>
+
+        <!-- Component Root onde são chamados todos os outros componentes  -->
+        <!-- ROOT -->
+        <component id="demoRoot">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <scale x="1" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="floorMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+            </children>
+        </component>
+
+    </components>
 </SXG>

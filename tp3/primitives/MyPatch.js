@@ -1,4 +1,8 @@
-import { CGFobject, CGFnurbsObject, CGFnurbsSurface } from "../../lib/CGF.js";
+import {
+	CGFobject,
+	CGFnurbsObject,
+	CGFnurbsSurface
+} from "../../lib/CGF.js";
 /**
  * MyPatch
  * @constructor
@@ -33,7 +37,8 @@ export class MyPatch extends CGFobject {
 					this.controlPoints[i * this.npointsV + j][0],
 					this.controlPoints[i * this.npointsV + j][1],
 					this.controlPoints[i * this.npointsV + j][2],
-					1]);
+					1
+				]);
 			}
 			this.controlPointsAux.push(point);
 		}
@@ -48,6 +53,5 @@ export class MyPatch extends CGFobject {
 		this.patch.display();
 	}
 
-	updateTexCoords(s, t) {
-	};
+	updateTexCoords(s, t) {};
 }

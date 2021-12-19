@@ -1,15 +1,15 @@
 <SXG>
 	<scene root="demoRoot" axis_length="5" /> <!-- deve definir-se um objeto para raiz da arvore, assim -->
-    <!-- como o comprimento dos tres eixos (cilindros) -->
+	<!-- como o comprimento dos tres eixos (cilindros) -->
 
 	<!-- ___________________________________VIEWS______________________________________ -->
 	<views default="overView">
-		  <!-- at least one of the following type of cameras must be declared -->
+		<!-- at least one of the following type of cameras must be declared -->
 
-		  <!-- Vista Geral - default -->
+		<!-- Vista Geral - default -->
 		<perspective id="overView" near="0.1" far="500" angle="45">
-			<from x="10" y="15" z="10" />
-			<to x="0" y="-2" z="0" />
+			<from x="10" y="10" z="10" />
+			<to x="0" y="0" z="0" />
 		</perspective>
 
 		<!-- Vista de lado -->
@@ -45,17 +45,18 @@
 	</views>
 
 	<ambient>
-		<ambient r="0.1" g="0.1" b="0.1" a="1.0" />  <!-- global ambient -->
+		<ambient r="0.1" g="0.1" b="0.1" a="1.0" /> <!-- global ambient -->
 		<background r="0.2" g="0.2" b="0.2" a="1.0" /> <!-- background color -->
 	</ambient>
 	<!-- ___________________________________LIGHTS______________________________________ -->
 	<lights>
 		<!-- this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-		<omni id="RightFarLight" enabled="1"> <!-- light identifier; enable/disable -->
-			<location x="-5" y="8" z="-12" w="1.0" /><!-- light location; w=1: point light; w=0: directional light -->
-			<ambient r="0" g="0" b="0" a="1.0" /><!-- ambient component -->
-			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" /><!-- diffuse component -->
-			<specular r="1" g="1" b="1" a="1.0" /><!-- specular component -->
+		<omni id="RightFarLight" enabled="1">
+			<!-- light identifier; enable/disable -->
+			<location x="-5" y="8" z="-12" w="1.0" /> <!-- light location; w=1: point light; w=0: directional light -->
+			<ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
+			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" /> <!-- diffuse component -->
+			<specular r="1" g="1" b="1" a="1.0" /> <!-- specular component -->
 		</omni>
 
 		<omni id="RightNearLight" enabled="1">
@@ -86,39 +87,39 @@
 			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
 		</omni>
 		<spot id="spotLight" enabled="1" angle="90" exponent="50">
-           
-            <location x="0" y="4" z="0" w="0.0" />
-            <target x="-0.5" y="3" z="12" />
-            <ambient r="0.5" g="0.5" b="0.5" a="1" />
-            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
-            <specular r="1" g="1" b="1" a="1.0" />
-        </spot>
+
+			<location x="0" y="4" z="0" w="0.0" />
+			<target x="-0.5" y="3" z="12" />
+			<ambient r="0.5" g="0.5" b="0.5" a="1" />
+			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+			<specular r="1" g="1" b="1" a="1.0" />
+		</spot>
 
 	</lights>
 	<!-- ___________________________________TEXTURES______________________________________ -->
 	<textures>
-		 <!-- this block "TEXTURE" must be repeated as necessary with different "id" -->
-		<texture id="court" file="scenes/images/court.jpg" />
-		<texture id="ball" file="scenes/images/ball.jpg" />
-		<texture id="ball2" file="scenes/images/ball2.jpg" />
-		<texture id="screen" file="scenes/images/screen.jpg" />
-		<texture id="sponsor" file="scenes/images/nba.png" />
-		<texture id="tabela" file="scenes/images/tabela.jpg" />
-		<texture id="net" file="scenes/images/net.jpg" />
-		<texture id="rimSupport" file="scenes/images/rimSupport.jpg" />
-		<texture id="timeboard" file="scenes/images/timeboard.jpg" />
-		<texture id="tabelaBack" file="scenes/images/tabelaBack.jpg" />
-		<texture id="cesta" file="scenes/images/cesta.jpg" />
+		<!-- this block "TEXTURE" must be repeated as necessary with different "id" -->
+		<texture id="court" file="" />
+		<texture id="ball" file="" />
+		<texture id="ball2" file="" />
+		<texture id="screen" file="" />
+		<texture id="sponsor" file="" />
+		<texture id="tabela" file="" />
+		<texture id="net" file="" />
+		<texture id="rimSupport" file="" />
+		<texture id="timeboard" file="" />
+		<texture id="tabelaBack" file="" />
+		<texture id="cesta" file="" />
 	</textures>
 	<!-- ___________________________________MATERIALS______________________________________ -->
 	<materials>
-		 <!-- the "MATERIAL" block may be repeated as required. Each defined material
+		<!-- the "MATERIAL" block may be repeated as required. Each defined material
          requires a distinct "id". At least one material should be present. -->
 		<material id="demoMaterial" shininess="10">
-			<emission r="0.0" g="0.0" b="0.0" a="1.0" /><!-- emissive component -->
-			<ambient r="1.0" g="0.0" b="0.0" a="1.0" /><!-- ambient reflection -->
-			<diffuse r="0.6" g="0.0" b="0.0" a="1.0" /><!-- diffuse reflection -->
-			<specular r="0.0" g="0.0" b="0.0" a="1.0" /><!-- specular reflection -->
+			<emission r="0.0" g="0.0" b="0.0" a="1.0" /> <!-- emissive component -->
+			<ambient r="1.0" g="0.0" b="0.0" a="1.0" /> <!-- ambient reflection -->
+			<diffuse r="0.6" g="0.0" b="0.0" a="1.0" /> <!-- diffuse reflection -->
+			<specular r="0.0" g="0.0" b="0.0" a="1.0" /> <!-- specular reflection -->
 		</material>
 
 		<material id="ballMaterial" shininess="10">
@@ -185,8 +186,9 @@
 		</material>
 	</materials>
 	<!-- ___________________________________TRANSFORMATIONS______________________________________ -->
-	<transformations><!-- the "transformations" block may be repeated as required. Each defined transformation
-         requires a distinct "id". At least one material should be present. --> 
+	<transformations>
+		<!-- the "transformations" block may be repeated as required. Each defined transformation
+         requires a distinct "id". At least one material should be present. -->
 		<transformation id="court">
 			<rotate axis="y" angle="90" />
 			<scale x="18" y="1" z="10" />
@@ -198,10 +200,11 @@
 			<scale x="0.2" y="0.2" z="0.2" />
 		</transformation>
 
-		<transformation id="screens"><!-- identifier -->
-			<translate x="0" y="4" z="0" /><!-- translate an object -->
-			<rotate axis="x" angle="-90" /><!-- rotate an object -->
-			<scale x="1.5" y="1.5" z="0.5" /><!-- scale an object -->
+		<transformation id="screens">
+			<!-- identifier -->
+			<translate x="0" y="4" z="0" /> <!-- translate an object -->
+			<rotate axis="x" angle="-90" /> <!-- rotate an object -->
+			<scale x="1.5" y="1.5" z="0.5" /> <!-- scale an object -->
 		</transformation>
 
 		<transformation id="rimSupport">
@@ -287,8 +290,9 @@
 
 	</transformations>
 	<!-- ___________________________________PRIMITIVES______________________________________ -->
-	<primitives><!-- the "primitives" block may be repeated as required. Each defined primitive
-		requires a distinct "id". At least one material should be present. --> 
+	<primitives>
+		<!-- the "primitives" block may be repeated as required. Each defined primitive
+		requires a distinct "id". At least one material should be present. -->
 		<primitive id="Rectangle">
 			<rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
 		</primitive>
@@ -385,1235 +389,9 @@
 	<!-- ___________________________________COMPONENTS______________________________________ -->
 	<components>
 		<!-- Uma "component" e' um objeto composto e pode ser -->
-        <!-- usada em nos intermédios -->
-        <!-- bloco "transformation" e' obrigatorio -->
+		<!-- usada em nos intermédios -->
+		<!-- bloco "transformation" e' obrigatorio -->
 
-		<!-- BASKET SPONSOR -->
-		<component id="sponsorL">
-			<transformation>
-				<!-- deve conter uma referencia a uma das "transformation" -->
-                <!-- declaradas anteriormente -->
-				<transformationref id="sponsorL" />
-			</transformation>
-			<materials>
-				<material id="whiteMaterial" />
-			</materials>
-			<texture id="sponsor" length_s="1" length_t="0.96" />
-			<children>
-				<primitiveref id="Triangle" />
-			</children>
-		</component>
-
-		<component id="sponsorR">
-			<transformation>
-				<transformationref id="sponsorR" />
-			</transformation>
-			<materials>
-				<material id="whiteMaterial" />
-			</materials>
-			<texture id="sponsor" length_s="1" length_t="0.96" />
-			<children>
-				<primitiveref id="Triangle" />
-			</children>
-		</component>
-
-		<!-- CESTA PARA BOLAS -->
-		<component id="cesta">
-			<transformation>
-				<transformationref id="cesta" />
-			</transformation>
-			<materials>
-				<material id="whiteMaterial" />
-			</materials>
-			<texture id="cesta" />
-			<children>
-				<primitiveref id="Cylinder2" />
-				<componentref id="ball_c1" />
-				<componentref id="ball_c2" />
-			</children>
-		</component>
-
-		<!-- 2 CESTA PARA BOLAS -->
-		<component id="cesta2">
-			<transformation>
-			<translate x="-2.5" y="0" z="-8.00" />
-			<rotate axis="x" angle="-90" />
-			</transformation>
-			<materials>
-				<material id="floorMaterial" />
-			</materials>
-			<texture id="cesta" />
-			<children>
-				<primitiveref id="Cylinder2" />
-				<componentref id="ball_c1" />
-				<componentref id="ball_c2" />
-			</children>
-		</component>
-
-		<!-- BOLA C1-->
-		<component id="ball_c1">
-			<transformation>
-				<translate x="0" y="0" z="0.25" />
-				<scale x="0.2" y="0.2" z="0.2" />
-			</transformation>
-			<materials>
-				<material id="ballMaterial" />
-			</materials>
-			<texture id="ball2" length_s="100000" length_t="1000000" />
-			<children>
-				<primitiveref id="Sphere" />
-			</children>
-		</component>
-
-		<!-- BOLA C2-->
-		<component id="ball_c2">
-			<transformation>
-				<translate x="0.1" y="0.1" z="0.6" />
-				<scale x="0.2" y="0.2" z="0.2" />
-			</transformation>
-			<materials>
-				<material id="ballMaterial" />
-			</materials>
-			<texture id="ball2" length_s="100000" length_t="1000000" />
-			<children>
-				<primitiveref id="Sphere" />
-			</children>
-		</component>
-		<!-- CHAIR PARTS -->
-		<component id="leg1">
-			<transformation>
-				<translate x="-0.08" y="0" z="-0.08" />
-				<rotate axis="x" angle="90" />
-			</transformation>
-			<materials>
-				<material id="inherit" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="leg" />
-			</children>
-		</component>
-		<component id="leg2">
-			<transformation>
-				<translate x="0.08" y="0" z="-0.08" />
-				<rotate axis="x" angle="90" />
-			</transformation>
-			<materials>
-				<material id="inherit" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="leg" />
-			</children>
-		</component>
-		<component id="leg3">
-			<transformation>
-				<translate x="-0.08" y="0" z="0.08" />
-				<rotate axis="x" angle="90" />
-			</transformation>
-			<materials>
-				<material id="inherit" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="leg" />
-			</children>
-		</component>
-		<component id="leg4">
-			<transformation>
-				<translate x="0.08" y="0" z="0.08" />
-				<rotate axis="x" angle="90" />
-			</transformation>
-			<materials>
-				<material id="inherit" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="leg" />
-			</children>
-		</component>
-		<component id="chairSeat">
-			<transformation>
-				<scale x="0.2" y="0.5" z="0.1" />
-				<rotate axis="x" angle="90" />
-			</transformation>
-			<materials>
-				<material id="inherit" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="chairRectangle" />
-			</children>
-		</component>
-		<component id="chairSeat2">
-			<transformation>
-				<scale x="0.2" y="0.5" z="0.1" />
-				<rotate axis="x" angle="-90" />
-			</transformation>
-			<materials>
-				<material id="inherit" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="chairRectangle" />
-			</children>
-		</component>
-		<component id="chairBack">
-			<transformation>
-				<translate x="0" y="0.15" z="0.1" />
-				<scale x="0.2" y="0.15" z="0.1" />
-			</transformation>
-			<materials>
-				<material id="inherit" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="chairRectangle" />
-			</children>
-		</component>
-		<component id="chairBack2">
-			<transformation>
-
-				<translate x="0" y="0.15" z="0.1" />
-				<scale x="0.2" y="0.15" z="0.1" />
-				<rotate axis="y" angle="180" />
-			</transformation>
-			<materials>
-				<material id="inherit" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="chairRectangle" />
-			</children>
-		</component>
-		<!-- CHAIR 1-->
-		<component id="chair1">
-			<transformation>
-				<translate x="4.5" y="0.35" z="0" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 2-->
-		<component id="chair2">
-			<transformation>
-				<translate x="4.5" y="0.35" z="0.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 3-->
-		<component id="chair3">
-			<transformation>
-				<translate x="4.5" y="0.35" z="1" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 4-->
-		<component id="chair4">
-			<transformation>
-				<translate x="4.5" y="0.35" z="1.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 5-->
-		<component id="chair5">
-			<transformation>
-				<translate x="4.5" y="0.35" z="2" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 6-->
-		<component id="chair6">
-			<transformation>
-				<translate x="4.5" y="0.35" z="2.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 7-->
-		<component id="chair7">
-			<transformation>
-				<translate x="4.5" y="0.35" z="3" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 8-->
-		<component id="chair8">
-			<transformation>
-				<translate x="4.5" y="0.35" z="3.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 9-->
-		<component id="chair9">
-			<transformation>
-				<translate x="4.5" y="0.35" z="4" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 10-->
-		<component id="chair10">
-			<transformation>
-				<translate x="4.5" y="0.35" z="4.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 11-->
-		<component id="chair11">
-			<transformation>
-				<translate x="4.5" y="0.35" z="5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 12-->
-		<component id="chair12">
-			<transformation>
-				<translate x="4.5" y="0.35" z="5.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 13-->
-		<component id="chair13">
-			<transformation>
-				<translate x="4.5" y="0.35" z="6" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 14-->
-		<component id="chair14">
-			<transformation>
-				<translate x="4.5" y="0.35" z="6.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 15-->
-		<component id="chair15">
-			<transformation>
-				<translate x="4.5" y="0.35" z="7" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 16-->
-		<component id="chair16">
-			<transformation>
-				<translate x="4.5" y="0.35" z="7.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-		<!-- CHAIR 17-->
-		<component id="chair17">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-0.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 18-->
-		<component id="chair18">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-1" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 19-->
-		<component id="chair19">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-1.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 20-->
-		<component id="chair20">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-2" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 21-->
-		<component id="chair21">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-2.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 22-->
-		<component id="chair22">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-3" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 23-->
-		<component id="chair23">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-3.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 24-->
-		<component id="chair24">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-4" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 25-->
-		<component id="chair25">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-4.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 26-->
-		<component id="chair26">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 27-->
-		<component id="chair27">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-5.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 28-->
-		<component id="chair28">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-6" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 29-->
-		<component id="chair29">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-6.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 30-->
-		<component id="chair30">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-7" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-
-		<!-- CHAIR 31-->
-		<component id="chair31">
-			<transformation>
-				<translate x="4.5" y="0.35" z="-7.5" />
-				<rotate axis="y" angle="90" />
-				<scale x="2" y="1.7" z="2" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chairSeat" />
-				<componentref id="chairSeat2" />
-				<componentref id="chairBack" />
-				<componentref id="chairBack2" />
-				<componentref id="leg1" />
-				<componentref id="leg2" />
-				<componentref id="leg3" />
-				<componentref id="leg4" />
-			</children>
-		</component>
-		<!-- ROW OF CHAIRS FRONT-->
-		<component id="rowChairsFront">
-			<transformation>
-				<translate x="0" y="0" z="0" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chair1" />
-				<componentref id="chair2" />
-				<componentref id="chair3" />
-				<componentref id="chair4" />
-				<componentref id="chair5" />
-				<componentref id="chair6" />
-				<componentref id="chair7" />
-				<componentref id="chair8" />
-				<componentref id="chair9" />
-				<componentref id="chair10" />
-				<componentref id="chair11" />
-				<componentref id="chair12" />
-				<componentref id="chair13" />
-				<componentref id="chair14" />
-				<componentref id="chair15" />
-				<componentref id="chair16" />
-				<componentref id="chair17" />
-				<componentref id="chair18" />
-				<componentref id="chair19" />
-				<componentref id="chair20" />
-				<componentref id="chair21" />
-				<componentref id="chair22" />
-				<componentref id="chair23" />
-				<componentref id="chair24" />
-				<componentref id="chair25" />
-				<componentref id="chair26" />
-				<componentref id="chair27" />
-				<componentref id="chair28" />
-				<componentref id="chair29" />
-				<componentref id="chair30" />
-				<componentref id="chair31" />
-			</children>
-		</component>
-
-		<!-- ROW OF CHAIRS BACK-->
-		<component id="rowChairsBack">
-			<transformation>
-				<translate x="0" y="0" z="0" />
-				<rotate axis="y" angle="180" />
-			</transformation>
-			<materials>
-				<material id="darkGreyMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="chair1" />
-				<componentref id="chair2" />
-				<componentref id="chair3" />
-				<componentref id="chair4" />
-				<componentref id="chair5" />
-				<componentref id="chair6" />
-				<componentref id="chair7" />
-				<componentref id="chair8" />
-				<componentref id="chair9" />
-				<componentref id="chair10" />
-				<componentref id="chair11" />
-				<componentref id="chair12" />
-				<componentref id="chair13" />
-				<componentref id="chair14" />
-				<componentref id="chair15" />
-				<componentref id="chair16" />
-				<componentref id="chair17" />
-				<componentref id="chair18" />
-				<componentref id="chair19" />
-				<componentref id="chair20" />
-				<componentref id="chair21" />
-				<componentref id="chair22" />
-				<componentref id="chair23" />
-				<componentref id="chair24" />
-				<componentref id="chair25" />
-				<componentref id="chair26" />
-				<componentref id="chair27" />
-				<componentref id="chair28" />
-				<componentref id="chair29" />
-				<componentref id="chair30" />
-				<componentref id="chair31" />
-			</children>
-		</component>
-
-		<!-- RIM SUPPORT -->
-		<component id="rimSupport">
-			<transformation>
-				<transformationref id="rimSupport" />
-			</transformation>
-			<materials>
-				<material id="rimMaterial" />
-			</materials>
-			<texture id="rimSupport" />
-			<children>
-				<primitiveref id="rimSupport" />
-			</children>
-		</component>
-
-		<!-- NET -->
-		<component id="net">
-			<transformation>
-				<transformationref id="net" />
-			</transformation>
-			<materials>
-				<material id="rimMaterial" />
-			</materials>
-			<texture id="net" />
-			<children>
-				<primitiveref id="net" />
-			</children>
-		</component>
-
-		<!-- Parte da lado tabela -->
-		<component id="tabelaSides">
-			<transformation>
-				<transformationref id="tabelaSides" />
-			</transformation>
-			<materials>
-				<material id="floorMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="tabelaSides" />
-			</children>
-		</component>
-
-		<!-- Parte da frente tabela -->
-		<component id="tabelaFront">
-			<transformation>
-				<transformationref id="tabelaFront" />
-			</transformation>
-			<materials>
-				<material id="whiteMaterial" />
-			</materials>
-			<texture id="tabela" length_s="0.9" length_t="1.5" />
-			<children>
-				<primitiveref id="tabela" />
-			</children>
-		</component>
-
-		<!-- Parte de trás tabela -->
-		<component id="tabelaBack">
-			<transformation>
-				<transformationref id="tabelaBack" />
-			</transformation>
-			<materials>
-				<material id="whiteMaterial" />
-			</materials>
-			<texture id="tabelaBack" length_s="0.9" length_t="1.5" />
-			<children>
-				<primitiveref id="tabela" />
-			</children>
-		</component>
-
-		<!-- BASE DA TABELA -->
-		<component id="basketBase">
-			<transformation>
-				<transformationref id="basketBase" />
-			</transformation>
-			<materials>
-				<material id="blueMaterialBase" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="basketBase" />
-			</children>
-		</component>
-
-		<!-- RETANGULO DA BASE -->
-		<component id="baseRectangle">
-			<transformation>
-				<transformationref id="baseRectangle" />
-			</transformation>
-			<materials>
-				<material id="blueMaterialBase" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="baseRectangle" />
-			</children>
-		</component>
-
-		<!-- COLUNA DA TABELA  -->
-		<component id="basketHeight">
-			<transformation>
-				<transformationref id="basketHeight" />
-			</transformation>
-			<materials>
-				<material id="blueMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="basketHeight" />
-			</children>
-		</component>
-
-		<!-- BRAÇO DA TABELA  -->
-		<component id="basketArm">
-			<transformation>
-				<transformationref id="basketArm" />
-			</transformation>
-			<materials>
-				<material id="blueMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="basketArm" />
-			</children>
-		</component>
-
-		<!-- RETANGULO DO BRAÇO -->
-		<component id="armRectangle">
-			<transformation>
-				<transformationref id="armRectangle" />
-			</transformation>
-			<materials>
-				<material id="blueMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="armRectangle" />
-			</children>
-		</component>
-
-		<!-- LEFT TABELA's  -->
-		<component id="basketLeft">
-			<transformation>
-				<translate x="0" y="0" z="0.45" />
-			</transformation>
-			<materials>
-				<material id="floorMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="basketBase" />
-				<componentref id="basketHeight" />
-				<componentref id="baseRectangle" />
-				<componentref id="basketArm" />
-				<componentref id="armRectangle" />
-				<componentref id="tabelaFront" />
-				<componentref id="tabelaBack" />
-				<componentref id="tabelaSides" />
-				<componentref id="net" />
-				<componentref id="rimSupport" />
-			</children>
-		</component>
-
-		<!-- RIGHT TABELA's  -->
-		<component id="basketRight">
-			<transformation>
-				<rotate axis="y" angle="180" />
-				<translate x="0.4" y="0" z="0.45" />
-			</transformation>
-			<materials>
-				<material id="floorMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<componentref id="basketBase" />
-				<componentref id="basketHeight" />
-				<componentref id="baseRectangle" />
-				<componentref id="basketArm" />
-				<componentref id="armRectangle" />
-				<componentref id="tabelaFront" />
-				<componentref id="tabelaBack" />
-				<componentref id="tabelaSides" />
-				<componentref id="net" />
-				<componentref id="rimSupport" />
-			</children>
-		</component>
-
-		<!-- ECRÃS -->
-		<component id="screens">
-			<transformation>
-				<transformationref id="screens" />
-			</transformation>
-			<materials>
-				<material id="screenMaterial" />
-			</materials>
-			<texture id="screen" length_s="1" length_t="100000" />
-			<children>
-				<primitiveref id="Screens" />
-			</children>
-		</component>
-
-		<!-- PARTE SUPERIOR ECRÃS -->
-		<component id="topScreen">
-			<transformation>
-				<transformationref id="topScreen" />
-			</transformation>
-			<materials>
-				<material id="redMaterial" />
-			</materials>
-			<texture id="none" />
-			<children>
-				<primitiveref id="topScreen" />
-			</children>
-		</component>
-
-		<!-- BOLA -->
-		<component id="ball">
-			<transformation>
-				<transformationref id="ball" />
-			</transformation>
-			<materials>
-				<material id="ballMaterial" />
-			</materials>
-			<texture id="ball2" length_s="100000" length_t="1000000" />
-			<children>
-				<primitiveref id="Sphere" />
-			</children>
-		</component>
 
 		<!-- CHÃO -->
 		<component id="floor">
@@ -1624,6 +402,21 @@
 				<material id="floorMaterial" />
 			</materials>
 			<texture id="court" length_s="1" length_t="2" />
+			<children>
+				<primitiveref id="Plane" />
+			</children>
+		</component>
+
+		<component id="carbody">
+			<transformation>
+				<translate x="4.5" y="0.35" z="0.5" />
+				<rotate axis="y" angle="90" />
+				<scale x="2" y="1.7" z="2" />
+			</transformation>
+			<materials>
+				<material id="darkGreyMaterial" />
+			</materials>
+			<texture id="none" />
 			<children>
 				<primitiveref id="Plane" />
 			</children>
@@ -1640,20 +433,7 @@
 				<material id="floorMaterial" />
 			</materials>
 			<texture id="none" />
-			<children>
-				<componentref id="cesta" />
-				<componentref id="cesta2" />
-				<componentref id="sponsorL" />
-				<componentref id="sponsorR" />
-				<componentref id="topScreen" />
-				<componentref id="floor" />
-				<componentref id="ball" />
-				<componentref id="screens" />
-				<componentref id="basketLeft" />
-				<componentref id="basketRight" />
-				<componentref id="rowChairsFront" />
-				<componentref id="rowChairsBack" />
-			</children>
+			<children></children>
 		</component>
 
 	</components>

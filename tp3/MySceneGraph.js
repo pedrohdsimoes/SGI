@@ -1,12 +1,37 @@
-import { CGFXMLreader, CGFappearance, CGFtexture, CGFcamera, CGFcameraOrtho } from "../lib/CGF.js";
-import { MyRectangle } from "./primitives/MyRectangle.js";
-import { MyTriangle } from "./primitives/MyTriangle.js";
-import { MyCylinder } from "./primitives/MyCylinder.js";
-import { MySphere } from "./primitives/MySphere.js";
-import { MyPlane } from "./primitives/MyPlane.js";
-import { MyPatch } from "./primitives/MyPatch.js";
-import { MyCylinder2 } from "./primitives/MyCylinder2.js";
-import { MyComponent } from "./MyComponent.js";
+import {
+	CGFXMLreader,
+	CGFappearance,
+	CGFtexture,
+	CGFcamera,
+	CGFcameraOrtho
+} from "../lib/CGF.js";
+import {
+	MyRectangle
+} from "./primitives/MyRectangle.js";
+import {
+	MyTriangle
+} from "./primitives/MyTriangle.js";
+import {
+	MyCylinder
+} from "./primitives/MyCylinder.js";
+import {
+	MySphere
+} from "./primitives/MySphere.js";
+import {
+	MyPlane
+} from "./primitives/MyPlane.js";
+import {
+	MyPatch
+} from "./primitives/MyPatch.js";
+import {
+	MyCylinder2
+} from "./primitives/MyCylinder2.js";
+import {
+	MyComponent
+} from "./MyComponent.js";
+import {
+	MyObstacle
+} from "./elements/MyObstacle.js";
 var DEGREE_TO_RAD = Math.PI / 180;
 
 // Order of the groups in the XML document.
@@ -193,6 +218,7 @@ export class MySceneGraph {
 
 			//Parse components block
 			if ((error = this.parseComponents(nodes[index])) != null) return error;
+
 		}
 		this.log("All parsed");
 	}
@@ -342,16 +368,14 @@ export class MySceneGraph {
 					if (viewchildren[1].nodeName != "up")
 						return "unable to parse up of the view for ID = " + viewId;
 					up = this.parseCoordinates3D(viewchildren[1], "up of the view for ID = " + viewId);
-				}
-				else {
+				} else {
 					up = [0, 1, 0];
 				}
 
 				cam = new CGFcameraOrtho(left, right, bottom, top, near, far, from, to, up);
 
 				this.views[viewId] = cam;
-			}
-			else this.onXMLError("View not identified");
+			} else this.onXMLError("View not identified");
 		}
 
 		this.log("Parsed views");
@@ -414,8 +438,7 @@ export class MySceneGraph {
 			if (children[i].nodeName != "omni" && children[i].nodeName != "spot") {
 				this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
 				continue;
-			}
-			else {
+			} else {
 				attributeNames.push(...["location", "ambient", "diffuse", "specular"]);
 				attributeTypes.push(...["position", "color", "color", "color"]);
 			}
@@ -464,8 +487,7 @@ export class MySceneGraph {
 						return aux;
 
 					global.push(aux);
-				}
-				else
+				} else
 					return ("light " + attributeNames[i] + " undefined for ID = " + lightId);
 			}
 
@@ -489,8 +511,7 @@ export class MySceneGraph {
 						return aux;
 
 					targetLight = aux;
-				}
-				else
+				} else
 					return "light target undefined for ID = " + lightId;
 
 				global.push(...[angle, exponent, targetLight]);
@@ -994,15 +1015,19 @@ export class MySceneGraph {
 				var cylin2 = new MyCylinder2(this.scene, primitiveId, slices, stacks, height, base, top);
 
 				this.primitives[primitiveId] = cylin2;
-			}
-
-			else {
+			} else {
 				console.warn("Unable to identify primitive");
 			}
 		}
 
 		this.log("Parsed primitives");
 		return null;
+	}
+
+	getComponentById(id) {
+
+
+
 	}
 
 	/**
@@ -1036,6 +1061,8 @@ export class MySceneGraph {
 			if (this.components[componentID] != null)
 				return ("ID must be unique for each component (conflict: ID = " + componentID + ")");
 
+
+
 			grandChildren = children[i].children;
 			nodeNames = [];
 
@@ -1054,18 +1081,13 @@ export class MySceneGraph {
 
 			if (grandChildren[transformationIndex].children.length == 0) {
 				transformation = mat4.create();
-			}
-
-			else if (grandChildren[transformationIndex].children[0].nodeName == "transformationref") {
+			} else if (grandChildren[transformationIndex].children[0].nodeName == "transformationref") {
 				var id = this.reader.getString(grandChildren[transformationIndex].children[0], "id");
 
 				if (this.transformations[id] != null) {
 					transformation = this.transformations[id];
-				}
-				else this.onXMLMinorError("No transformation for ID : " + id);
-			}
-
-			else
+				} else this.onXMLMinorError("No transformation for ID : " + id);
+			} else
 				transformation = this.parseTransformationsAux(grandChildren[transformationIndex].children);
 
 
@@ -1108,18 +1130,19 @@ export class MySceneGraph {
 				if (grandgrandChildren[x].nodeName == "componentref") {
 					child = this.reader.getString(grandgrandChildren[x], "id");
 					componentchildren.push(child);
-				}
-				else if (grandgrandChildren[x].nodeName == "primitiveref") {
+				} else if (grandgrandChildren[x].nodeName == "primitiveref") {
 					child = this.reader.getString(grandgrandChildren[x], "id");
 					if (this.primitives[child] == null)
 						this.onXMLMinorError("No primitive for ID : " + child);
 					leaves.push(child);
-				}
-				else {
+				} else {
 					this.onXMLMinorError("unknown tag <" + grandgrandChildren[x].nodeName + ">");
 				}
 			}
 			var component = new MyComponent(this.scene, componentID, transformation, materialID, textureID, textureLenghtS, textureLenghtT, componentchildren, leaves);
+
+			//	if (component.componentID == id)
+
 			this.components[componentID] = component;
 		}
 		this.log("Parsed components");
@@ -1240,6 +1263,7 @@ export class MySceneGraph {
 
 	displayScene() {
 		this.displayComponent(this.idRoot, null, null, 1, 1);
+
 	}
 
 	displayComponent(componentID, material, texture, s, t) {
@@ -1258,11 +1282,9 @@ export class MySceneGraph {
 			material.setTexture(this.textures[texture]);
 			component.length_s = s;
 			component.length_t = t;
-		}
-		
-		else if (component.texture == "none")
+		} else if (component.texture == "none")
 			material.setTexture(null);
-		
+
 		else {
 			texture = component.texture;
 			material.setTexture(this.textures[texture]);

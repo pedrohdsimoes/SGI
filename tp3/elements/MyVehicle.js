@@ -19,8 +19,8 @@ export class MyVehicle extends CGFobject {
 
         // this.carbody = scene.displayComponent('carbody', null ,null , 1, 1);
         // this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
-        
-        this.car = new VehicleBody(scene);
+
+        this.carbody = new VehicleBody(scene);
         this.wheel = new MyWheel(scene);
         this.test = new MyStartLine(scene);
         this.keyForward = false;
@@ -80,7 +80,7 @@ export class MyVehicle extends CGFobject {
 
         //car body
         this.scene.pushMatrix();
-        this.car.display();
+        this.carbody.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();

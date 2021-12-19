@@ -46,19 +46,16 @@ export class MyWheel extends CGFobject {
         this.circle = new MyCircle(scene, "medium", 40, 100);
 
     }
-    
+
     display() {
         this.scene.pushMatrix();
         this.side.apply();
-
-        this.scene.pushMatrix();
 
         // this.scene.scale(3, 1, 3);
         this.scene.translate(0, 2, 0);
         this.cylinder.display();
         this.scene.popMatrix();
 
-        this.front.apply();
 
         // this.scene.pushMatrix();
         // this.scene.translate(0, 2, 3);
@@ -70,13 +67,14 @@ export class MyWheel extends CGFobject {
 
 
         this.scene.pushMatrix();
+        this.front.apply();
         this.scene.translate(0, 2, 3);
         this.scene.scale(0.05, 0.05, 0.05);
         // this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.circle.display();
         this.scene.popMatrix();
 
-        this.scene.popMatrix();
+
     }
 
 }

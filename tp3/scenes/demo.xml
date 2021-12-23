@@ -99,17 +99,8 @@
     <!-- ___________________________________TEXTURES______________________________________ -->
     <textures>
         <!-- this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="court" file="" />
-        <texture id="ball" file="" />
-        <texture id="ball2" file="" />
-        <texture id="screen" file="" />
-        <texture id="sponsor" file="" />
-        <texture id="tabela" file="" />
-        <texture id="net" file="" />
-        <texture id="rimSupport" file="" />
-        <texture id="timeboard" file="" />
-        <texture id="tabelaBack" file="" />
-        <texture id="cesta" file="" />
+        <texture id="trackBackground" file="./scenes/images/trackbackground.png" />
+
     </textures>
     <!-- ___________________________________MATERIALS______________________________________ -->
     <materials>
@@ -191,102 +182,10 @@
          requires a distinct "id". At least one material should be present. -->
         <transformation id="court">
             <rotate axis="y" angle="90" />
-            <scale x="18" y="1" z="10" />
+            <scale x="512" y="1" z="512" />
             <rotate axis="x" angle="-90" />
         </transformation>
 
-        <transformation id="ball">
-            <translate x="-1" y="0.2" z="3" />
-            <scale x="0.2" y="0.2" z="0.2" />
-        </transformation>
-
-        <transformation id="screens">
-            <!-- identifier -->
-            <translate x="0" y="4" z="0" /> <!-- translate an object -->
-            <rotate axis="x" angle="-90" /> <!-- rotate an object -->
-            <scale x="1.5" y="1.5" z="0.5" /> <!-- scale an object -->
-        </transformation>
-
-        <transformation id="rimSupport">
-            <scale x="1" y="1" z="1" />
-            <translate x="-0.19" y="2.7" z="4.85" />
-            <rotate axis="z" angle="45" />
-        </transformation>
-
-        <transformation id="net">
-            <translate x="-0.19" y="2.32" z="4.65" />
-            <rotate axis="x" angle="-90" />
-            <rotate axis="z" angle="45" />
-        </transformation>
-
-        <transformation id="tabelaFront">
-            <translate x="-0.19" y="3" z="5" />
-            <rotate axis="x" angle="180" />
-            <rotate axis="z" angle="90" />
-        </transformation>
-
-        <transformation id="tabelaBack">
-            <translate x="-0.19" y="3" z="5.1" />
-            <rotate axis="z" angle="270" />
-        </transformation>
-
-        <transformation id="tabelaSides">
-            <scale x="1.5" y="1" z="1" />
-            <translate x="-0.12" y="3" z="5" />
-            <rotate axis="z" angle="45" />
-        </transformation>
-
-        <transformation id="baseRectangle">
-            <translate x="-0.19" y="0.18" z="8.62" />
-            <scale x="0.67" y="0.95" z="1" />
-            <rotate axis="x" angle="10" />
-        </transformation>
-
-        <transformation id="basketBase">
-            <translate x="-0.19" y="0.5" z="6.8" />
-            <scale x="0.7" y="1" z="1" />
-            <rotate axis="x" angle="10" />
-            <rotate axis="z" angle="45" />
-        </transformation>
-
-        <transformation id="basketHeight">
-            <translate x="-0.2" y="0" z="7.1" />
-            <scale x="0.7" y="1" z="0.6" />
-            <rotate axis="x" angle="-90" />
-            <rotate axis="z" angle="45" />
-        </transformation>
-
-        <transformation id="topScreen">
-            <translate x="0" y="5.475" z="0" />
-            <scale x="1.88" y="1" z="1.83" />
-        </transformation>
-
-        <transformation id="basketArm">
-            <translate x="-0.2" y="2.75" z="5.1" />
-            <scale x="1" y="0.65" z="1" />
-            <rotate axis="z" angle="45" />
-        </transformation>
-
-        <transformation id="armRectangle">
-            <translate x="-0.238" y="2.775" z="7.27" />
-            <scale x="1" y="1" z="1" />
-        </transformation>
-
-        <transformation id="sponsorL">
-            <translate x="0.3" y="0" z="7.05" />
-            <rotate axis="y" angle="180" />
-            <rotate axis="x" angle="-10" />
-        </transformation>
-
-        <transformation id="sponsorR">
-            <translate x="-0.7" y="0" z="-7.05" />
-            <rotate axis="x" angle="-10" />
-        </transformation>
-
-        <transformation id="cesta">
-            <translate x="2.5" y="0" z="8.00" />
-            <rotate axis="x" angle="-90" />
-        </transformation>
 
     </transformations>
     <!-- ___________________________________PRIMITIVES______________________________________ -->
@@ -330,61 +229,12 @@
             </patch>
         </primitive>
 
-        <primitive id="Cylinder2">
-            <cylinder2 base="0.35" top="0.4" height="0.8" slices="16" stacks="5" />
-        </primitive>
-
-        <!-- ECRAS -->
-        <primitive id="Screens">
-            <cylinder base="1" top="1.25" height="3.0" slices="6" stacks="1" />
-        </primitive>
-
-
-        <!-- TABELA DE BASKET -->
-        <primitive id="basketBase">
-            <cylinder base="0.7" top="0.2" height="1.85" slices="4" stacks="1" />
-        </primitive>
-
-        <primitive id="baseRectangle">
-            <rectangle x1="-0.15" y1="-0.15" x2="0.15" y2="0.15" />
-        </primitive>
-
-        <primitive id="basketHeight">
-            <cylinder base="0.95" top="0.4" height="2.63" slices="4" stacks="1" />
-        </primitive>
-
-        <primitive id="armRectangle">
-            <rectangle x1="-0.16" y1="-0.145" x2="0.235" y2="0.11" />
-        </primitive>
-
-        <primitive id="basketArm">
-            <cylinder base="0.28" top="0.28" height="2.17" slices="4" stacks="1" />
-        </primitive>
-
-        <primitive id="tabela">
-            <rectangle x1="-0.45" y1="-0.7" x2="0.45" y2="0.7" />
-        </primitive>
-
-        <primitive id="tabelaSides">
-            <cylinder base="0.64" top="0.64" height="0.1" slices="4" stacks="1" />
-        </primitive>
-
-        <primitive id="net">
-            <cylinder base="0.12" top="0.2" height="0.4" slices="100" stacks="1" />
-        </primitive>
 
         <primitive id="rimSupport">
             <cylinder base="0.03" top="0.03" height="0.15" slices="4" stacks="1" />
         </primitive>
 
-        <!-- CHAIR -->
-        <primitive id="chairRectangle">
-            <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
-        </primitive>
-
-        <primitive id="leg">
-            <cylinder base="0.02" top="0.02" height="0.2" slices="100" stacks="1" />
-        </primitive>
+     
     </primitives>
     <!-- ___________________________________COMPONENTS______________________________________ -->
     <components>
@@ -401,7 +251,7 @@
             <materials>
                 <material id="floorMaterial" />
             </materials>
-            <texture id="court" length_s="1" length_t="2" />
+            <texture id="trackBackground" length_s="1" length_t="2" />
             <children>
                 <primitiveref id="Plane" />
             </children>
@@ -434,6 +284,7 @@
             </materials>
             <texture id="none" />
             <children>
+                <componentref id="floor" />
             </children>
         </component>
 

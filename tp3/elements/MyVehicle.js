@@ -69,21 +69,24 @@ export class MyVehicle extends CGFobject {
 
         // FL Wheel
         this.scene.pushMatrix();
-        this.scene.rotate(this.steeringAngle * Math.PI / 180, 0, 1, 0);
         this.scene.translate(0.65, 0, 2);
         this.scene.scale(0.2, 0.2, 0.2)
-        this.scene.translate(1, 0, 0)
+        this.scene.translate(1, 2, 17.5);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
+        this.scene.rotate(this.steeringAngle * 1.2 * Math.PI / 110, 0, 1, 0);
+        this.scene.rotate(-this.velocity * 3 * Math.PI, 0, 0, 1);
         this.wheel.display();
         this.scene.popMatrix();
 
         // FR Wheel
         this.scene.pushMatrix();
-        this.scene.rotate(this.steeringAngle * Math.PI / 180, 0, 1, 0);
+
         this.scene.translate(-0.65, 0, 2);
         this.scene.scale(0.2, 0.2, 0.2)
-        this.scene.translate(-1, 0, 0)
+        this.scene.translate(-1, 2, 17.5)
         this.scene.rotate(-Math.PI / 2, 0, 1, 0);
+        this.scene.rotate(this.steeringAngle * 1.2 * Math.PI / 110, 0, 1, 0);
+        this.scene.rotate(this.velocity * 3 * Math.PI, 0, 0, 1);
         this.wheel.display();
         this.scene.popMatrix();
 
@@ -91,8 +94,9 @@ export class MyVehicle extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0.65, 0, -2.8);
         this.scene.scale(0.2, 0.2, 0.2)
-        this.scene.translate(1, 0, -7)
+        this.scene.translate(1, 2, 10.5)
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
+        this.scene.rotate(-this.velocity * 3 * Math.PI, 0, 0, 1);
         this.wheel.display();
         this.scene.popMatrix();
 
@@ -100,8 +104,9 @@ export class MyVehicle extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(-0.65, 0, -2.8);
         this.scene.scale(0.2, 0.2, 0.2)
-        this.scene.translate(-1, 0, -7)
+        this.scene.translate(-1, 2, 10.5)
         this.scene.rotate(-Math.PI / 2, 0, 1, 0);
+        this.scene.rotate(this.velocity * 3 * Math.PI, 0, 0, 1);
         this.wheel.display();
         this.scene.popMatrix();
 
@@ -173,6 +178,7 @@ export class MyVehicle extends CGFobject {
         var deltaDirection = this.direction - this.lastDirection;
         this.lastDirection = this.direction;
 
+
         // compute vehicle location based on current location, direction and velocity
         this.location[0] += (Math.sin(this.direction) * this.velocity);
         this.location[1] = 0;
@@ -180,5 +186,6 @@ export class MyVehicle extends CGFobject {
 
         //log
         console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + ")");
+        return this.location;
     }
 }

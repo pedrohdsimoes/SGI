@@ -4,6 +4,9 @@ import {
     CGFcamera
 } from '../lib/CGF.js';
 import {
+    SimpleImage
+} from '../tp3/SimpleImage/SimpleImage.js';
+import {
     MyObstacle
 } from './elements/MyObstacle.js';
 import {
@@ -76,6 +79,8 @@ export class XMLscene extends CGFscene {
         this.wheel = new MyWheel(this);
         this.vehicleBody = new VehicleBody(this);
         this.mysvgreader = new MySVGReader("TestTrackMap.svg", this);
+
+        this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
 
         super.setUpdatePeriod(100);
     }
@@ -249,7 +254,7 @@ export class XMLscene extends CGFscene {
             // this.start.display();
             this.vehicle.display();
             this.mysvgreader.displayScene();
-            // this.wheel.display();
+            //this.wheel.display();
             // this.vehicleBody.display();
 
 

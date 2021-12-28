@@ -1,10 +1,27 @@
-import { CGFobject, CGFappearance, CGFnurbsObject, CGFnurbsSurface } from "../../lib/CGF.js";
-import { MyCylinder } from "../primitives/MyCylinder.js";
-import { MyPlane } from "../primitives/MyPlane.js";
-import { MyRectangle } from "../primitives/MyRectangle.js";
-import { MySphere } from "../primitives/MySphere.js";
-import { MyPatch } from "../primitives/MyPatch.js";
-import { MyTriangle } from "../primitives/MyTriangle.js";
+import {
+    CGFobject,
+    CGFappearance,
+    CGFnurbsObject,
+    CGFnurbsSurface
+} from "../../lib/CGF.js";
+import {
+    MyCylinder
+} from "../primitives/MyCylinder.js";
+import {
+    MyPlane
+} from "../primitives/MyPlane.js";
+import {
+    MyRectangle
+} from "../primitives/MyRectangle.js";
+import {
+    MySphere
+} from "../primitives/MySphere.js";
+import {
+    MyPatch
+} from "../primitives/MyPatch.js";
+import {
+    MyTriangle
+} from "../primitives/MyTriangle.js";
 
 
 
@@ -158,6 +175,7 @@ export class VehicleBody extends CGFobject {
 
     display() {
         this.scene.pushMatrix();
+        this.scene.translate(0, 0, 3.5);
 
 
         // Left Surface

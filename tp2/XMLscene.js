@@ -1,4 +1,8 @@
-import { CGFscene,CGFaxis,CGFcamera  } from '../lib/CGF.js';
+import {
+    CGFscene,
+    CGFaxis,
+    CGFcamera
+} from '../lib/CGF.js';
 
 
 
@@ -37,14 +41,14 @@ export class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.lightValues = [];
-    
+
         this.axis = new CGFaxis(this);
         this.displayLights = false;
-        
+
     }
     /**
-* Initializes the default camera.
-*/
+     * Initializes the default camera.
+     */
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
         this.interface.setActiveCamera(this.camera);
@@ -60,7 +64,7 @@ export class XMLscene extends CGFscene {
         // Reads the lights from the scene graph.
         for (var key in this.graph.lights) {
             if (i >= 8)
-                break;              // Only eight lights allowed by WebGL.
+                break; // Only eight lights allowed by WebGL.
 
             if (this.graph.lights.hasOwnProperty(key)) {
                 var light = this.graph.lights[key];
@@ -77,10 +81,9 @@ export class XMLscene extends CGFscene {
                 }
                 this.lights[i].setVisible(true);
 
-                if(this.displayLights){
+                if (this.displayLights) {
                     this.lights[i].setVisible(true);
-                }
-                else
+                } else
                     this.lights[i].setVisible(false);
 
                 if (light[0])
@@ -95,48 +98,47 @@ export class XMLscene extends CGFscene {
         }
     }
 
-        /**
-         * Initializes the scene cameras.
-         */
-    
-        initXMLCameras(){
-            this.cameraID=this.graph.defaultCameraId;
-            this.camera = this.graph.views[this.graph.defaultCameraId];
-            this.interface.setActiveCamera(this.default);
-        }
+    /**
+     * Initializes the scene cameras.
+     */
 
-        /**
+    initXMLCameras() {
+        this.cameraID = this.graph.defaultCameraId;
+        this.camera = this.graph.views[this.graph.defaultCameraId];
+        this.interface.setActiveCamera(this.default);
+    }
+
+    /**
      * Update the current camera according to a change in the  cameras dropdown in the interface
      */
-         updateCamera(newCamera) {
-            this.cameraID = newCamera;
-            this.camera = this.graph.views[this.cameraID];
-            this.interface.setActiveCamera(this.camera);
-        }
-        /**
-         * Enables the lights accordingly to the lights chosen in the interface
-         */
-        setLights() {
-            var i = 0;
-            // Lights index.
-            
-            // Reads the lights from the lightValues map.
-            for (var key in this.lightValues) {
-                if (this.lightValues.hasOwnProperty(key)) {
-                    this.lights[i].setVisible(this.displayLights);
-                    if (this.lightValues[key]){
-                        this.lights[i].enable();
-                    }
-                    else{
-                        this.lights[i].disable();
-                    }		
-        
-                    this.lights[i].update();
-        
-                    i++;
+    updateCamera(newCamera) {
+        this.cameraID = newCamera;
+        this.camera = this.graph.views[this.cameraID];
+        this.interface.setActiveCamera(this.camera);
+    }
+    /**
+     * Enables the lights accordingly to the lights chosen in the interface
+     */
+    setLights() {
+        var i = 0;
+        // Lights index.
+
+        // Reads the lights from the lightValues map.
+        for (var key in this.lightValues) {
+            if (this.lightValues.hasOwnProperty(key)) {
+                this.lights[i].setVisible(this.displayLights);
+                if (this.lightValues[key]) {
+                    this.lights[i].enable();
+                } else {
+                    this.lights[i].disable();
                 }
+
+                this.lights[i].update();
+
+                i++;
             }
         }
+    }
 
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -155,12 +157,12 @@ export class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
 
         //cameras
-         this.initCameras();
+        this.initCameras();
 
         this.initXMLCameras();
 
         //initializing the interface elements
-        this.interface.createInterface(this.graph.views); 
+        this.interface.createInterface(this.graph.views);
 
         this.initLights();
 
@@ -172,7 +174,7 @@ export class XMLscene extends CGFscene {
      */
     display() {
         // ---- BEGIN Background, camera and axis setup
-       // this.selectView(this.interface.currentCameraId);
+        // this.selectView(this.interface.currentCameraId);
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -198,8 +200,8 @@ export class XMLscene extends CGFscene {
             // Draw axis
             this.setDefaultAppearance();
 
-             //set the active camera, necessary for being able to move the camera around
-             this.interface.setActiveCamera(this.camera);
+            //set the active camera, necessary for being able to move the camera around
+            this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();

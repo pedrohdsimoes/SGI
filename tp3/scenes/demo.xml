@@ -8,8 +8,8 @@
 
         <!-- Vista Geral - default -->
         <perspective id="overView" near="0.1" far="500" angle="45">
-            <from x="250" y="200" z="1" />
-            <to x="250" y="0" z="250" />
+            <from x="1" y="10" z="0" />
+            <to x="0" y="0" z="1" />
         </perspective>
 
         <!-- Vista de lado -->

@@ -26,7 +26,7 @@ import {
 export class MyWheel extends CGFobject {
     constructor(scene) {
         super(scene);
-        
+
         this.side = new CGFappearance(this.scene);
         this.side.setAmbient(1, 1, 1, 1);
         this.side.setDiffuse(1, 1, 1, 1);
@@ -53,7 +53,7 @@ export class MyWheel extends CGFobject {
         this.side.apply();
 
         // this.scene.scale(3, 1, 3);
-        this.scene.translate(0, 2, 0);
+        // this.scene.translate(0, 2, 0);
         this.cylinder2.display();
         this.scene.popMatrix();
 
@@ -69,7 +69,7 @@ export class MyWheel extends CGFobject {
         // Front 
         this.scene.pushMatrix();
         this.front.apply();
-        this.scene.translate(0, 2, 3);
+        this.scene.translate(0, 0, 3);
         this.scene.scale(0.05, 0.05, 0.05);
         this.circle.display();
         this.scene.popMatrix();
@@ -77,7 +77,7 @@ export class MyWheel extends CGFobject {
         // Back
         this.scene.pushMatrix();
         this.front.apply();
-        this.scene.translate(0, 2, 0);
+        // this.scene.translate(0, 2, 0);
         this.scene.scale(0.05, 0.05, 0.05);
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.circle.display();

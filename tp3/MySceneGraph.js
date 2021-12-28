@@ -5,6 +5,10 @@ import {
 	CGFcamera,
 	CGFcameraOrtho
 } from "../lib/CGF.js";
+
+import {
+	MyCircle
+} from "./primitives/MyCircle.js";
 import {
 	MyRectangle
 } from "./primitives/MyRectangle.js";
@@ -769,7 +773,8 @@ export class MySceneGraph {
 			// Validate the primitive type
 			if (
 				grandChildren.length != 1 ||
-				(grandChildren[0].nodeName != "rectangle" &&
+				(grandChildren[0].nodeName != "circle" &&
+					grandChildren[0].nodeName != "rectangle" &&
 					grandChildren[0].nodeName != "triangle" &&
 					grandChildren[0].nodeName != "cylinder" &&
 					grandChildren[0].nodeName != "sphere" &&
@@ -777,7 +782,7 @@ export class MySceneGraph {
 					grandChildren[0].nodeName != "patch" &&
 					grandChildren[0].nodeName != "cylinder2")
 			) {
-				return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, plane, patch or cylinder2)";
+				return "There must be exactly 1 primitive type (circle,rectangle, triangle, cylinder, sphere, plane, patch or cylinder2)";
 			}
 
 			// Specifications for the current primitive.
@@ -810,6 +815,22 @@ export class MySceneGraph {
 				var rect = new MyRectangle(this.scene, primitiveId, x1, x2, y1, y2);
 
 				this.primitives[primitiveId] = rect;
+			}
+
+			// CIRCLE
+			else if (primitiveType == "circle") {
+				// radius
+				var radius = this.reader.getFloat(grandChildren[0], "radius");
+				if (!(radius != null && !isNaN(radius)))
+					return ("unable to parse radius of the primitive coordinates for ID = " + primitiveId);
+
+				var slices = this.reader.getFloat(grandChildren[0], "slices");
+				if (!(slices != null && !isNaN(slices)))
+					return ("unable to parse slices of the primitive coordinates for ID = " + primitiveId);
+
+				var circ = new MyCircle(this.scene, primitiveId, radius, slices);
+
+				this.primitives[primitiveId] = circ;
 			}
 
 			// TRIANGLE
@@ -1024,11 +1045,6 @@ export class MySceneGraph {
 		return null;
 	}
 
-	getComponentById(id) {
-
-
-
-	}
 
 	/**
 	 * Parses the <components> block.

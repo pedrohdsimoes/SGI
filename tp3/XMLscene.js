@@ -18,7 +18,12 @@ import {
 import {
     MyWheel
 } from './elements/MyWheel.js';
-import { VehicleBody } from './elements/VehicleBody.js';
+import {
+    VehicleBody
+} from './elements/VehicleBody.js';
+import {
+    MySVGReader
+} from './MySVGReader.js';
 import {
     MyRectangle
 } from './primitives/MyRectangle.js';
@@ -70,6 +75,7 @@ export class XMLscene extends CGFscene {
         this.start = new MyStartLine(this);
         this.wheel = new MyWheel(this);
         this.vehicleBody = new VehicleBody(this);
+        this.mysvgreader = new MySVGReader("TestTrackMap.svg", this);
 
         super.setUpdatePeriod(100);
     }
@@ -237,11 +243,12 @@ export class XMLscene extends CGFscene {
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
-
+            // this.graph.displayScene2();
             // this.obstacle.display();
             // this.powerup.display();
             // this.start.display();
             this.vehicle.display();
+            this.mysvgreader.displayScene();
             // this.wheel.display();
             // this.vehicleBody.display();
 

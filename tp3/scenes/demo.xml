@@ -8,8 +8,8 @@
 
         <!-- Vista Geral - default -->
         <perspective id="overView" near="0.1" far="500" angle="45">
-            <from x="10" y="10" z="10" />
-            <to x="0" y="0" z="0" />
+            <from x="250" y="200" z="1" />
+            <to x="250" y="0" z="250" />
         </perspective>
 
         <!-- Vista de lado -->
@@ -99,7 +99,7 @@
     <!-- ___________________________________TEXTURES______________________________________ -->
     <textures>
         <!-- this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="trackBackground" file="./scenes/images/trackbackground.png" />
+        <texture id="trackBackground" file="./scenes/images/TestTrackMap.png" />
 
     </textures>
     <!-- ___________________________________MATERIALS______________________________________ -->
@@ -181,7 +181,8 @@
         <!-- the "transformations" block may be repeated as required. Each defined transformation
          requires a distinct "id". At least one material should be present. -->
         <transformation id="court">
-            <rotate axis="y" angle="90" />
+            <!-- <rotate axis="y" angle="90" /> -->
+            <translate x="256" y="0" z="256" />
             <scale x="512" y="1" z="512" />
             <rotate axis="x" angle="-90" />
         </transformation>
@@ -234,7 +235,7 @@
             <cylinder base="0.03" top="0.03" height="0.15" slices="4" stacks="1" />
         </primitive>
 
-     
+
     </primitives>
     <!-- ___________________________________COMPONENTS______________________________________ -->
     <components>

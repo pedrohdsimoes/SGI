@@ -1,9 +1,23 @@
-import { CGFobject, CGFnurbsObject, CGFnurbsSurface } from "../../lib/CGF.js";
-import { MySceneGraph } from "../MySceneGraph.js";
-import { MyCylinder } from "../primitives/MyCylinder.js";
-import { MyStartLine } from "./MyStartLine.js";
-import { MyWheel } from "./MyWheel.js";
-import { VehicleBody } from "./VehicleBody.js";
+import {
+    CGFobject,
+    CGFnurbsObject,
+    CGFnurbsSurface
+} from "../../lib/CGF.js";
+import {
+    MySceneGraph
+} from "../MySceneGraph.js";
+import {
+    MyCylinder
+} from "../primitives/MyCylinder.js";
+import {
+    MyStartLine
+} from "./MyStartLine.js";
+import {
+    MyWheel
+} from "./MyWheel.js";
+import {
+    VehicleBody
+} from "./VehicleBody.js";
 
 /**
  * 
@@ -56,7 +70,7 @@ export class MyVehicle extends CGFobject {
         // FL Wheel
         this.scene.pushMatrix();
         this.scene.rotate(this.steeringAngle * Math.PI / 180, 0, 1, 0);
-        this.scene.translate(0.65,0,2);
+        this.scene.translate(0.65, 0, 2);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(1, 0, 0)
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
@@ -66,7 +80,7 @@ export class MyVehicle extends CGFobject {
         // FR Wheel
         this.scene.pushMatrix();
         this.scene.rotate(this.steeringAngle * Math.PI / 180, 0, 1, 0);
-        this.scene.translate(-0.65,0,2);
+        this.scene.translate(-0.65, 0, 2);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(-1, 0, 0)
         this.scene.rotate(-Math.PI / 2, 0, 1, 0);
@@ -75,7 +89,7 @@ export class MyVehicle extends CGFobject {
 
         // RL Wheel
         this.scene.pushMatrix();
-        this.scene.translate(0.65,0,-2.8);
+        this.scene.translate(0.65, 0, -2.8);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(1, 0, -7)
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
@@ -84,7 +98,7 @@ export class MyVehicle extends CGFobject {
 
         // RR Wheel
         this.scene.pushMatrix();
-        this.scene.translate(-0.65,0,-2.8);
+        this.scene.translate(-0.65, 0, -2.8);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(-1, 0, -7)
         this.scene.rotate(-Math.PI / 2, 0, 1, 0);
@@ -111,24 +125,26 @@ export class MyVehicle extends CGFobject {
     }
 
     updateMovement(currTime) {
+        var direction = 0;
         // right turn
         if (this.keyRight && !this.keyLeft) {
-            if (this.steeringAngle < this.steeringAngleMax) this.steeringAngle += this.steeringDelta;
+            if (this.steeringAngle > -this.steeringAngleMax) this.steeringAngle -= this.steeringDelta;
+            //else if (this.steeringAngle >= this.steeringAngleMax) this.steeringAngle = this.steeringAngleMax;
         } else
             // left turn
             if (this.keyLeft && !this.keyRight) {
-                if (this.steeringAngle > -this.steeringAngleMax) this.steeringAngle -= this.steeringDelta;
+                if (this.steeringAngle < this.steeringAngleMax) this.steeringAngle += this.steeringDelta;
             }
 
-            else {
-                //wheels going back to place when keys aren´t being pressed
-                if (!this.keyLeft && !this.keyRight) {
-                    if (Math.abs(this.steeringAngle) > 0.001) this.steeringAngle = this.steeringAngle * this.steeringAtriction;
-                    if (Math.abs(this.steeringAngle) < 0.001) this.steeringAngle = 0;
-                }
+        else {
+            //wheels going back to place when keys aren´t being pressed
+            if (!this.keyLeft && !this.keyRight) {
+                if (Math.abs(this.steeringAngle) > 0.001) this.steeringAngle = this.steeringAngle * this.steeringAtriction;
+                if (Math.abs(this.steeringAngle) < 0.001) this.steeringAngle = 0;
             }
+        }
 
-        var direction = 0;
+
         //forward
         if (this.keyForward && !this.keyBackward) {
             this.velocity = this.velocity + this.velocityDelta;

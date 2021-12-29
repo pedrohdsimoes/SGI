@@ -25,6 +25,9 @@ import {
     VehicleBody
 } from './elements/VehicleBody.js';
 import {
+    MyRoute
+} from './MyRoute.js';
+import {
     MySVGReader
 } from './MySVGReader.js';
 import {
@@ -73,14 +76,15 @@ export class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.displayLights = false;
         this.vehicle = new MyVehicle(this);
-        this.obstacle = new MyObstacle(this);
-        this.powerup = new MyPowerUp(this);
-        this.start = new MyStartLine(this);
-        this.wheel = new MyWheel(this);
-        this.vehicleBody = new VehicleBody(this);
-        this.mysvgreader = new MySVGReader("TestTrackMap.svg", this);
+        // this.obstacle = new MyObstacle(this);
+        // this.powerup = new MyPowerUp(this);
+        // this.start = new MyStartLine(this);
+        // this.wheel = new MyWheel(this);
+        //this.vehicleBody = new VehicleBody(this);
+        this.mysvgreader = new MySVGReader("TrackMap.svg", this);
 
-        this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
+
+        // this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
 
         super.setUpdatePeriod(100);
     }
@@ -209,6 +213,14 @@ export class XMLscene extends CGFscene {
 
     update(currTime) {
         this.vehicle.updateMovement(currTime);
+        this.collision_detection(currTime);
+
+    }
+
+    collision_detection(currTime) {
+        console.log("LOCATION " + this.vehicle.updateMovement(currTime)[2]);
+        //circle coordinates and r
+        console.log("CircleCOORD " + this.mysvgreader.circleColision[0]);
     }
     /**
      * Displays the scene.

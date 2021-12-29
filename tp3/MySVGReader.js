@@ -17,11 +17,13 @@ import {
 import {
 	MyStartLine
 } from "./elements/MyStartLine.js";
+import {
+	MyRoute
+} from "./MyRoute.js";
+import {
+	MyVehicle
+} from "./elements/MyVehicle.js";
 var DEGREE_TO_RAD = Math.PI / 180;
-
-// Order of the groups in the XML document.
-var G_INDEX = 3;
-
 
 /**
  * MySVGReader class, representing the scene graph.
@@ -35,7 +37,7 @@ export class MySVGReader {
 
 		// Establish bidirectional references between scene and graph.
 		this.scene = scene;
-		scene.graph = this;
+		//scene.graph = this;
 
 		this.nodes = [];
 		this.powerup = [];
@@ -43,7 +45,8 @@ export class MySVGReader {
 		this.puIndex = 0;
 		this.oIndex = 0;
 		this.idRoot = null; // The id of the root element.
-
+		this.routes = [];
+		this.circleColision = [];
 		this.axisCoords = [];
 		this.axisCoords["x"] = [1, 0, 0];
 		this.axisCoords["y"] = [0, 1, 0];
@@ -106,8 +109,7 @@ export class MySVGReader {
 		if ((index = nodeNames.indexOf("g")) == -1)
 			return "tag <g> missing";
 		else {
-			if (index != G_INDEX)
-				this.onXMLMinorError("tag <g> out of order " + index);
+
 
 			//Parse g block
 			for (let gIndex = index; gIndex < nodeNames.length - 1; gIndex++)
@@ -123,10 +125,9 @@ export class MySVGReader {
 	 * @param {view block element} gNode
 	 */
 	parseG(gNode) {
-		this.views = [];
 		var children = gNode.children;
 		var g;
-
+		var circleIndex = 0;
 		// this.groupmode = this.reader.getString(gNode, "inkscape:groupmode");
 
 		// this.GId = this.reader.getString(gNode, "id");
@@ -159,9 +160,12 @@ export class MySVGReader {
 				if (!(d != null))
 					return "unable to parse d of the view for ID = " + id;
 
-
-
+				if (this.label == "Routes") {
+					this.send_route = new MyRoute(this.scene, d);
+					// console.log("COORD=" + this.routes);
+				}
 				if (this.label == "Start") {
+					console.log("START");
 					//Splits d-string into start coordinates [x,0,y]
 					var splited = [];
 					splited = d.split(" ");
@@ -169,11 +173,11 @@ export class MySVGReader {
 					let x = coord[0];
 					let y = coord[1];
 					var pos = [x, 0, y];
-					this.start = new MyStartLine(this.scene, pos, "TestTrackMap");
-
+					this.start = new MyStartLine(this.scene, pos, "TrackMap");
 				}
 
 			} else if (g.nodeName == "circle") {
+
 				// style
 				var style = this.reader.getString(g, "style");
 				if (!(style != null))
@@ -190,12 +194,14 @@ export class MySVGReader {
 				if (this.label == "PowerUps") {
 					this.powerup[this.puIndex] = new MyPowerUp(this.scene, circleCoord);
 					this.puIndex++;
+					this.circleColision[circleIndex] = circleCoord;
 				} else
 				if (this.label == "Obstacles") {
 					this.obstacle[this.oIndex] = new MyObstacle(this.scene, circleCoord);
 					this.oIndex++;
+					this.circleColision[circleIndex] = circleCoord;
 				}
-
+				circleIndex++;
 			} else this.onXMLError("g not identified");
 		}
 
@@ -305,6 +311,7 @@ export class MySVGReader {
 		this.scene.scale(3.77, 3.77, 3.77)
 		this.start.display();
 		this.scene.popMatrix();
+
 		this.scene.popMatrix();
 	}
 

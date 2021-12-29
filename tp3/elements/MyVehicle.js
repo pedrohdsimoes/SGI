@@ -4,6 +4,9 @@ import {
     CGFnurbsSurface
 } from "../../lib/CGF.js";
 import {
+    SimpleImage
+} from "../SimpleImage/SimpleImage.js";
+import {
     MySceneGraph
 } from "../MySceneGraph.js";
 import {
@@ -46,13 +49,16 @@ export class MyVehicle extends CGFobject {
         this.velocity = 0;
         this.velocityAtriction = 0.9;
         this.velocityDelta = 0.2;
-        this.velocityMax = 2;
+        this.velocityMax = 8;
         this.direction = 0;
         this.lastDirection = 0;
         this.steeringAngle = 0;
         this.steeringDelta = 1;
         this.steeringAngleMax = 15;
         this.steeringAtriction = 0.8;
+
+        // this.previousTime = 0;
+        // this.deltaTime = 0;
     }
 
     display() {
@@ -61,6 +67,8 @@ export class MyVehicle extends CGFobject {
         this.scene.translate(this.location[0], this.location[1], this.location[2]);
 
         this.scene.rotate(this.direction * Math.PI / 180, 0, 1, 0);
+
+
 
         //car body
         this.scene.pushMatrix();
@@ -172,20 +180,18 @@ export class MyVehicle extends CGFobject {
         }
 
         // compute direction
-        this.direction += this.steeringAngle;
-
-        //compute and manage direction delta
-        var deltaDirection = this.direction - this.lastDirection;
-        this.lastDirection = this.direction;
-
+        if (Math.abs(this.velocity) > 0) this.direction += this.steeringAngle;
 
         // compute vehicle location based on current location, direction and velocity
-        this.location[0] += (Math.sin(this.direction) * this.velocity);
+        this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
         this.location[1] = 0;
-        this.location[2] += (Math.cos(this.direction) * this.velocity);
+        this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);
 
         //log
         console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + ")");
+        //
+        this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
+
         return this.location;
     }
 }

@@ -20,8 +20,8 @@
 
         <!-- Vista de cima -->
         <perspective id="topView" near="0.1" far="500" angle="90">
-            <from x="0" y="12" z="0" />
-            <to x="-1" y="0" z="0" />
+            <from x="100" y="256" z="0" />
+            <to x="256" y="0" z="256" />
         </perspective>
 
         <!--Vista do meio campo para o cesto da esquerda -->
@@ -99,7 +99,7 @@
     <!-- ___________________________________TEXTURES______________________________________ -->
     <textures>
         <!-- this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="trackBackground" file="./scenes/images/TestTrackMap.png" />
+        <texture id="trackBackground" file="./scenes/images/trackbackground.png" />
 
     </textures>
     <!-- ___________________________________MATERIALS______________________________________ -->
@@ -183,6 +183,7 @@
         <transformation id="court">
             <!-- <rotate axis="y" angle="90" /> -->
             <translate x="256" y="0" z="256" />
+            <!-- <translate x="150" y="0" z="75" /> -->
             <scale x="512" y="1" z="512" />
             <rotate axis="x" angle="-90" />
         </transformation>
@@ -258,7 +259,7 @@
             </children>
         </component>
 
-        <component id="carbody">
+        <!-- <component id="carbody">
             <transformation>
                 <translate x="4.5" y="0.35" z="0.5" />
                 <rotate axis="y" angle="90" />
@@ -271,7 +272,7 @@
             <children>
                 <primitiveref id="Plane" />
             </children>
-        </component>
+        </component> -->
 
         <!-- Component Root onde são chamados todos os outros componentes  -->
         <!-- ROOT -->

@@ -4,35 +4,11 @@ import {
     CGFcamera
 } from '../lib/CGF.js';
 import {
-    SimpleImage
-} from '../tp3/SimpleImage/SimpleImage.js';
-import {
-    MyObstacle
-} from './elements/MyObstacle.js';
-import {
-    MyPowerUp
-} from './elements/MyPowerUp.js';
-import {
-    MyStartLine
-} from './elements/MyStartLine.js';
-import {
     MyVehicle
 } from './elements/MyVehicle.js';
 import {
-    MyWheel
-} from './elements/MyWheel.js';
-import {
-    VehicleBody
-} from './elements/VehicleBody.js';
-import {
-    MyRoute
-} from './MyRoute.js';
-import {
     MySVGReader
 } from './MySVGReader.js';
-import {
-    MyRectangle
-} from './primitives/MyRectangle.js';
 
 
 var DEGREE_TO_RAD = Math.PI / 180;
@@ -212,15 +188,64 @@ export class XMLscene extends CGFscene {
     }
 
     update(currTime) {
-        this.vehicle.updateMovement(currTime);
-        this.collision_detection(currTime);
+        this.car_location = this.vehicle.updateMovement(currTime);
+        this.collision_detection();
 
     }
 
-    collision_detection(currTime) {
-        console.log("LOCATION " + this.vehicle.updateMovement(currTime)[2]);
-        //circle coordinates and r
-        console.log("CircleCOORD " + this.mysvgreader.circleColision[0]);
+    collision_detection() {
+        var center_to_front = 10.7;
+        var center_to_back = 0.8;
+        var center_to_wheel = 1.6;
+        var scale = 3.77;
+        //coordinates of car (x,y)
+        let x_car = this.car_location[0];
+        let y_car = this.car_location[2];
+        //circle coordinates and radius
+        this.puCircleCoord = this.mysvgreader.puCircleColision;
+        this.oCircleCoord = this.mysvgreader.oCircleColision;
+
+        //PowerUps 
+        for (let i = 0; i < this.puCircleCoord.length; i++) {
+            let x_circle = this.puCircleCoord[i][0] * scale;
+            let y_circle = this.puCircleCoord[i][2] * scale;
+            let radius = this.puCircleCoord[i][3] * scale;
+            //distance beetween car location and circles
+            let distanceFL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
+            let distanceFR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
+            let distanceBR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
+            let distanceBL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
+            let threshold = Math.pow(radius, 2);
+            //when there is collision
+            if (distanceBR <= threshold ||
+                distanceBL <= threshold ||
+                distanceFR <= threshold ||
+                distanceFL <= threshold) {
+
+                console.log("BATEU CARALHO")
+            }
+
+        }
+        //Obstacles
+        for (let i = 0; i < this.oCircleCoord.length; i++) {
+            let x_circle = this.oCircleCoord[i][0] * scale;
+            let y_circle = this.oCircleCoord[i][2] * scale;
+            let radius = this.oCircleCoord[i][3] * scale;
+            //distance beetween car location and circles
+            let distanceFL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
+            let distanceFR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
+            let distanceBR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
+            let distanceBL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
+            let threshold = Math.pow(radius, 2);
+            //when there is collision
+            if (distanceBR <= threshold ||
+                distanceBL <= threshold ||
+                distanceFR <= threshold ||
+                distanceFL <= threshold) {
+
+                console.log("BATEU CARALHO")
+            }
+        }
     }
     /**
      * Displays the scene.

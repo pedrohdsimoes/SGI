@@ -49,9 +49,8 @@ export class MyVehicle extends CGFobject {
         this.velocity = 0;
         this.velocityAtriction = 0.9;
         this.velocityDelta = 0.2;
-        this.velocityMax = 8;
+        this.velocityMax = 2;
         this.direction = 0;
-        this.lastDirection = 0;
         this.steeringAngle = 0;
         this.steeringDelta = 1;
         this.steeringAngleMax = 15;
@@ -72,11 +71,13 @@ export class MyVehicle extends CGFobject {
 
         //car body
         this.scene.pushMatrix();
+        this.scene.scale(1.5, 1.5, 1.5);
         this.carbody.display();
         this.scene.popMatrix();
 
         // FL Wheel
         this.scene.pushMatrix();
+        this.scene.scale(1.5, 1.5, 1.5);
         this.scene.translate(0.65, 0, 2);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(1, 2, 17.5);
@@ -88,7 +89,7 @@ export class MyVehicle extends CGFobject {
 
         // FR Wheel
         this.scene.pushMatrix();
-
+        this.scene.scale(1.5, 1.5, 1.5);
         this.scene.translate(-0.65, 0, 2);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(-1, 2, 17.5)
@@ -100,6 +101,7 @@ export class MyVehicle extends CGFobject {
 
         // RL Wheel
         this.scene.pushMatrix();
+        this.scene.scale(1.5, 1.5, 1.5);
         this.scene.translate(0.65, 0, -2.8);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(1, 2, 10.5)
@@ -110,6 +112,7 @@ export class MyVehicle extends CGFobject {
 
         // RR Wheel
         this.scene.pushMatrix();
+        this.scene.scale(1.5, 1.5, 1.5);
         this.scene.translate(-0.65, 0, -2.8);
         this.scene.scale(0.2, 0.2, 0.2)
         this.scene.translate(-1, 2, 10.5)
@@ -142,7 +145,6 @@ export class MyVehicle extends CGFobject {
         // right turn
         if (this.keyRight && !this.keyLeft) {
             if (this.steeringAngle > -this.steeringAngleMax) this.steeringAngle -= this.steeringDelta;
-            //else if (this.steeringAngle >= this.steeringAngleMax) this.steeringAngle = this.steeringAngleMax;
         } else
             // left turn
             if (this.keyLeft && !this.keyRight) {
@@ -187,10 +189,10 @@ export class MyVehicle extends CGFobject {
         this.location[1] = 0;
         this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);
 
-        //log
+        //Car telemetry
         console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + ")");
-        //
-        this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
+        // Track detection
+        // this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
 
         return this.location;
     }

@@ -44,14 +44,17 @@ export class MySVGReader {
 		this.obstacle = [];
 		this.puIndex = 0;
 		this.oIndex = 0;
+		this.puCircleIndex = 0;
+		this.oCircleIndex = 0;
 		this.idRoot = null; // The id of the root element.
 		this.routes = [];
-		this.circleColision = [];
+		this.puCircleColision = [];
+		this.oCircleColision = [];
 		this.axisCoords = [];
 		this.axisCoords["x"] = [1, 0, 0];
 		this.axisCoords["y"] = [0, 1, 0];
 		this.axisCoords["z"] = [0, 0, 1];
-
+		this.circleIndex = 0;
 		// File reading
 		this.reader = new CGFXMLreader();
 
@@ -127,7 +130,7 @@ export class MySVGReader {
 	parseG(gNode) {
 		var children = gNode.children;
 		var g;
-		var circleIndex = 0;
+
 		// this.groupmode = this.reader.getString(gNode, "inkscape:groupmode");
 
 		// this.GId = this.reader.getString(gNode, "id");
@@ -140,7 +143,7 @@ export class MySVGReader {
 
 		if (children.length == 0) this.onXMLError("No g found");
 		//this.puIndex = 0;
-		let oIndex = 0;
+		//let oIndex = 0;
 		for (let i = 0; i < children.length; i++) {
 			g = children[i];
 			// path view
@@ -194,14 +197,17 @@ export class MySVGReader {
 				if (this.label == "PowerUps") {
 					this.powerup[this.puIndex] = new MyPowerUp(this.scene, circleCoord);
 					this.puIndex++;
-					this.circleColision[circleIndex] = circleCoord;
+					this.puCircleColision[this.puCircleIndex] = circleCoord;
+					this.puCircleIndex++;
+
 				} else
 				if (this.label == "Obstacles") {
 					this.obstacle[this.oIndex] = new MyObstacle(this.scene, circleCoord);
 					this.oIndex++;
-					this.circleColision[circleIndex] = circleCoord;
+					this.oCircleColision[this.oCircleIndex] = circleCoord;
+					this.oCircleIndex++;
 				}
-				circleIndex++;
+
 			} else this.onXMLError("g not identified");
 		}
 

@@ -23,9 +23,9 @@
             this.height = this.img.naturalHeight;
 
             // just for demo purposes
-            console.log(this.getPixel(this.location[0], this.location[2]));
-            console.log("Width " + this.width + "height " + this.height);
-
+           console.log(this.getPixel(this.location[0], this.location[2])[0]);
+           return Number(this.getPixel(this.location[0], this.location[2])[0]);
+           
         }
 
         getPixel(x, y) {
@@ -34,7 +34,7 @@
             else
                 return null;
         }
-
+       
         getWidth() {
             return this.width;
         }

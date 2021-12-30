@@ -1,25 +1,20 @@
 import {
-    CGFobject,
-    CGFnurbsObject,
-    CGFnurbsSurface
+	CGFobject,
+	CGFnurbsObject,
+	CGFnurbsSurface
 } from "../../lib/CGF.js";
 import {
-    SimpleImage
+	SimpleImage
 } from "../SimpleImage/SimpleImage.js";
 import {
-    MySceneGraph
+	MySceneGraph
 } from "../MySceneGraph.js";
+
 import {
-    MyCylinder
-} from "../primitives/MyCylinder.js";
-import {
-    MyStartLine
-} from "./MyStartLine.js";
-import {
-    MyWheel
+	MyWheel
 } from "./MyWheel.js";
 import {
-    VehicleBody
+	VehicleBody
 } from "./VehicleBody.js";
 
 /**
@@ -29,171 +24,209 @@ import {
  */
 
 export class MyVehicle extends CGFobject {
-    constructor(scene) {
-        super(scene);
+	constructor(scene,track) {
+		super(scene);
 
-        this.scene = scene;
+		this.scene = scene;
+		this.track = track;
 
-        // this.carbody = scene.displayComponent('carbody', null ,null , 1, 1);
-        // this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
+	
 
-        this.carbody = new VehicleBody(scene);
-        this.wheel = new MyWheel(scene);
-        this.test = new MyStartLine(scene);
-        this.keyForward = false;
-        this.keyBackward = false;
-        this.keyLeft = false;
-        this.keyRight = false;
+		// this.carbody = scene.displayComponent('carbody', null ,null , 1, 1);
+		// this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
 
-        this.location = new vec3.fromValues(0, 0, 0);
-        this.velocity = 0;
-        this.velocityAtriction = 0.9;
-        this.velocityDelta = 0.2;
-        this.velocityMax = 2;
-        this.direction = 0;
-        this.steeringAngle = 0;
-        this.steeringDelta = 1;
-        this.steeringAngleMax = 15;
-        this.steeringAtriction = 0.8;
+		this.carbody = new VehicleBody(scene);
+		this.wheel = new MyWheel(scene);
+		this.keyForward = false;
+		this.keyBackward = false;
+		this.keyLeft = false;
+		this.keyRight = false;
+		this.location = new vec3.fromValues(0,0,0);
+		//if(this.track=="TrackMap")this.location = new vec3.fromValues(221.7,0,259.6);
+		this.velocity = 0;
+		this.velocityAtriction = 0.9;
+		this.velocityDelta = 0.2;
+		this.velocityMax = 4;
+		this.direction = 0;
+		this.steeringAngle = 0;
+		this.steeringDelta = 1;
+		this.steeringAngleMax = 15;
+		this.steeringAtriction = 0.8;
+		this.scale = 1.5;
 
-        // this.previousTime = 0;
-        // this.deltaTime = 0;
-    }
+	}
 
-    display() {
-        this.scene.pushMatrix();
+	display() {
+		this.scene.pushMatrix();
 
-        this.scene.translate(this.location[0], this.location[1], this.location[2]);
+		this.scene.translate(this.location[0], this.location[1], this.location[2]);
 
-        this.scene.rotate(this.direction * Math.PI / 180, 0, 1, 0);
+		this.scene.rotate(this.direction * Math.PI / 180, 0, 1, 0);
 
+		this.scene.scale(this.scale, this.scale, this.scale);
 
+		if (this.track == "TestTrackMap"){ 
+			
+			
+		}
+        if (this.track == "TrackMap"){ 
+			
+	
+			
+		}
+		//car body
+		this.scene.pushMatrix();
+		// this.scene.scale(this.scale, this.scale, this.scale);
+		this.carbody.display();
+		this.scene.popMatrix();
 
-        //car body
-        this.scene.pushMatrix();
-        this.scene.scale(1.5, 1.5, 1.5);
-        this.carbody.display();
-        this.scene.popMatrix();
+		// FL Wheel
+		this.scene.pushMatrix();
+		//this.scene.scale(1.5, 1.5, 1.5);
+		this.scene.translate(0.65, 0, 2);
+		this.scene.scale(0.2, 0.2, 0.2)
+		this.scene.translate(1, 2, 17.5);
+		this.scene.rotate(Math.PI / 2, 0, 1, 0);
+		this.scene.rotate(this.steeringAngle * 1.2 * Math.PI / 110, 0, 1, 0);
+		this.scene.rotate(-this.velocity * 3 * Math.PI, 0, 0, 1);
+		this.wheel.display();
+		this.scene.popMatrix();
 
-        // FL Wheel
-        this.scene.pushMatrix();
-        this.scene.scale(1.5, 1.5, 1.5);
-        this.scene.translate(0.65, 0, 2);
-        this.scene.scale(0.2, 0.2, 0.2)
-        this.scene.translate(1, 2, 17.5);
-        this.scene.rotate(Math.PI / 2, 0, 1, 0);
-        this.scene.rotate(this.steeringAngle * 1.2 * Math.PI / 110, 0, 1, 0);
-        this.scene.rotate(-this.velocity * 3 * Math.PI, 0, 0, 1);
-        this.wheel.display();
-        this.scene.popMatrix();
+		// FR Wheel
+		this.scene.pushMatrix();
+		//this.scene.scale(1.5, 1.5, 1.5);
+		this.scene.translate(-0.65, 0, 2);
+		this.scene.scale(0.2, 0.2, 0.2)
+		this.scene.translate(-1, 2, 17.5)
+		this.scene.rotate(-Math.PI / 2, 0, 1, 0);
+		this.scene.rotate(this.steeringAngle * 1.2 * Math.PI / 110, 0, 1, 0);
+		this.scene.rotate(this.velocity * 3 * Math.PI, 0, 0, 1);
+		this.wheel.display();
+		this.scene.popMatrix();
 
-        // FR Wheel
-        this.scene.pushMatrix();
-        this.scene.scale(1.5, 1.5, 1.5);
-        this.scene.translate(-0.65, 0, 2);
-        this.scene.scale(0.2, 0.2, 0.2)
-        this.scene.translate(-1, 2, 17.5)
-        this.scene.rotate(-Math.PI / 2, 0, 1, 0);
-        this.scene.rotate(this.steeringAngle * 1.2 * Math.PI / 110, 0, 1, 0);
-        this.scene.rotate(this.velocity * 3 * Math.PI, 0, 0, 1);
-        this.wheel.display();
-        this.scene.popMatrix();
+		// RL Wheel
+		this.scene.pushMatrix();
+		//this.scene.scale(1.5, 1.5, 1.5);
+		this.scene.translate(0.65, 0, -2.8);
+		this.scene.scale(0.2, 0.2, 0.2)
+		this.scene.translate(1, 2, 10.5)
+		this.scene.rotate(Math.PI / 2, 0, 1, 0);
+		this.scene.rotate(-this.velocity * 3 * Math.PI, 0, 0, 1);
+		this.wheel.display();
+		this.scene.popMatrix();
 
-        // RL Wheel
-        this.scene.pushMatrix();
-        this.scene.scale(1.5, 1.5, 1.5);
-        this.scene.translate(0.65, 0, -2.8);
-        this.scene.scale(0.2, 0.2, 0.2)
-        this.scene.translate(1, 2, 10.5)
-        this.scene.rotate(Math.PI / 2, 0, 1, 0);
-        this.scene.rotate(-this.velocity * 3 * Math.PI, 0, 0, 1);
-        this.wheel.display();
-        this.scene.popMatrix();
+		// RR Wheel
+		this.scene.pushMatrix();
+		// this.scene.scale(1.5, 1.5, 1.5);
+		this.scene.translate(-0.65, 0, -2.8);
+		this.scene.scale(0.2, 0.2, 0.2)
+		this.scene.translate(-1, 2, 10.5)
+		this.scene.rotate(-Math.PI / 2, 0, 1, 0);
+		this.scene.rotate(this.velocity * 3 * Math.PI, 0, 0, 1);
+		this.wheel.display();
+		this.scene.popMatrix();
 
-        // RR Wheel
-        this.scene.pushMatrix();
-        this.scene.scale(1.5, 1.5, 1.5);
-        this.scene.translate(-0.65, 0, -2.8);
-        this.scene.scale(0.2, 0.2, 0.2)
-        this.scene.translate(-1, 2, 10.5)
-        this.scene.rotate(-Math.PI / 2, 0, 1, 0);
-        this.scene.rotate(this.velocity * 3 * Math.PI, 0, 0, 1);
-        this.wheel.display();
-        this.scene.popMatrix();
-
-        this.scene.popMatrix();
-    }
-
-
-    processKeyDown(event) {
-        //key is being pushed
-        if (event.keyCode == 87) this.keyForward = true;
-        if (event.keyCode == 83) this.keyBackward = true;
-        if (event.keyCode == 65) this.keyLeft = true;
-        if (event.keyCode == 68) this.keyRight = true;
-    }
-    processKeyUp(event) {
-        //key is not being pushed
-        if (event.keyCode == 87) this.keyForward = false;
-        if (event.keyCode == 83) this.keyBackward = false;
-        if (event.keyCode == 65) this.keyLeft = false;
-        if (event.keyCode == 68) this.keyRight = false;
-    }
-
-    updateMovement(currTime) {
-        var direction = 0;
-        // right turn
-        if (this.keyRight && !this.keyLeft) {
-            if (this.steeringAngle > -this.steeringAngleMax) this.steeringAngle -= this.steeringDelta;
-        } else
-            // left turn
-            if (this.keyLeft && !this.keyRight) {
-                if (this.steeringAngle < this.steeringAngleMax) this.steeringAngle += this.steeringDelta;
-            }
-
-        else {
-            //wheels going back to place when keys aren´t being pressed
-            if (!this.keyLeft && !this.keyRight) {
-                if (Math.abs(this.steeringAngle) > 0.001) this.steeringAngle = this.steeringAngle * this.steeringAtriction;
-                if (Math.abs(this.steeringAngle) < 0.001) this.steeringAngle = 0;
-            }
-        }
+		this.scene.popMatrix();
+	}
 
 
-        //forward
-        if (this.keyForward && !this.keyBackward) {
-            this.velocity = this.velocity + this.velocityDelta;
-            if (this.velocity > this.velocityMax) this.velocity = this.velocityMax;
-            direction = 1;
-        } else
-            //backward
-            if (!this.keyForward && this.keyBackward) {
-                this.velocity = this.velocity - this.velocityDelta;
-                if (this.velocity < -this.velocityMax) this.velocity = -this.velocityMax;
-                direction = -1;
-            }
+	processKeyDown(event) {
+		//key is being pushed
+		if (event.keyCode == 87) this.keyForward = true;
+		if (event.keyCode == 83) this.keyBackward = true;
+		if (event.keyCode == 65) this.keyLeft = true;
+		if (event.keyCode == 68) this.keyRight = true;
+	}
+	processKeyUp(event) {
+		//key is not being pushed
+		if (event.keyCode == 87) this.keyForward = false;
+		if (event.keyCode == 83) this.keyBackward = false;
+		if (event.keyCode == 65) this.keyLeft = false;
+		if (event.keyCode == 68) this.keyRight = false;
+	}
 
-        //not going forward or backward
-        if (!this.keyForward && !this.keyBackward) {
-            if (Math.abs(this.velocity) > 0) {
-                this.velocity = this.velocity * this.velocityAtriction;
-                if (Math.abs(this.velocity) < 0.001) this.velocity = 0;
-            }
-        }
+	updateMovement(currTime) {
+		var direction = 0;
+		// right turn
+		if (this.keyRight && !this.keyLeft) {
+			if (this.steeringAngle > -this.steeringAngleMax) this.steeringAngle -= this.steeringDelta;
+		} else
+			// left turn
+			if (this.keyLeft && !this.keyRight) {
+				if (this.steeringAngle < this.steeringAngleMax) this.steeringAngle += this.steeringDelta;
+			}
 
-        // compute direction
-        if (Math.abs(this.velocity) > 0) this.direction += this.steeringAngle;
+			else {
+				//wheels going back to place when keys aren´t being pressed
+				if (!this.keyLeft && !this.keyRight) {
+					if (Math.abs(this.steeringAngle) > 0.001) this.steeringAngle = this.steeringAngle * this.steeringAtriction;
+					if (Math.abs(this.steeringAngle) < 0.001) this.steeringAngle = 0;
+				}
+			}
 
-        // compute vehicle location based on current location, direction and velocity
-        this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
-        this.location[1] = 0;
-        this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);
 
-        //Car telemetry
-        console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + ")");
-        // Track detection
-        // this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
+		//forward
+		if (this.keyForward && !this.keyBackward) {
+			this.velocity = this.velocity + this.velocityDelta;
+			if (this.velocity > this.velocityMax) this.velocity = this.velocityMax;
+			direction = 1;
+		} else
+			//backward
+			if (!this.keyForward && this.keyBackward) {
+				this.velocity = this.velocity - this.velocityDelta;
+				if (this.velocity < -this.velocityMax) this.velocity = -this.velocityMax;
+				direction = -1;
+			}
 
-        return this.location;
-    }
+		//not going forward or backward
+		if (!this.keyForward && !this.keyBackward) {
+			if (Math.abs(this.velocity) > 0) {
+				this.velocity = this.velocity * this.velocityAtriction;
+				if (Math.abs(this.velocity) < 0.001) this.velocity = 0;
+			}
+		}
+
+		// compute direction
+		if (Math.abs(this.velocity) > 0) this.direction += this.steeringAngle;
+
+		// compute vehicle location based on current location, direction and velocity
+		this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
+		this.location[1] = 0;
+		this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);
+
+		//Car telemetry
+		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + ")");
+		// Track detection
+		this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
+		
+		console.log("MAP "+this.map.onload())
+		this.color = this.map.onload();
+		this.velocityMax = 4 - ( this.color/100);
+		console.log("VELOCITYMAX"+this.velocityMax)
+
+		return this.location;
+	}
+	//Car turns more uncontrollably 
+	obstacle_effect1() {
+		this.steeringDelta = 7.5;
+		setTimeout (() => this.steeringDelta = 1, 5000);
+		console.log("OBS1");
+	}
+	obstacle_effect2() {
+		this.scale = 4;
+		setTimeout (() => this.scale = 1.5, 10000);
+		console.log("OBS2");
+	}
+	//car is faster
+	powerup_effect1() {
+		this.velocityMax = 20;
+		setTimeout (() => this.velocityMax = 4, 10000);
+		console.log("PU1");
+	}
+	powerup_effect2() {
+		this.velocityMax = 20;
+		setTimeout (() => this.velocityMax = 4, 10000);
+		console.log("PU2");
+	}
+
 }

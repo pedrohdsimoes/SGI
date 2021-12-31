@@ -24,13 +24,13 @@ import {
  */
 
 export class MyVehicle extends CGFobject {
-	constructor(scene,track) {
+	constructor(scene, track) {
 		super(scene);
 
 		this.scene = scene;
 		this.track = track;
 
-	
+
 
 		// this.carbody = scene.displayComponent('carbody', null ,null , 1, 1);
 		// this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
@@ -41,7 +41,7 @@ export class MyVehicle extends CGFobject {
 		this.keyBackward = false;
 		this.keyLeft = false;
 		this.keyRight = false;
-		this.location = new vec3.fromValues(0,0,0);
+		this.location = new vec3.fromValues(0, 0, 0);
 		//if(this.track=="TrackMap")this.location = new vec3.fromValues(221.7,0,259.6);
 		this.velocity = 0;
 		this.velocityAtriction = 0.9;
@@ -65,14 +65,14 @@ export class MyVehicle extends CGFobject {
 
 		this.scene.scale(this.scale, this.scale, this.scale);
 
-		if (this.track == "TestTrackMap"){ 
-			
-			
+		if (this.track == "TestTrackMap") {
+
+
 		}
-        if (this.track == "TrackMap"){ 
-			
-	
-			
+		if (this.track == "TrackMap") {
+
+
+
 		}
 		//car body
 		this.scene.pushMatrix();
@@ -156,13 +156,13 @@ export class MyVehicle extends CGFobject {
 				if (this.steeringAngle < this.steeringAngleMax) this.steeringAngle += this.steeringDelta;
 			}
 
-			else {
-				//wheels going back to place when keys aren´t being pressed
-				if (!this.keyLeft && !this.keyRight) {
-					if (Math.abs(this.steeringAngle) > 0.001) this.steeringAngle = this.steeringAngle * this.steeringAtriction;
-					if (Math.abs(this.steeringAngle) < 0.001) this.steeringAngle = 0;
-				}
+		else {
+			//wheels going back to place when keys aren´t being pressed
+			if (!this.keyLeft && !this.keyRight) {
+				if (Math.abs(this.steeringAngle) > 0.001) this.steeringAngle = this.steeringAngle * this.steeringAtriction;
+				if (Math.abs(this.steeringAngle) < 0.001) this.steeringAngle = 0;
 			}
+		}
 
 
 		//forward
@@ -198,34 +198,31 @@ export class MyVehicle extends CGFobject {
 		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + ")");
 		// Track detection
 		this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
-		
-		console.log("MAP "+this.map.onload())
 		this.color = this.map.onload();
-		this.velocityMax = 4 - ( this.color/100);
-		console.log("VELOCITYMAX"+this.velocityMax)
+		this.velocityMax = 4 - (this.color / 100);
 
 		return this.location;
 	}
 	//Car turns more uncontrollably 
 	obstacle_effect1() {
 		this.steeringDelta = 7.5;
-		setTimeout (() => this.steeringDelta = 1, 5000);
+		setTimeout(() => this.steeringDelta = 1, 5000);
 		console.log("OBS1");
 	}
 	obstacle_effect2() {
 		this.scale = 4;
-		setTimeout (() => this.scale = 1.5, 10000);
+		setTimeout(() => this.scale = 1.5, 10000);
 		console.log("OBS2");
 	}
 	//car is faster
 	powerup_effect1() {
 		this.velocityMax = 20;
-		setTimeout (() => this.velocityMax = 4, 10000);
+		setTimeout(() => this.velocityMax = 4, 10000);
 		console.log("PU1");
 	}
 	powerup_effect2() {
 		this.velocityMax = 20;
-		setTimeout (() => this.velocityMax = 4, 10000);
+		setTimeout(() => this.velocityMax = 4, 10000);
 		console.log("PU2");
 	}
 

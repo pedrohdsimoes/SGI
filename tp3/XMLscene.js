@@ -1,7 +1,8 @@
 import {
 	CGFscene,
 	CGFaxis,
-	CGFcamera
+	CGFcamera,
+	CGFplane
 } from '../lib/CGF.js';
 import {
 	MyVehicle
@@ -53,14 +54,20 @@ export class XMLscene extends CGFscene {
 
 		this.axis = new CGFaxis(this);
 		this.displayLights = false;
-		this.vehicle = new MyVehicle(this,"TrackMap");
+		this.vehicle = new MyVehicle(this, "TrackMap");
 		// this.obstacle = new MyObstacle(this);
 		// this.powerup = new MyPowerUp(this);
 		// this.start = new MyStartLine(this);
 		// this.wheel = new MyWheel(this);
 		// this.vehicleBody = new VehicleBody(this);
 		this.mysvgreader = new MySVGReader("TrackMap.svg", this);
-
+		this.objects = [
+			new CGFplane(this),
+			new CGFplane(this),
+			new CGFplane(this),
+			new CGFplane(this)
+		];
+		this.setPickEnabled(true);
 
 		// this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
 
@@ -230,8 +237,7 @@ export class XMLscene extends CGFscene {
 				if (this.puflag == 0) {
 					this.vehicle.powerup_effect1();
 					this.puflag = 1;
-				}
-				else {
+				} else {
 					this.vehicle.powerup_effect2();
 					this.puflag = 0;
 				}
@@ -260,14 +266,28 @@ export class XMLscene extends CGFscene {
 				if (this.switch == 1) {
 					this.vehicle.obstacle_effect1();
 					this.oflag = 1;
-				}
-				else if(this.switch > 10){
+				} else if (this.switch > 10) {
 					this.vehicle.obstacle_effect2();
 					this.oflag = 0;
 					this.switch = 1;
 				}
-				
-				
+
+
+			}
+		}
+	}
+
+	logPicking() {
+		if (this.pickMode == false) {
+			if (this.pickResults != null && this.pickResults.length > 0) {
+				for (var i = 0; i < this.pickResults.length; i++) {
+					var obj = this.pickResults[i][0];
+					if (obj) {
+						var customId = this.pickResults[i][1];
+						console.log("Picked object: " + obj + ", with pick id " + customId);
+					}
+				}
+				this.pickResults.splice(0, this.pickResults.length);
 			}
 		}
 	}
@@ -278,6 +298,18 @@ export class XMLscene extends CGFscene {
 		// ---- BEGIN Background, camera and axis setup
 		// this.selectView(this.interface.currentCameraId);
 		// Clear image and depth buffer everytime we update the scene
+
+		// When picking is enabled, the scene's display method is called once for picking, 
+		// and then again for rendering.
+		// logPicking does nothing in the beginning of the first pass (when pickMode is true)
+		// during the first pass, a picking buffer is filled.
+		// in the beginning of the second pass (pickMode false), logPicking checks the buffer and
+		// collects the id's of the picked object(s) 
+		this.logPicking();
+
+		// this resets the picking buffer
+		this.clearPickRegistration();
+
 		this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
@@ -319,6 +351,18 @@ export class XMLscene extends CGFscene {
 			// this.vehicleBody.display();
 
 
+		}
+		// draw objects
+		for (var i = 0; i < this.objects.length; i++) {
+			this.pushMatrix();
+
+			this.translate(i * 2, 0, 0);
+
+			// set pick id before drawing
+			this.registerForPick(i + 1, this.objects[i]);
+
+			this.objects[i].display();
+			this.popMatrix();
 		}
 		this.popMatrix();
 		// ---- END Background, camera and axis setup

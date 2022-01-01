@@ -42,7 +42,7 @@ export class MyVehicle extends CGFobject {
 		this.keyLeft = false;
 		this.keyRight = false;
 		this.location = new vec3.fromValues(0, 0, 0);
-		//if(this.track=="TrackMap")this.location = new vec3.fromValues(221.7,0,259.6);
+		//if(this.track=="TrackMap.svg")this.location = new vec3.fromValues(221.7,0,259.6);
 		this.velocity = 0;
 		this.velocityAtriction = 0.9;
 		this.velocityDelta = 0.2;
@@ -65,11 +65,11 @@ export class MyVehicle extends CGFobject {
 
 		this.scene.scale(this.scale, this.scale, this.scale);
 
-		if (this.track == "TestTrackMap") {
+		if (this.track == "TestTrackMap.svg") {
 
 
 		}
-		if (this.track == "TrackMap") {
+		if (this.track == "TrackMap.svg") {
 
 
 

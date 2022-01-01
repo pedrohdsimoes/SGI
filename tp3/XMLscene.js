@@ -2,14 +2,21 @@ import {
 	CGFscene,
 	CGFaxis,
 	CGFcamera,
-	CGFplane
+	CGFplane,
+	CGFappearance
 } from '../lib/CGF.js';
+import {
+	MyStartLine
+} from './elements/MyStartLine.js';
 import {
 	MyVehicle
 } from './elements/MyVehicle.js';
 import {
 	MySVGReader
 } from './MySVGReader.js';
+import {
+	MyPlane
+} from './primitives/MyPlane.js';
 
 
 var DEGREE_TO_RAD = Math.PI / 180;
@@ -29,6 +36,8 @@ export class XMLscene extends CGFscene {
 		this.puflag = 0;
 		this.oflag = 0;
 		this.switch = 0;
+		this.track2On = false;
+		this.dif2On = false;
 
 	}
 
@@ -54,12 +63,13 @@ export class XMLscene extends CGFscene {
 
 		this.axis = new CGFaxis(this);
 		this.displayLights = false;
-		this.vehicle = new MyVehicle(this, "TrackMap");
+		this.vehicle = new MyVehicle(this, "TrackMap.svg");
 		// this.obstacle = new MyObstacle(this);
 		// this.powerup = new MyPowerUp(this);
-		// this.start = new MyStartLine(this);
+		//this.startline = new MyStartLine(this, [0, 0, 0], "TestTrackMap.svg");
 		// this.wheel = new MyWheel(this);
 		// this.vehicleBody = new VehicleBody(this);
+
 		this.mysvgreader = new MySVGReader("TrackMap.svg", this);
 		this.objects = [
 			new CGFplane(this),
@@ -67,9 +77,49 @@ export class XMLscene extends CGFscene {
 			new CGFplane(this),
 			new CGFplane(this)
 		];
+		this.track2 = new CGFplane(this);
+		this.dif2 = new CGFplane(this);
+
+		this.start = new CGFappearance(this);
+		this.start.setAmbient(0.3, 0, 0, 1);
+		this.start.setDiffuse(0.3, 0, 0, 1);
+		this.start.setSpecular(0.3, 0, 0, 1);
+		this.start.setShininess(10.0);
+		this.start.loadTexture('scenes/images/menu/start.png');
+		this.start.setTextureWrap('REPEAT', 'REPEAT');
+
+		this.demo = new CGFappearance(this);
+		this.demo.setAmbient(0.5, 1, 1, 1);
+		this.demo.setDiffuse(0.5, 0.5, 0.5, 1);
+		this.demo.setSpecular(1, 0.5, 0.5, 1);
+		this.demo.setShininess(100.0);
+		this.demo.loadTexture('scenes/images/santanderSponsor.png');
+		this.demo.setTextureWrap('REPEAT', 'REPEAT');
+
+		this.difficulty = new CGFappearance(this);
+		this.difficulty.setAmbient(0.7, 1, 1, 1);
+		this.difficulty.setDiffuse(0.7, 0.7, 0.7, 1);
+		this.difficulty.setSpecular(1, 0.7, 0.7, 1);
+		this.difficulty.setShininess(100.0);
+		this.difficulty.loadTexture('scenes/images/santanderSponsor.png');
+		this.difficulty.setTextureWrap('REPEAT', 'REPEAT');
+
+		this.track = new CGFappearance(this);
+		this.track.setAmbient(0.9, 1, 1, 1);
+		this.track.setDiffuse(0.9, 0.9, 0.9, 1);
+		this.track.setSpecular(1, 0.9, 0.9, 1);
+		this.track.setShininess(100.0);
+		this.track.loadTexture('scenes/images/santanderSponsor.png');
+		this.track.setTextureWrap('REPEAT', 'REPEAT');
+
 		this.setPickEnabled(true);
 
-		// this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
+		this.materials = [
+			this.track,
+			this.difficulty,
+			this.demo,
+			this.start
+		]
 
 		super.setUpdatePeriod(100);
 	}
@@ -284,7 +334,44 @@ export class XMLscene extends CGFscene {
 					var obj = this.pickResults[i][0];
 					if (obj) {
 						var customId = this.pickResults[i][1];
-						console.log("Picked object: " + obj + ", with pick id " + customId);
+						//console.log("Picked object: " + obj + ", with pick id " + customId);
+						//start
+						if (customId == 4) {
+							console.log("Menu: START")
+						}
+						//demo
+						if (customId == 3) {
+							console.log("Menu: DEMO")
+						}
+						//difficulty
+						if (customId == 2) {
+							console.log("Menu: DIFFICULTY")
+							//Formula1 
+							if (!this.dif2On) {
+								console.log("DIFFICULTY: Formula1")
+								this.dif2On = true;
+							}
+							//Formula2 (Default)
+							else if (this.dif2On) {
+								console.log("DIFFICULTY: Formula2")
+								this.dif2On = false;
+							}
+						}
+						//track
+						if (customId == 1) {
+							console.log("Menu: TRACK")
+							//TestTrackMap
+							if (!this.track2On) {
+								console.log("TRACK: SGI ")
+								this.track2On = true;
+							}
+							//TrackMap - Abu Dhabi (Default)
+							else if (this.track2On) {
+								console.log("TRACK: Abu Dhabi")
+								this.track2On = false;
+							}
+
+						}
 					}
 				}
 				this.pickResults.splice(0, this.pickResults.length);
@@ -344,7 +431,7 @@ export class XMLscene extends CGFscene {
 			// this.graph.displayScene2();
 			// this.obstacle.display();
 			// this.powerup.display();
-			// this.start.display();
+			//this.startline.display();
 			this.vehicle.display();
 			this.mysvgreader.displayScene();
 			//this.wheel.display();
@@ -355,13 +442,37 @@ export class XMLscene extends CGFscene {
 		// draw objects
 		for (var i = 0; i < this.objects.length; i++) {
 			this.pushMatrix();
-
-			this.translate(i * 2, 0, 0);
+			this.materials[i].apply();
+			this.translate(5, 0.2, 2 + i * 2);
+			this.rotate(Math.PI / 4, 0, 1, 0);
+			this.scale(1, 0, 3);
 
 			// set pick id before drawing
 			this.registerForPick(i + 1, this.objects[i]);
 
 			this.objects[i].display();
+			this.popMatrix();
+		}
+		//track 2
+		if (this.track2On) {
+			this.pushMatrix();
+			this.translate(5, 0.2, 2.010 + 0 * 2);
+			this.rotate(Math.PI / 4, 0, 1, 0);
+			this.scale(1, 0, 3);
+			// set pick id before drawing
+			this.registerForPick(1, this.track2);
+			this.track2.display();
+			this.popMatrix();
+		}
+		//difficulty 2
+		if (this.dif2On) {
+			this.pushMatrix();
+			this.translate(5, 0.2, 2.010 + 1 * 2);
+			this.rotate(Math.PI / 4, 0, 1, 0);
+			this.scale(1, 0, 3);
+			// set pick id before drawing
+			this.registerForPick(2, this.dif2);
+			this.dif2.display();
 			this.popMatrix();
 		}
 		this.popMatrix();

@@ -8,7 +8,7 @@
 
         <!-- Vista Geral - default -->
         <perspective id="overView" near="0.1" far="500" angle="45">
-            <from x="1" y="10" z="0" />
+            <from x="1" y="15" z="0" />
             <to x="0" y="0" z="1" />
         </perspective>
 

@@ -175,7 +175,7 @@ export class MySVGReader {
                     let x = coord[0];
                     let y = coord[1];
                     var pos = [x, 0, y];
-                    this.start = new MyStartLine(this.scene, pos, "TrackMap");
+                    this.start = new MyStartLine(this.scene, pos, "TrackMap.svg");
                 }
 
             } else if (g.nodeName == "circle") {
@@ -200,12 +200,12 @@ export class MySVGReader {
                     this.puCircleIndex++;
 
                 } else
-                    if (this.label == "Obstacles") {
-                        this.obstacle[this.oIndex] = new MyObstacle(this.scene, circleCoord);
-                        this.oIndex++;
-                        this.oCircleColision[this.oCircleIndex] = circleCoord;
-                        this.oCircleIndex++;
-                    }
+                if (this.label == "Obstacles") {
+                    this.obstacle[this.oIndex] = new MyObstacle(this.scene, circleCoord);
+                    this.oIndex++;
+                    this.oCircleColision[this.oCircleIndex] = circleCoord;
+                    this.oCircleIndex++;
+                }
 
             } else this.onXMLError("g not identified");
         }

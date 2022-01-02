@@ -6,6 +6,9 @@ import {
 	CGFappearance
 } from '../lib/CGF.js';
 import {
+	MyQuad
+} from '../TextExample/MyQuad.js';
+import {
 	MyStartLine
 } from './elements/MyStartLine.js';
 import {
@@ -62,6 +65,7 @@ export class XMLscene extends CGFscene {
 		this.lightValues = [];
 
 		this.axis = new CGFaxis(this);
+		this.quad = new MyQuad(this);
 		this.displayLights = false;
 		this.vehicle = new MyVehicle(this, "TrackMap.svg");
 		// this.obstacle = new MyObstacle(this);
@@ -71,19 +75,25 @@ export class XMLscene extends CGFscene {
 		// this.vehicleBody = new VehicleBody(this);
 
 		this.mysvgreader = new MySVGReader("TrackMap.svg", this);
+		// this.objects = [
+		// 	new CGFplane(this),
+		// 	new CGFplane(this),
+		// 	new CGFplane(this),
+		// 	new CGFplane(this)
+		// ];
 		this.objects = [
-			new CGFplane(this),
-			new CGFplane(this),
-			new CGFplane(this),
-			new CGFplane(this)
+			new MyQuad(this),
+			new MyQuad(this),
+			new MyQuad(this),
+			new MyQuad(this)
 		];
-		this.track2 = new CGFplane(this);
-		this.dif2 = new CGFplane(this);
+		this.track2 = new MyQuad(this);
+		this.dif2 = new MyQuad(this);
 
 		this.start = new CGFappearance(this);
-		this.start.setAmbient(0.3, 0, 0, 1);
-		this.start.setDiffuse(0.3, 0, 0, 1);
-		this.start.setSpecular(0.3, 0, 0, 1);
+		this.start.setAmbient(1, 1, 1, 1);
+		this.start.setDiffuse(1, 1, 1, 1);
+		this.start.setSpecular(1, 1, 1, 1);
 		this.start.setShininess(10.0);
 		this.start.loadTexture('scenes/images/menu/start.png');
 		this.start.setTextureWrap('REPEAT', 'REPEAT');
@@ -404,6 +414,12 @@ export class XMLscene extends CGFscene {
 		this.updateProjectionMatrix();
 		this.loadIdentity();
 
+		//HUD
+		this.pushMatrix();
+		this.translate(-7, 3.7, -10);
+		this.quad.display();
+		this.popMatrix();
+
 		// Apply transformations corresponding to the camera position relative to the origin
 		this.applyViewMatrix();
 
@@ -444,8 +460,10 @@ export class XMLscene extends CGFscene {
 			this.pushMatrix();
 			this.materials[i].apply();
 			this.translate(5, 0.2, 2 + i * 2);
-			this.rotate(Math.PI / 4, 0, 1, 0);
-			this.scale(1, 0, 3);
+			this.rotate(-Math.PI / 4, 0, 1, 0);
+			this.rotate(Math.PI, 0, 0, 1);
+			this.rotate(Math.PI / 2, 1, 0, 0);
+			this.scale(3, 1, 0);
 
 			// set pick id before drawing
 			this.registerForPick(i + 1, this.objects[i]);
@@ -456,9 +474,12 @@ export class XMLscene extends CGFscene {
 		//track 2
 		if (this.track2On) {
 			this.pushMatrix();
-			this.translate(5, 0.2, 2.010 + 0 * 2);
-			this.rotate(Math.PI / 4, 0, 1, 0);
-			this.scale(1, 0, 3);
+			//this.materials[i].apply();
+			this.translate(5, 0.2, 2 + 0 * 2);
+			this.rotate(-Math.PI / 4, 0, 1, 0);
+			this.rotate(Math.PI, 0, 0, 1);
+			this.rotate(Math.PI / 2, 1, 0, 0);
+			this.scale(3, 1, 0);
 			// set pick id before drawing
 			this.registerForPick(1, this.track2);
 			this.track2.display();
@@ -467,9 +488,12 @@ export class XMLscene extends CGFscene {
 		//difficulty 2
 		if (this.dif2On) {
 			this.pushMatrix();
-			this.translate(5, 0.2, 2.010 + 1 * 2);
-			this.rotate(Math.PI / 4, 0, 1, 0);
-			this.scale(1, 0, 3);
+			//this.materials[i].apply();
+			this.translate(5, 0.2, 2 + 1 * 2);
+			this.rotate(-Math.PI / 4, 0, 1, 0);
+			this.rotate(Math.PI, 0, 0, 1);
+			this.rotate(Math.PI / 2, 1, 0, 0);
+			this.scale(3, 1, 0);
 			// set pick id before drawing
 			this.registerForPick(2, this.dif2);
 			this.dif2.display();

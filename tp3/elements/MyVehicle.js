@@ -24,17 +24,16 @@ import {
  */
 
 export class MyVehicle extends CGFobject {
-	constructor(scene, track) {
+	constructor(scene) {
 		super(scene);
 
 		this.scene = scene;
-		this.track = track;
-
-
+		this.track = "TrackMap.svg";
+		this.track2On = false;
 
 		// this.carbody = scene.displayComponent('carbody', null ,null , 1, 1);
 		// this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
-
+		this.simpleImage = "";
 		this.carbody = new VehicleBody(scene);
 		this.wheel = new MyWheel(scene);
 		this.keyForward = false;
@@ -47,6 +46,7 @@ export class MyVehicle extends CGFobject {
 		this.velocityAtriction = 0.9;
 		this.velocityDelta = 0.2;
 		this.velocityMax = 4;
+		this.velocityMaxAux = this.velocityMax;
 		this.direction = 0;
 		this.steeringAngle = 0;
 		this.steeringDelta = 1;
@@ -54,6 +54,10 @@ export class MyVehicle extends CGFobject {
 		this.steeringAtriction = 0.8;
 		this.scale = 1.5;
 
+	}
+	trackSelection(track2On) {
+		if (track2On) this.track = "TestTrackMap.svg";
+		if (!track2On) this.track = "TrackMap.svg";
 	}
 
 	display() {
@@ -146,6 +150,7 @@ export class MyVehicle extends CGFobject {
 	}
 
 	updateMovement(currTime) {
+		//	this.trackSelection(this.track2On);
 		var direction = 0;
 		// right turn
 		if (this.keyRight && !this.keyLeft) {
@@ -197,9 +202,14 @@ export class MyVehicle extends CGFobject {
 		//Car telemetry
 		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + ")");
 		// Track detection
-		this.map = new SimpleImage("SimpleImage/trackMap.png", this.location);
+		if (this.track == "TrackMap.svg") this.simpleImage = "SimpleImage/trackMap.png";
+		if (this.track == "TestTrackMap.svg") this.simpleImage = "SimpleImage/testTrackMap.png";
+
+		this.map = new SimpleImage(this.simpleImage, this.location);
 		this.color = this.map.onload();
-		this.velocityMax = 4 - (this.color / 100);
+
+		this.velocityMax = this.velocityMaxAux - (this.color / 100);
+		if (this.color == 255) this.velocityMax = 1.45;
 
 		return this.location;
 	}
@@ -216,8 +226,9 @@ export class MyVehicle extends CGFobject {
 	}
 	//car is faster
 	powerup_effect1() {
-		this.velocityMax = 20;
-		setTimeout(() => this.velocityMax = 4, 10000);
+
+		this.velocityMaxAux = 8;
+		setTimeout(() => this.velocityMaxAux = 4.0, 10000);
 		console.log("PU1");
 	}
 	powerup_effect2() {

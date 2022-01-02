@@ -34,7 +34,7 @@ export class XMLscene extends CGFscene {
 	 */
 	constructor(myinterface) {
 		super();
-
+		this.mytrack = "TrackMap.svg";
 		this.interface = myinterface;
 		this.puflag = 0;
 		this.oflag = 0;
@@ -67,20 +67,9 @@ export class XMLscene extends CGFscene {
 		this.axis = new CGFaxis(this);
 		this.quad = new MyQuad(this);
 		this.displayLights = false;
-		this.vehicle = new MyVehicle(this, "TrackMap.svg");
-		// this.obstacle = new MyObstacle(this);
-		// this.powerup = new MyPowerUp(this);
-		//this.startline = new MyStartLine(this, [0, 0, 0], "TestTrackMap.svg");
-		// this.wheel = new MyWheel(this);
-		// this.vehicleBody = new VehicleBody(this);
-
-		this.mysvgreader = new MySVGReader("TrackMap.svg", this);
-		// this.objects = [
-		// 	new CGFplane(this),
-		// 	new CGFplane(this),
-		// 	new CGFplane(this),
-		// 	new CGFplane(this)
-		// ];
+		this.vehicle = new MyVehicle(this);
+		// this.mysvgreader = new MySVGReader("TrackMap.svg", this);
+		this.trackSelection(this.mytrack);
 		this.objects = [
 			new MyQuad(this),
 			new MyQuad(this),
@@ -99,28 +88,44 @@ export class XMLscene extends CGFscene {
 		this.start.setTextureWrap('REPEAT', 'REPEAT');
 
 		this.demo = new CGFappearance(this);
-		this.demo.setAmbient(0.5, 1, 1, 1);
-		this.demo.setDiffuse(0.5, 0.5, 0.5, 1);
-		this.demo.setSpecular(1, 0.5, 0.5, 1);
+		this.demo.setAmbient(1, 1, 1, 1);
+		this.demo.setDiffuse(1, 1, 1, 1);
+		this.demo.setSpecular(1, 1, 1, 1);
 		this.demo.setShininess(100.0);
-		this.demo.loadTexture('scenes/images/santanderSponsor.png');
+		this.demo.loadTexture('scenes/images/menu/demo.png');
 		this.demo.setTextureWrap('REPEAT', 'REPEAT');
 
 		this.difficulty = new CGFappearance(this);
-		this.difficulty.setAmbient(0.7, 1, 1, 1);
-		this.difficulty.setDiffuse(0.7, 0.7, 0.7, 1);
-		this.difficulty.setSpecular(1, 0.7, 0.7, 1);
+		this.difficulty.setAmbient(1, 1, 1, 1);
+		this.difficulty.setDiffuse(1, 1, 1, 1);
+		this.difficulty.setSpecular(1, 1, 1, 1);
 		this.difficulty.setShininess(100.0);
-		this.difficulty.loadTexture('scenes/images/santanderSponsor.png');
+		this.difficulty.loadTexture('scenes/images/menu/f2dif.jpeg');
 		this.difficulty.setTextureWrap('REPEAT', 'REPEAT');
 
 		this.track = new CGFappearance(this);
-		this.track.setAmbient(0.9, 1, 1, 1);
-		this.track.setDiffuse(0.9, 0.9, 0.9, 1);
-		this.track.setSpecular(1, 0.9, 0.9, 1);
+		this.track.setAmbient(1, 1, 1, 1);
+		this.track.setDiffuse(1, 1, 1, 1);
+		this.track.setSpecular(1, 1, 1, 1);
 		this.track.setShininess(100.0);
-		this.track.loadTexture('scenes/images/santanderSponsor.png');
+		this.track.loadTexture('scenes/images/menu/adtrack.jpeg');
 		this.track.setTextureWrap('REPEAT', 'REPEAT');
+
+		this.track2tex = new CGFappearance(this);
+		this.track2tex.setAmbient(1, 1, 1, 1);
+		this.track2tex.setDiffuse(1, 1, 1, 1);
+		this.track2tex.setSpecular(1, 1, 1, 1);
+		this.track2tex.setShininess(10.0);
+		this.track2tex.loadTexture('scenes/images/menu/SGItrack.png');
+		this.track2tex.setTextureWrap('REPEAT', 'REPEAT');
+
+		this.dif2tex = new CGFappearance(this);
+		this.dif2tex.setAmbient(1, 1, 1, 1);
+		this.dif2tex.setDiffuse(1, 1, 1, 1);
+		this.dif2tex.setSpecular(1, 1, 1, 1);
+		this.dif2tex.setShininess(10.0);
+		this.dif2tex.loadTexture('scenes/images/menu/f1dif.png');
+		this.dif2tex.setTextureWrap('REPEAT', 'REPEAT');
 
 		this.setPickEnabled(true);
 
@@ -132,6 +137,10 @@ export class XMLscene extends CGFscene {
 		]
 
 		super.setUpdatePeriod(100);
+	}
+	trackSelection(track) {
+		//	this.vehicle = new MyVehicle(this, track);
+		this.mysvgreader = new MySVGReader(track, this);
 	}
 	/**
 	 * Initializes the default camera.
@@ -296,11 +305,12 @@ export class XMLscene extends CGFscene {
 				console.log("BATEU CARALHO")
 				if (this.puflag == 0) {
 					this.vehicle.powerup_effect1();
-					this.puflag = 1;
-				} else {
-					this.vehicle.powerup_effect2();
-					this.puflag = 0;
+					// this.puflag = 1;
 				}
+				//else {
+				// 	this.vehicle.powerup_effect2();
+				// 	this.puflag = 0;
+				// }
 			}
 
 		}
@@ -373,11 +383,13 @@ export class XMLscene extends CGFscene {
 							//TestTrackMap
 							if (!this.track2On) {
 								console.log("TRACK: SGI ")
+								this.vehicle.trackSelection(this.track2On);
 								this.track2On = true;
 							}
 							//TrackMap - Abu Dhabi (Default)
 							else if (this.track2On) {
 								console.log("TRACK: Abu Dhabi")
+								this.vehicle.trackSelection(this.track2On);
 								this.track2On = false;
 							}
 
@@ -474,7 +486,7 @@ export class XMLscene extends CGFscene {
 		//track 2
 		if (this.track2On) {
 			this.pushMatrix();
-			//this.materials[i].apply();
+			this.track2tex.apply();
 			this.translate(5, 0.2, 2 + 0 * 2);
 			this.rotate(-Math.PI / 4, 0, 1, 0);
 			this.rotate(Math.PI, 0, 0, 1);
@@ -488,7 +500,7 @@ export class XMLscene extends CGFscene {
 		//difficulty 2
 		if (this.dif2On) {
 			this.pushMatrix();
-			//this.materials[i].apply();
+			this.dif2tex.apply();
 			this.translate(5, 0.2, 2 + 1 * 2);
 			this.rotate(-Math.PI / 4, 0, 1, 0);
 			this.rotate(Math.PI, 0, 0, 1);

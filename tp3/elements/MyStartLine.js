@@ -32,7 +32,7 @@ export class MyStartLine extends CGFobject {
         this.line.apply();
 
         this.scene.pushMatrix();
-        this.scene.translate(this.position[0], this.position[1], this.position[2]);
+        this.scene.translate(this.position[0], this.position[1] + 0.05, this.position[2]);
         if (this.track == "TestTrackMap.svg") this.scene.rotate(-Math.PI / 2, 0, 1, 0);
         if (this.track == "TrackMap.svg") this.scene.rotate(Math.PI / 8, 0, 1, 0);
         this.scene.rotate(-Math.PI / 2, 1, 0, 0);

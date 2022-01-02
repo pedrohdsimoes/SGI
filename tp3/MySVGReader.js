@@ -39,9 +39,11 @@ export class MySVGReader {
         this.scene = scene;
         //scene.graph = this;
         this.filename = filename;
+        this.track = "TrackMap.svg";
         this.nodes = [];
         this.powerup = [];
         this.obstacle = [];
+        this.startAux = 0;
         this.puIndex = 0;
         this.oIndex = 0;
         this.puCircleIndex = 0;
@@ -64,6 +66,10 @@ export class MySVGReader {
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
         this.reader.open("scenes/" + filename, this);
+    }
+    trackSelection(track2On) {
+        if (track2On) this.track = "TestTrackMap.svg";
+        if (!track2On) this.track = "TrackMap.svg";
     }
 
     /*
@@ -169,6 +175,7 @@ export class MySVGReader {
                 }
                 if (this.label == "Start") {
                     //Splits d-string into start coordinates [x,0,y]
+                    this.startAux = 1;
                     var splited = [];
                     splited = d.split(" ");
                     let coord = splited[1].split(",");
@@ -242,32 +249,6 @@ export class MySVGReader {
 
         return position;
     }
-
-    /**
-     * Parse the coordinates from a node with ID = id
-     * @param {block element} node
-     * @param {message to be displayed in case of error} messageError
-     */
-    parseCoordinates4D(node, messageError) {
-        let position = [];
-
-        //Get x, y, z
-        position = this.parseCoordinates3D(node, messageError);
-
-        if (!Array.isArray(position)) return position;
-
-        // w
-        var w = this.reader.getFloat(node, "w");
-        if (!(w != null && !isNaN(w)))
-            return "unable to parse w-coordinate of the " + messageError;
-
-        position.push(w);
-
-        return position;
-    }
-
-
-
     /*
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
@@ -314,7 +295,7 @@ export class MySVGReader {
         //Start
         this.scene.pushMatrix();
         this.scene.scale(3.77, 3.77, 3.77)
-        this.start.display();
+        if (this.startAux == 1) this.start.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();

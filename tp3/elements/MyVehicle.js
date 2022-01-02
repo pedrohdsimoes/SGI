@@ -29,7 +29,7 @@ export class MyVehicle extends CGFobject {
 
 		this.scene = scene;
 		this.track = "TrackMap.svg";
-		this.track2On = false;
+
 
 		// this.carbody = scene.displayComponent('carbody', null ,null , 1, 1);
 		// this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
@@ -150,7 +150,6 @@ export class MyVehicle extends CGFobject {
 	}
 
 	updateMovement(currTime) {
-		//	this.trackSelection(this.track2On);
 		var direction = 0;
 		// right turn
 		if (this.keyRight && !this.keyLeft) {
@@ -226,7 +225,6 @@ export class MyVehicle extends CGFobject {
 	}
 	//car is faster
 	powerup_effect1() {
-
 		this.velocityMaxAux = 8;
 		setTimeout(() => this.velocityMaxAux = 4.0, 10000);
 		console.log("PU1");

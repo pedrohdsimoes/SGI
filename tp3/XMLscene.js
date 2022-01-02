@@ -9,6 +9,12 @@ import {
 	MyQuad
 } from '../TextExample/MyQuad.js';
 import {
+	MyAbuDhabi
+} from './elements/MyAbuDhabi.js';
+import {
+	MySGITrack
+} from './elements/MySGITrack.js';
+import {
 	MyStartLine
 } from './elements/MyStartLine.js';
 import {
@@ -34,7 +40,6 @@ export class XMLscene extends CGFscene {
 	 */
 	constructor(myinterface) {
 		super();
-		this.mytrack = "TrackMap.svg";
 		this.interface = myinterface;
 		this.puflag = 0;
 		this.oflag = 0;
@@ -68,8 +73,7 @@ export class XMLscene extends CGFscene {
 		this.quad = new MyQuad(this);
 		this.displayLights = false;
 		this.vehicle = new MyVehicle(this);
-		// this.mysvgreader = new MySVGReader("TrackMap.svg", this);
-		this.trackSelection(this.mytrack);
+		this.mysvgreader = new MySVGReader("TrackMap.svg", this);
 		this.objects = [
 			new MyQuad(this),
 			new MyQuad(this),
@@ -78,6 +82,8 @@ export class XMLscene extends CGFscene {
 		];
 		this.track2 = new MyQuad(this);
 		this.dif2 = new MyQuad(this);
+		this.abuDhabi = new MyAbuDhabi(this);
+		this.sgiTrack = new MySGITrack(this);
 
 		this.start = new CGFappearance(this);
 		this.start.setAmbient(1, 1, 1, 1);
@@ -138,10 +144,7 @@ export class XMLscene extends CGFscene {
 
 		super.setUpdatePeriod(100);
 	}
-	trackSelection(track) {
-		//	this.vehicle = new MyVehicle(this, track);
-		this.mysvgreader = new MySVGReader(track, this);
-	}
+
 	/**
 	 * Initializes the default camera.
 	 */
@@ -267,11 +270,12 @@ export class XMLscene extends CGFscene {
 
 	update(currTime) {
 		this.car_location = this.vehicle.updateMovement(currTime);
-		this.collision_detection();
+		this.collision_detection(this.track2On);
+		this.vehicle.trackSelection(this.track2On);
 
 	}
 
-	collision_detection() {
+	collision_detection(track2On) {
 		var center_to_front = 10.7;
 		var center_to_back = 0.8;
 		var center_to_wheel = 1.6;
@@ -282,8 +286,13 @@ export class XMLscene extends CGFscene {
 		let x_car = this.car_location[0];
 		let y_car = this.car_location[2];
 		//circle coordinates and radius
-		this.puCircleCoord = this.mysvgreader.puCircleColision;
-		this.oCircleCoord = this.mysvgreader.oCircleColision;
+		if (!track2On) {
+			this.puCircleCoord = this.mysvgreader.puCircleColision;
+			this.oCircleCoord = this.mysvgreader.oCircleColision;
+		} else {
+			this.puCircleCoord = this.mysvgreader2.puCircleColision;
+			this.oCircleCoord = this.mysvgreader2.oCircleColision;
+		}
 
 		//PowerUps 
 		for (let i = 0; i < this.puCircleCoord.length; i++) {
@@ -383,13 +392,12 @@ export class XMLscene extends CGFscene {
 							//TestTrackMap
 							if (!this.track2On) {
 								console.log("TRACK: SGI ")
-								this.vehicle.trackSelection(this.track2On);
+								this.mysvgreader2 = new MySVGReader("TestTrackMap.svg", this);
 								this.track2On = true;
 							}
 							//TrackMap - Abu Dhabi (Default)
 							else if (this.track2On) {
 								console.log("TRACK: Abu Dhabi")
-								this.vehicle.trackSelection(this.track2On);
 								this.track2On = false;
 							}
 
@@ -461,7 +469,14 @@ export class XMLscene extends CGFscene {
 			// this.powerup.display();
 			//this.startline.display();
 			this.vehicle.display();
-			this.mysvgreader.displayScene();
+			if (!this.track2On) {
+				this.mysvgreader.displayScene();
+				this.abuDhabi.display();
+			} else {
+				this.mysvgreader2.displayScene();
+				this.sgiTrack.display();
+
+			}
 			//this.wheel.display();
 			// this.vehicleBody.display();
 

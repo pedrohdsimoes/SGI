@@ -16,6 +16,9 @@ import {
 import {
 	VehicleBody
 } from "./VehicleBody.js";
+import {
+	MyComponent
+} from "../MyComponent.js";
 
 /**
  * 
@@ -78,6 +81,7 @@ export class MyVehicle extends CGFobject {
 
 
 		}
+
 		//car body
 		this.scene.pushMatrix();
 		// this.scene.scale(this.scale, this.scale, this.scale);
@@ -190,10 +194,10 @@ export class MyVehicle extends CGFobject {
 			}
 		}
 
-		// compute direction
+		// direction
 		if (Math.abs(this.velocity) > 0) this.direction += this.steeringAngle;
 
-		// compute vehicle location based on current location, direction and velocity
+		// vehicle location 
 		this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
 		this.location[1] = 0;
 		this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);

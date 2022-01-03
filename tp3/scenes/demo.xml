@@ -3,44 +3,39 @@
     <!-- como o comprimento dos tres eixos (cilindros) -->
 
     <!-- ___________________________________VIEWS______________________________________ -->
-    <views default="overView">
+    <views default="menu">
         <!-- at least one of the following type of cameras must be declared -->
 
         <!-- Vista Geral - default -->
-        <perspective id="overView" near="0.1" far="500" angle="45">
+        <perspective id="menu" near="0.1" far="500" angle="45">
             <from x="1" y="15" z="0" />
             <to x="0" y="0" z="1" />
         </perspective>
 
         <!-- Vista de lado -->
-        <perspective id="sideView" near="0.1" far="500" angle="45">
+        <!-- <perspective id="sideView" near="0.1" far="500" angle="45">
             <from x="17" y="7" z="0" />
             <to x="0" y="4" z="0" />
-        </perspective>
+        </perspective> -->
 
         <!-- Vista de cima -->
-        <perspective id="topView" near="0.1" far="500" angle="90">
-            <from x="100" y="256" z="0" />
+        <perspective id="trackView" near="0.1" far="500" angle="90">
+            <from x="256" y="250" z="230" />
             <to x="256" y="0" z="256" />
         </perspective>
 
         <!--Vista do meio campo para o cesto da esquerda -->
-        <perspective id="basketView" near="0.1" far="500" angle="45">
+        <!-- <perspective id="basketView" near="0.1" far="500" angle="45">
             <from x="0" y="1" z="-5" />
             <to x="0" y="3" z="4" />
-        </perspective>
+        </perspective> -->
 
         <!-- Vista que um fã teria de uma cadeira para os ecrãs gigantes e para o cesto -->
-        <perspective id="fanView" near="0.8" far="100" angle="45">
+        <!-- <perspective id="fanView" near="0.8" far="100" angle="45">
             <from x="10.5" y="2" z="-5" />
             <to x="0" y="5" z="0" />
-        </perspective>
+        </perspective> -->
 
-        <!-- Vista "ortho" dos ecrãs gigantes -->
-        <ortho id="orthoScreenView" near="0.1" far="500" left="-3.0" right="3.0" top="3.0" bottom="-3.0">
-            <from x="6" y="4" z="6" />
-            <to x="0" y="5" z="0" />
-        </ortho>
 
     </views>
 

@@ -463,7 +463,7 @@ export class XMLscene extends CGFscene {
 
 		//HUD
 		this.pushMatrix();
-		this.translate(-7, 3.7, -10);
+		this.translate(-17, 9.5, -10);
 		this.hud.display();
 		this.popMatrix();
 
@@ -561,40 +561,55 @@ export class XMLscene extends CGFscene {
 		this.loadIdentity();
 
 		// transform as needed to place on screen
-		this.translate(-1, 3, -10);
+		this.translate(-15, 9.5, -10);
 
 		// set character to display to be in the Nth column, Mth line (0-based)
 		// the shader will take care of computing the correct texture coordinates 
 		// of that character inside the font texture (check shaders/font.vert )
 		// Homework: This should be wrapped in a function/class for displaying a full string
-
+		let velocity1 = [Math.trunc(Math.abs(this.vehicle.velocity) * 80 / 100), 3];
+		let velocity2 = [Math.trunc((Math.abs(this.vehicle.velocity) * 80 / 10) % 10), 3];
+		let velocity3 = [Math.trunc(Math.abs(this.vehicle.velocity) * 80 % 10), 3];
+		console.log("t " + velocity1);
 		this.activeShader.setUniformsValues({
-			'charCoords': [10, 5]
-		}); // Z
+			'charCoords': velocity1
+		}); // 
 		this.quad.display();
 
 		this.translate(0.5, 0, 0);
 		this.activeShader.setUniformsValues({
-			'charCoords': [5, 4]
-		}); // E
-		this.quad.display();
-
-		this.translate(1.5, 0, 0);
-		this.activeShader.setUniformsValues({
-			'charCoords': [7, 4]
-		}); // G
+			'charCoords': velocity2
+		}); // 
 		this.quad.display();
 
 		this.translate(0.5, 0, 0);
 		this.activeShader.setUniformsValues({
-			'charCoords': [1, 4]
-		}); // A
+			'charCoords': velocity3
+		}); // 
 		this.quad.display();
 
 		this.translate(0.5, 0, 0);
 		this.activeShader.setUniformsValues({
-			'charCoords': [9, 5]
-		}); // Y
+			'charCoords': [11, 4]
+		}); // K
+		this.quad.display();
+
+		this.translate(0.5, 0, 0);
+		this.activeShader.setUniformsValues({
+			'charCoords': [13, 4]
+		}); // M
+		this.quad.display();
+
+		this.translate(0.7, 0, 0);
+		this.activeShader.setUniformsValues({
+			'charCoords': [15, 2]
+		}); // /
+		this.quad.display();
+
+		this.translate(0.3, 0, 0);
+		this.activeShader.setUniformsValues({
+			'charCoords': [8, 4]
+		}); // H
 		this.quad.display();
 
 		this.popMatrix();

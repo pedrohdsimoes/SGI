@@ -43,6 +43,5 @@ export class MyCircle extends CGFobject {
      * Updates the list of texture coordinates of the rectangle
      * @param {Array} coords - Array of texture coordinates
      */
-    updateTexCoords(s,t) {
-    }
+    updateTexCoords(s, t) {}
 }

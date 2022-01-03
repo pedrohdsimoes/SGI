@@ -1,21 +1,13 @@
 import {
     CGFobject,
-    CGFappearance,
-    CGFnurbsObject,
-    CGFnurbsSurface
+    CGFappearance
 } from "../../lib/CGF.js";
 import {
     MyCircle
 } from "../primitives/MyCircle.js";
 import {
-    MyCylinder
-} from "../primitives/MyCylinder.js";
-import {
     MyCylinder2
 } from "../primitives/MyCylinder2.js";
-import {
-    MyPatch
-} from "../primitives/MyPatch.js";
 
 
 /**
@@ -49,22 +41,11 @@ export class MyWheel extends CGFobject {
     }
 
     display() {
+        //tyre
         this.scene.pushMatrix();
         this.side.apply();
-
-        // this.scene.scale(3, 1, 3);
-        // this.scene.translate(0, 2, 0);
         this.cylinder2.display();
         this.scene.popMatrix();
-
-
-        // this.scene.pushMatrix();
-        // this.scene.translate(0, 2, 3);
-        // this.scene.rotate(Math.PI / 2, 1, 0, 0);
-        // this.scene.scale(2, 0, 2);
-        // this.scene.translate(0, 2, 0);
-        // this.patch.display();
-        // this.scene.popMatrix();
 
         // Front 
         this.scene.pushMatrix();
@@ -77,7 +58,6 @@ export class MyWheel extends CGFobject {
         // Back
         this.scene.pushMatrix();
         this.front.apply();
-        // this.scene.translate(0, 2, 0);
         this.scene.scale(0.05, 0.05, 0.05);
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.circle.display();

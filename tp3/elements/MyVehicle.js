@@ -212,27 +212,48 @@ export class MyVehicle extends CGFobject {
 
 		return this.location;
 	}
+	//Difficulty F2
 	//Car turns more uncontrollably 
-	obstacle_effect1() {
+	f2_obstacle_effect1() {
 		this.steeringDelta = 7.5;
-		setTimeout(() => this.steeringDelta = 1, 5000);
-		console.log("OBS1");
+		setTimeout(() => this.steeringDelta = 1, 10000);
+		console.log("F2 - OBS1");
 	}
-	obstacle_effect2() {
+	f2_obstacle_effect2() {
 		this.scale = 4;
 		setTimeout(() => this.scale = 1.5, 10000);
-		console.log("OBS2");
+		console.log("F2 - OBS2");
 	}
 	//car is faster
-	powerup_effect1() {
+	f2_powerup_effect1() {
 		this.velocityMaxAux = 8;
 		setTimeout(() => this.velocityMaxAux = 4.0, 10000);
-		console.log("PU1");
+		console.log("F2 - PU1");
 	}
-	powerup_effect2() {
-		this.velocityMax = 20;
-		setTimeout(() => this.velocityMax = 4, 10000);
-		console.log("PU2");
+	f2_powerup_effect2() {
+		//
+		console.log("F2 - PU2");
 	}
+	//Difficulty F1
+	f1_obstacle_effect1() {
+
+		console.log("F1 - OBS1");
+	}
+	f1_obstacle_effect2() {
+		this.scale = 7;
+		setTimeout(() => this.scale = 1.5, 10000);
+		console.log("F1 - OBS2");
+	}
+	//car is faster
+	f1_powerup_effect1() {
+		this.velocityMaxAux = 14;
+		setTimeout(() => this.velocityMaxAux = 4.0, 15000);
+		console.log("F1 - PU1");
+	}
+	f1_powerup_effect2() {
+
+		console.log("F1 - PU2");
+	}
+
 
 }

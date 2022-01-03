@@ -3,7 +3,9 @@ import {
 	CGFaxis,
 	CGFcamera,
 	CGFplane,
-	CGFappearance
+	CGFappearance,
+	CGFtexture,
+	CGFshader
 } from '../lib/CGF.js';
 import {
 	MyQuad
@@ -43,9 +45,10 @@ export class XMLscene extends CGFscene {
 		this.interface = myinterface;
 		this.puflag = 0;
 		this.oflag = 0;
-		this.switch = 0;
 		this.track2On = false;
 		this.dif2On = false;
+		this.startOn = false;
+		this.demoOn = false;
 
 	}
 
@@ -70,7 +73,7 @@ export class XMLscene extends CGFscene {
 		this.lightValues = [];
 
 		this.axis = new CGFaxis(this);
-		this.quad = new MyQuad(this);
+		this.hud = new MyQuad(this);
 		this.displayLights = false;
 		this.vehicle = new MyVehicle(this);
 		this.mysvgreader = new MySVGReader("TrackMap.svg", this);
@@ -141,6 +144,25 @@ export class XMLscene extends CGFscene {
 			this.demo,
 			this.start
 		]
+		//TEXT ON SCENE
+		this.appearance = new CGFappearance(this);
+
+		// font texture: 16 x 16 characters
+		// http://jens.ayton.se/oolite/files/font-tests/rgba/oolite-font.png
+		this.fontTexture = new CGFtexture(this, "textures/oolite-font.trans.png");
+		this.appearance.setTexture(this.fontTexture);
+
+		// plane where texture character will be rendered
+		this.quad = new MyQuad(this);
+
+		// instatiate text shader (used to simplify access via row/column coordinates)
+		// check the two files to see how it is done
+		this.textShader = new CGFshader(this.gl, "shaders/font.vert", "shaders/font.frag");
+
+		// set number of rows and columns in font texture
+		this.textShader.setUniformsValues({
+			'dims': [16, 16]
+		});
 
 		super.setUpdatePeriod(100);
 	}
@@ -270,12 +292,12 @@ export class XMLscene extends CGFscene {
 
 	update(currTime) {
 		this.car_location = this.vehicle.updateMovement(currTime);
-		this.collision_detection(this.track2On);
+		this.collision_detection(this.dif2On, this.track2On);
 		this.vehicle.trackSelection(this.track2On);
 
 	}
 
-	collision_detection(track2On) {
+	collision_detection(dif2On, track2On) {
 		var center_to_front = 10.7;
 		var center_to_back = 0.8;
 		var center_to_wheel = 1.6;
@@ -311,15 +333,16 @@ export class XMLscene extends CGFscene {
 				distanceFR <= threshold ||
 				distanceFL <= threshold) {
 
-				console.log("BATEU CARALHO")
-				if (this.puflag == 0) {
-					this.vehicle.powerup_effect1();
-					// this.puflag = 1;
+				console.log("BATEU")
+				this.puflag++;
+				if (this.puflag == 1) {
+					if (!dif2On) this.vehicle.f2_powerup_effect1();
+					else this.vehicle.f1_powerup_effect1();
+				} else if (this.puflag > 10) {
+					if (!dif2On) this.vehicle.f2_powerup_effect2();
+					else this.vehicle.f1_powerup_effect2();
+					this.puflag = 1;
 				}
-				//else {
-				// 	this.vehicle.powerup_effect2();
-				// 	this.puflag = 0;
-				// }
 			}
 
 		}
@@ -340,15 +363,17 @@ export class XMLscene extends CGFscene {
 				distanceFR <= threshold ||
 				distanceFL <= threshold) {
 
-				console.log("BATEU CARALHO")
-				this.switch++;
-				if (this.switch == 1) {
-					this.vehicle.obstacle_effect1();
+				console.log("BATEU")
+				this.oflag++;
+				if (this.oflag == 1) {
+					if (!dif2On) this.vehicle.f2_obstacle_effect1();
+					else this.vehicle.f1_obstacle_effect1();
+
+				} else if (this.oflag > 10) {
+					if (!dif2On) this.vehicle.f2_obstacle_effect2();
+					else this.vehicle.f1_obstacle_effect2();
+
 					this.oflag = 1;
-				} else if (this.switch > 10) {
-					this.vehicle.obstacle_effect2();
-					this.oflag = 0;
-					this.switch = 1;
 				}
 
 
@@ -367,10 +392,12 @@ export class XMLscene extends CGFscene {
 						//start
 						if (customId == 4) {
 							console.log("Menu: START")
+							this.startOn = true;
 						}
 						//demo
 						if (customId == 3) {
 							console.log("Menu: DEMO")
+							this.demo = true;
 						}
 						//difficulty
 						if (customId == 2) {
@@ -437,7 +464,7 @@ export class XMLscene extends CGFscene {
 		//HUD
 		this.pushMatrix();
 		this.translate(-7, 3.7, -10);
-		this.quad.display();
+		this.hud.display();
 		this.popMatrix();
 
 		// Apply transformations corresponding to the camera position relative to the origin
@@ -464,10 +491,6 @@ export class XMLscene extends CGFscene {
 
 			// Displays the scene (MySceneGraph function).
 			this.graph.displayScene();
-			// this.graph.displayScene2();
-			// this.obstacle.display();
-			// this.powerup.display();
-			//this.startline.display();
 			this.vehicle.display();
 			if (!this.track2On) {
 				this.mysvgreader.displayScene();
@@ -477,9 +500,6 @@ export class XMLscene extends CGFscene {
 				this.sgiTrack.display();
 
 			}
-			//this.wheel.display();
-			// this.vehicleBody.display();
-
 
 		}
 		// draw objects
@@ -527,6 +547,64 @@ export class XMLscene extends CGFscene {
 			this.popMatrix();
 		}
 		this.popMatrix();
+		// activate shader for rendering text characters
+		this.setActiveShaderSimple(this.textShader);
+
+		// Optional: disable depth test so that it is always in front (need to reenable in the end)
+		this.gl.disable(this.gl.DEPTH_TEST);
+
+		// activate texture containing the font
+		this.appearance.apply();
+
+		this.pushMatrix();
+		// 	Reset transf. matrix to draw independent of camera
+		this.loadIdentity();
+
+		// transform as needed to place on screen
+		this.translate(-1, 3, -10);
+
+		// set character to display to be in the Nth column, Mth line (0-based)
+		// the shader will take care of computing the correct texture coordinates 
+		// of that character inside the font texture (check shaders/font.vert )
+		// Homework: This should be wrapped in a function/class for displaying a full string
+
+		this.activeShader.setUniformsValues({
+			'charCoords': [10, 5]
+		}); // Z
+		this.quad.display();
+
+		this.translate(0.5, 0, 0);
+		this.activeShader.setUniformsValues({
+			'charCoords': [5, 4]
+		}); // E
+		this.quad.display();
+
+		this.translate(1.5, 0, 0);
+		this.activeShader.setUniformsValues({
+			'charCoords': [7, 4]
+		}); // G
+		this.quad.display();
+
+		this.translate(0.5, 0, 0);
+		this.activeShader.setUniformsValues({
+			'charCoords': [1, 4]
+		}); // A
+		this.quad.display();
+
+		this.translate(0.5, 0, 0);
+		this.activeShader.setUniformsValues({
+			'charCoords': [9, 5]
+		}); // Y
+		this.quad.display();
+
+		this.popMatrix();
+
+		// re-enable depth test 
+		this.gl.enable(this.gl.DEPTH_TEST);
+
+		// reactivate default shader
+		this.setActiveShaderSimple(this.defaultShader);
+
 		// ---- END Background, camera and axis setup
 	}
 

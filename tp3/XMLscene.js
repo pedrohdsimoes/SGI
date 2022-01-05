@@ -67,6 +67,7 @@ export class XMLscene extends CGFscene {
 		this.sceneInited = false;
 
 		this.initCameras();
+		
 
 		this.enableTextures(true);
 
@@ -189,6 +190,7 @@ export class XMLscene extends CGFscene {
 		this.interface.setActiveCamera(this.camera);
 	}
 
+
 	/**
 	 * Initializes the scene lights with the values read from the XML file.
 	 */
@@ -232,7 +234,10 @@ export class XMLscene extends CGFscene {
 			}
 		}
 	}
-
+	trackCarCamera() {
+		this.cam = new CGFcamera(0.4,0.1,500,vec3.fromValues(this.vehicle.location[0],this.vehicle.location[1]+12,this.vehicle.location[2]),vec3.fromValues(this.vehicle.location[0],this.vehicle.location[1],this.vehicle.location[2]));
+		this.interface.setActiveCamera(this.cam);
+	}
 	/**
 	 * Initializes the scene cameras.
 	 */
@@ -293,7 +298,7 @@ export class XMLscene extends CGFscene {
 
 		//cameras
 		this.initCameras();
-
+		this.trackCarCamera();
 		this.initXMLCameras();
 
 		//initializing the interface elements
@@ -308,6 +313,8 @@ export class XMLscene extends CGFscene {
 		this.car_location = this.vehicle.updateMovement(currTime);
 		this.collision_detection(this.dif2On, this.track2On);
 		this.vehicle.trackSelection(this.track2On);
+        this.trackCarCamera();
+        // this.animation.update(currTime);
 
 	}
 
@@ -412,7 +419,7 @@ export class XMLscene extends CGFscene {
 						if (customId == 3) {
 							console.log("Menu: DEMO")
 							this.demoOn = true;
-							this.demo1();
+							this.getAnimation();
 						}
 						//difficulty
 						if (customId == 2) {
@@ -451,12 +458,11 @@ export class XMLscene extends CGFscene {
 		}
 	}
 
-	demo1() {
-		// Recebe a animação
+    getAnimation() { // Recebe a animação do MyRoute
 		if (!this.track2On) {
 			this.animation = this.mysvgreader.send_route.store_route();
 			// console.log("ROUTES_ABU: " + this.mysvgreader.send_route.routes);
-			console.log("INSTANT: " + this.animation);
+            console.log("INSTANT: " + this.animation);
 		}
 		if (this.track2On) {
 			this.animation = this.mysvgreader2.send_route.store_route();

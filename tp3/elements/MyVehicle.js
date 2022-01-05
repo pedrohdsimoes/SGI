@@ -84,13 +84,11 @@ export class MyVehicle extends CGFobject {
 
 		//car body
 		this.scene.pushMatrix();
-		// this.scene.scale(this.scale, this.scale, this.scale);
 		this.carbody.display();
 		this.scene.popMatrix();
 
 		// FL Wheel
 		this.scene.pushMatrix();
-		//this.scene.scale(1.5, 1.5, 1.5);
 		this.scene.translate(0.65, 0, 2);
 		this.scene.scale(0.2, 0.2, 0.2)
 		this.scene.translate(1, 2, 17.5);
@@ -102,7 +100,6 @@ export class MyVehicle extends CGFobject {
 
 		// FR Wheel
 		this.scene.pushMatrix();
-		//this.scene.scale(1.5, 1.5, 1.5);
 		this.scene.translate(-0.65, 0, 2);
 		this.scene.scale(0.2, 0.2, 0.2)
 		this.scene.translate(-1, 2, 17.5)
@@ -114,7 +111,6 @@ export class MyVehicle extends CGFobject {
 
 		// RL Wheel
 		this.scene.pushMatrix();
-		//this.scene.scale(1.5, 1.5, 1.5);
 		this.scene.translate(0.65, 0, -2.8);
 		this.scene.scale(0.2, 0.2, 0.2)
 		this.scene.translate(1, 2, 10.5)
@@ -125,7 +121,6 @@ export class MyVehicle extends CGFobject {
 
 		// RR Wheel
 		this.scene.pushMatrix();
-		// this.scene.scale(1.5, 1.5, 1.5);
 		this.scene.translate(-0.65, 0, -2.8);
 		this.scene.scale(0.2, 0.2, 0.2)
 		this.scene.translate(-1, 2, 10.5)
@@ -215,9 +210,10 @@ export class MyVehicle extends CGFobject {
 		if (this.color == 255) this.velocityMax = 1.45;
 
 		return this.location;
-	}
-	//Difficulty F2
-	//Car turns more uncontrollably 
+    }
+    
+	// Difficulty F2
+	// Car turns more uncontrollably 
 	f2_obstacle_effect1() {
 		this.steeringDelta = 7.5;
 		setTimeout(() => this.steeringDelta = 1, 10000);
@@ -228,7 +224,7 @@ export class MyVehicle extends CGFobject {
 		setTimeout(() => this.scale = 1.5, 10000);
 		console.log("F2 - OBS2");
 	}
-	//car is faster
+	// Car is faster
 	f2_powerup_effect1() {
 		this.velocityMaxAux = 8;
 		setTimeout(() => this.velocityMaxAux = 4.0, 10000);
@@ -237,8 +233,9 @@ export class MyVehicle extends CGFobject {
 	f2_powerup_effect2() {
 		//
 		console.log("F2 - PU2");
-	}
-	//Difficulty F1
+    }
+    
+	// Difficulty F1
 	f1_obstacle_effect1() {
 
 		console.log("F1 - OBS1");

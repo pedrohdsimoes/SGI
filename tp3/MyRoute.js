@@ -13,15 +13,17 @@ import { KeyFrame } from "./KeyFrame.js";
 export class MyRoute extends CGFobject {
     constructor(scene, d) {
         super(scene);
-        
+
         this.scene = scene;
         this.d = d;
         this.routes = [];
         this.store_route();
-        // this.animations = [];
 
     }
 
+    // Recebe as coordenadas dos pontos da pista provenientes do MySVGReader
+    // É criada uma KeyFrame para cada coordenada que depois é adicionada à KeyFrameAnimation
+    // que guarda toda a animação
     store_route() {
         var splitedR = [];
         let coord = this.d;
@@ -36,11 +38,10 @@ export class MyRoute extends CGFobject {
 
             keyframe.instant = instant;
             keyframe.translation = [coordR[0], 0, coordR[1]];
-            animation.addKeyFrame(keyframe);
+            animation.addKeyFrame(keyframe);     // the new keyframe is added to the array
             instant += 5;
         }
 
-        // this.animations= animation;
         // console.log("COORD=" + this.routes);
         return animation
     }

@@ -1,8 +1,12 @@
-import { CGFinterface, CGFapplication, dat } from '../lib/CGF.js';
+import {
+	CGFinterface,
+	CGFapplication,
+	dat
+} from '../lib/CGF.js';
 
 /**
-* MyInterface class, creating a GUI interface.
-*/
+ * MyInterface class, creating a GUI interface.
+ */
 
 export class MyInterface extends CGFinterface {
 	/**
@@ -45,7 +49,7 @@ export class MyInterface extends CGFinterface {
 	 */
 	initKeys() {
 		this.scene.gui = this;
-		this.processKeyboard = function () { };
+		this.processKeyboard = function () {};
 		this.activeKeys = {};
 	}
 
@@ -61,12 +65,12 @@ export class MyInterface extends CGFinterface {
 		return this.activeKeys[keyCode] || false;
 	}
 	/**
-   * 
-   * @param {*} views - views defined in the scene
-   */
+	 * 
+	 * @param {*} views - views defined in the scene
+	 */
 	createInterface(views) {
 		this.addLightsCheckbox();
-		this.addTrackCarCamera();
+		//this.addTrackCarCamera();
 		this.addLightsFolder();
 		this.addCamerasDropDown(views);
 	}
@@ -97,7 +101,7 @@ export class MyInterface extends CGFinterface {
 		}
 		//setting the cameras dropdown 
 		this.gui.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera(val)).name("Camera");
-		
+
 	}
 	addTrackCarCamera() {
 		this.gui.add(this.scene, "displayLights").onChange(val => this.scene.trackCarCamera()).name("Car Camera");

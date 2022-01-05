@@ -56,6 +56,7 @@ export class MyVehicle extends CGFobject {
 		this.steeringAngleMax = 15;
 		this.steeringAtriction = 0.8;
 		this.scale = 1.5;
+		this.powerupOn = false;
 
 	}
 	trackSelection(track2On) {
@@ -210,49 +211,54 @@ export class MyVehicle extends CGFobject {
 		if (this.color == 255) this.velocityMax = 1.45;
 
 		return this.location;
-    }
-    
+	}
+
 	// Difficulty F2
 	// Car turns more uncontrollably 
 	f2_obstacle_effect1() {
+		this.obstacleOn = true;
 		this.steeringDelta = 7.5;
 		setTimeout(() => this.steeringDelta = 1, 10000);
 		console.log("F2 - OBS1");
 	}
 	f2_obstacle_effect2() {
+		this.obstacleOn = true;
 		this.scale = 4;
 		setTimeout(() => this.scale = 1.5, 10000);
 		console.log("F2 - OBS2");
 	}
 	// Car is faster
 	f2_powerup_effect1() {
+		this.powerupOn = true;
 		this.velocityMaxAux = 8;
 		setTimeout(() => this.velocityMaxAux = 4.0, 10000);
 		console.log("F2 - PU1");
 	}
 	f2_powerup_effect2() {
-		//
+		this.powerupOn = true;
 		console.log("F2 - PU2");
-    }
-    
+	}
+
 	// Difficulty F1
 	f1_obstacle_effect1() {
-
+		this.obstacleOn = true;
 		console.log("F1 - OBS1");
 	}
 	f1_obstacle_effect2() {
+		this.obstacleOn = true;
 		this.scale = 7;
 		setTimeout(() => this.scale = 1.5, 10000);
 		console.log("F1 - OBS2");
 	}
 	//car is faster
 	f1_powerup_effect1() {
+		this.powerupOn = true;
 		this.velocityMaxAux = 14;
 		setTimeout(() => this.velocityMaxAux = 4.0, 15000);
 		console.log("F1 - PU1");
 	}
 	f1_powerup_effect2() {
-
+		this.powerupOn = true;
 		console.log("F1 - PU2");
 	}
 

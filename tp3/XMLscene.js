@@ -67,7 +67,7 @@ export class XMLscene extends CGFscene {
 		this.sceneInited = false;
 
 		this.initCameras();
-		
+
 
 		this.enableTextures(true);
 
@@ -151,6 +151,18 @@ export class XMLscene extends CGFscene {
 		this.hudtex.loadTexture('scenes/images/HUD.png');
 		this.hudtex.setTextureWrap('REPEAT', 'REPEAT');
 
+		this.puHUD = new CGFappearance(this);
+		this.puHUD.setAmbient(0, 1, 0, 1);
+		this.puHUD.setDiffuse(0, 1, 0, 1);
+		this.puHUD.setSpecular(0, 1, 0, 1);
+		this.puHUD.setShininess(100.0);
+
+		this.oHUD = new CGFappearance(this);
+		this.oHUD.setAmbient(1, 0, 0, 1);
+		this.oHUD.setDiffuse(1, 0, 0, 1);
+		this.oHUD.setSpecular(1, 0, 0, 1);
+		this.oHUD.setShininess(100.0);
+
 		this.setPickEnabled(true);
 
 		this.materials = [
@@ -178,6 +190,8 @@ export class XMLscene extends CGFscene {
 		this.textShader.setUniformsValues({
 			'dims': [16, 16]
 		});
+
+		this.timer = new MyQuad(this);
 
 		super.setUpdatePeriod(100);
 	}
@@ -234,8 +248,15 @@ export class XMLscene extends CGFscene {
 			}
 		}
 	}
+	getTime() {
+		var now = new Date().getTime();
+		this.minutes = 0;
+		this.seconds = Math.floor((now % (1000 * 60)) / 1000);
+	}
+
+
 	trackCarCamera() {
-		this.cam = new CGFcamera(0.4,0.1,500,vec3.fromValues(this.vehicle.location[0],this.vehicle.location[1]+12,this.vehicle.location[2]),vec3.fromValues(this.vehicle.location[0],this.vehicle.location[1],this.vehicle.location[2]));
+		this.cam = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 12, this.vehicle.location[2]), vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1], this.vehicle.location[2]));
 		this.interface.setActiveCamera(this.cam);
 	}
 	/**
@@ -313,9 +334,7 @@ export class XMLscene extends CGFscene {
 		this.car_location = this.vehicle.updateMovement(currTime);
 		this.collision_detection(this.dif2On, this.track2On);
 		this.vehicle.trackSelection(this.track2On);
-        this.trackCarCamera();
-        // this.animation.update(currTime);
-
+		this.getTime(currTime)
 	}
 
 	collision_detection(dif2On, track2On) {
@@ -355,18 +374,20 @@ export class XMLscene extends CGFscene {
 				distanceFL <= threshold) {
 
 				console.log("BATEU")
-				this.puflag++;
+				//this.puflag++;
+				this.puflag = 1;
 				if (this.puflag == 1) {
 					if (!dif2On) this.vehicle.f2_powerup_effect1();
 					else this.vehicle.f1_powerup_effect1();
 				} else if (this.puflag > 10) {
-					if (!dif2On) this.vehicle.f2_powerup_effect2();
-					else this.vehicle.f1_powerup_effect2();
+					// if (!dif2On) this.vehicle.f2_powerup_effect2();
+					// else this.vehicle.f1_powerup_effect2();
 					this.puflag = 1;
 				}
 			}
 
 		}
+
 		//Obstacles
 		for (let i = 0; i < this.oCircleCoord.length; i++) {
 			let x_circle = this.oCircleCoord[i][0] * scale;
@@ -385,14 +406,15 @@ export class XMLscene extends CGFscene {
 				distanceFL <= threshold) {
 
 				console.log("BATEU")
-				this.oflag++;
+				//this.oflag++;
+				this.oflag = 1;
 				if (this.oflag == 1) {
 					if (!dif2On) this.vehicle.f2_obstacle_effect1();
 					else this.vehicle.f1_obstacle_effect1();
 
 				} else if (this.oflag > 10) {
-					if (!dif2On) this.vehicle.f2_obstacle_effect2();
-					else this.vehicle.f1_obstacle_effect2();
+					// if (!dif2On) this.vehicle.f2_obstacle_effect2();
+					// else this.vehicle.f1_obstacle_effect2();
 
 					this.oflag = 1;
 				}
@@ -458,11 +480,11 @@ export class XMLscene extends CGFscene {
 		}
 	}
 
-    getAnimation() { // Recebe a animação do MyRoute
+	getAnimation() { // Recebe a animação do MyRoute
 		if (!this.track2On) {
 			this.animation = this.mysvgreader.send_route.store_route();
 			// console.log("ROUTES_ABU: " + this.mysvgreader.send_route.routes);
-            console.log("INSTANT: " + this.animation);
+			console.log("INSTANT: " + this.animation);
 		}
 		if (this.track2On) {
 			this.animation = this.mysvgreader2.send_route.store_route();
@@ -487,6 +509,14 @@ export class XMLscene extends CGFscene {
 		// collects the id's of the picked object(s) 
 		this.logPicking();
 
+		var min = this.minutes;
+		var sec = this.seconds;
+
+		var min2 = min + 3;
+		var sec2 = sec;
+
+		console.log("Time: " + (60 - min2) + "," + (60 - sec2));
+
 
 		// this resets the picking buffer
 		this.clearPickRegistration();
@@ -506,6 +536,31 @@ export class XMLscene extends CGFscene {
 		this.hud.display();
 		this.popMatrix();
 
+		if (this.vehicle.powerupOn) {
+			setTimeout(() => this.vehicle.powerupOn = false, 10000);
+			this.puTime = 0.5;
+
+			this.pushMatrix();
+			this.puHUD.apply();
+			this.translate(-4.8, 3, -4);
+			this.scale(5, 0.3, 1)
+			this.hud.display();
+			this.popMatrix();
+			this.puTime += 0.5;
+		}
+		if (this.vehicle.obstacleOn) {
+			setTimeout(() => this.vehicle.obstacleOn = false, 10000);
+			this.puTime = 0.5;
+
+			this.pushMatrix();
+			this.oHUD.apply();
+			this.translate(-4.8, 2.7, -4);
+			this.scale(5, 0.3, 1)
+			this.hud.display();
+			this.popMatrix();
+			this.puTime += 0.5;
+		}
+
 		// Apply transformations corresponding to the camera position relative to the origin
 		this.applyViewMatrix();
 
@@ -524,7 +579,6 @@ export class XMLscene extends CGFscene {
 		if (this.sceneInited) {
 			// Draw axis
 			this.setDefaultAppearance();
-
 			//set the active camera, necessary for being able to move the camera around
 			this.interface.setActiveCamera(this.camera);
 
@@ -682,16 +736,9 @@ export class XMLscene extends CGFscene {
 		this.popMatrix();
 
 		// re-enable depth test 
+		// re-enable depth test 
+		// re-enable depth test 
 		this.gl.enable(this.gl.DEPTH_TEST);
-
-		// reactivate default shader
-		this.setActiveShaderSimple(this.defaultShader);
-
-		// ---- END Background, camera and axis setup
-	}
-
-	processKeyboard(ev) {
-
 	}
 	processKeyDown(ev) {
 		this.vehicle.processKeyDown(ev);

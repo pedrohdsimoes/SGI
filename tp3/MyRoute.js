@@ -2,8 +2,12 @@ import {
     CGFobject
 } from "../../lib/CGF.js";
 
-import { KeyFrameAnimation } from "./KeyFrameAnimation.js";
-import { KeyFrame } from "./KeyFrame.js";
+import {
+    KeyFrameAnimation
+} from "./KeyFrameAnimation.js";
+import {
+    KeyFrame
+} from "./KeyFrame.js";
 
 /**
  * MyRoute
@@ -38,7 +42,7 @@ export class MyRoute extends CGFobject {
 
             keyframe.instant = instant;
             keyframe.translation = [coordR[0], 0, coordR[1]];
-            animation.addKeyFrame(keyframe);     // the new keyframe is added to the array
+            animation.addKeyFrame(keyframe); // the new keyframe is added to the array
             instant += 5;
         }
 

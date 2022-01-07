@@ -376,7 +376,7 @@ export class XMLscene extends CGFscene {
 		this.car_location = this.vehicle.updateMovement(currTime);
 		this.collision_detection(this.dif2On, this.track2On);
 		this.vehicle.trackSelection(this.track2On);
-		this.cam = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 3, this.vehicle.location[2]), vec3.fromValues(this.vehicle.locationFront[0], this.vehicle.locationFront[1], this.vehicle.locationFront[2]));
+		this.cam = new CGFcamera(0.8, 2, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 3.5, this.vehicle.location[2]), vec3.fromValues(this.vehicle.locationFront[0], this.vehicle.locationFront[1], this.vehicle.locationFront[2]));
 		if (this.cameraID == "carCamera") this.updateCamera("carCamera")
 	}
 

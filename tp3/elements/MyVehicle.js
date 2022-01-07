@@ -202,17 +202,25 @@ export class MyVehicle extends CGFobject {
 		}
 
 		// direction
-		//if (Math.abs(this.velocity) > 0)
+		if (Math.abs(this.velocity) > 0)
 		this.direction += this.steeringAngle;
 
 		// vehicle location 
 		this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
 		this.location[1] = 0;
 		this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);
-
-		this.locationFront[0] = this.location[0] + (-1 * (this.location[0] * Math.cos(this.direction * Math.PI / 180) - (this.location[2] + 10) * Math.sin(this.direction * Math.PI / 180)));
+		if(this.velocity>=0){
+		this.locationFront[0] = this.location[0] + 14 * Math.sin(this.direction * Math.PI / 180);
 		this.locationFront[1] = 1;
-		this.locationFront[2] = this.location[2] + (this.location[0] * Math.sin(this.direction * Math.PI / 180) + (this.location[2] + 10) * Math.cos(this.direction * Math.PI / 180));
+		this.locationFront[2] = this.location[2] + 14 * Math.cos(this.direction * Math.PI / 180);
+		} else {
+		this.locationFront[0] = this.location[0] + -3.5 * Math.sin(this.direction * Math.PI / 180);
+		this.locationFront[1] = 2;
+		this.locationFront[2] = this.location[2] + -3.5 * Math.cos(this.direction * Math.PI / 180);
+		}
+		// this.locationFront[0] = this.location[0] + (-1 * (this.location[0] * Math.cos(this.direction * Math.PI / 180) - (this.location[2] + 10) * Math.sin(this.direction * Math.PI / 180)));
+		// this.locationFront[1] = 1;
+		// this.locationFront[2] = this.location[2] + (this.location[0] * Math.sin(this.direction * Math.PI / 180) + (this.location[2] + 10) * Math.cos(this.direction * Math.PI / 180));
 		// this.directionFront = this.direction;
 		// if (this.directionFront == 0) this.directionFront = 1;
 		// this.previousDirectionFront = this.previousDirection;

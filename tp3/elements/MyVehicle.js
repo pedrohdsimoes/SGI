@@ -44,6 +44,9 @@ export class MyVehicle extends CGFobject {
 		this.keyLeft = false;
 		this.keyRight = false;
 		this.location = new vec3.fromValues(0, 0, 0);
+		this.previousLocation = new vec3.fromValues(0, 0, 0);
+		this.locationFront = new vec3.fromValues(0, 0, 5);
+		this.locationWing = new vec3.fromValues(0, 0, 10);
 		//if(this.track=="TrackMap.svg")this.location = new vec3.fromValues(221.7,0,259.6);
 		this.velocity = 0;
 		this.velocityAtriction = 0.9;
@@ -150,6 +153,14 @@ export class MyVehicle extends CGFobject {
 	}
 
 	updateMovement(currTime) {
+		if (this.velocity > 0.2) {
+			this.previousLocation[0] = this.location[0];
+			this.previousLocation[1] = this.location[1];
+			this.previousLocation[2] = this.location[2];
+		}
+
+		this.previousDirection = this.direction;
+
 		var direction = 0;
 		// right turn
 		if (this.keyRight && !this.keyLeft) {
@@ -191,15 +202,27 @@ export class MyVehicle extends CGFobject {
 		}
 
 		// direction
-		if (Math.abs(this.velocity) > 0) this.direction += this.steeringAngle;
+		//if (Math.abs(this.velocity) > 0)
+		this.direction += this.steeringAngle;
 
 		// vehicle location 
 		this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
 		this.location[1] = 0;
 		this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);
 
+		this.locationFront[0] = this.location[0] + (-1 * (this.location[0] * Math.cos(this.direction * Math.PI / 180) - (this.location[2] + 10) * Math.sin(this.direction * Math.PI / 180)));
+		this.locationFront[1] = 1;
+		this.locationFront[2] = this.location[2] + (this.location[0] * Math.sin(this.direction * Math.PI / 180) + (this.location[2] + 10) * Math.cos(this.direction * Math.PI / 180));
+		// this.directionFront = this.direction;
+		// if (this.directionFront == 0) this.directionFront = 1;
+		// this.previousDirectionFront = this.previousDirection;
+		// if (this.directionFront == 0) this.previousDirectionFront = 1;
+		// this.locationFront[0] = this.location[0] + (this.location[0] * Math.abs(this.directionFront) - this.previousLocation[0] * Math.abs(this.previousDirectionFront));
+		// this.locationFront[1] = 0;
+		// if (this.direction == 0) this.locationFront[2] = 15 + this.location[2];
+		// else this.locationFront[2] = this.location[2];
 		//Car telemetry
-		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + ")");
+		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + "), Front Location (" + this.locationFront);
 		// Track detection
 		if (this.track == "TrackMap.svg") this.simpleImage = "SimpleImage/trackMap.png";
 		if (this.track == "TestTrackMap.svg") this.simpleImage = "SimpleImage/testTrackMap.png";

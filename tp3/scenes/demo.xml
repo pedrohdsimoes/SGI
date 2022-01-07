@@ -3,7 +3,7 @@
     <!-- como o comprimento dos tres eixos (cilindros) -->
 
     <!-- ___________________________________VIEWS______________________________________ -->
-    <views default="menu">
+    <views default="carCamera">
         <!-- at least one of the following type of cameras must be declared -->
 
         <!-- Vista Geral - default -->
@@ -13,10 +13,10 @@
         </perspective>
 
         <!-- Vista de lado -->
-        <!-- <perspective id="sideView" near="0.1" far="500" angle="45">
-            <from x="17" y="7" z="0" />
-            <to x="0" y="4" z="0" />
-        </perspective> -->
+        <perspective id="sideView" near="0.1" far="500" angle="45">
+            <from x="0" y="3" z="1" />
+            <to x="0" y="0" z="10" />
+        </perspective>
 
         <!-- Vista de cima -->
         <perspective id="trackView" near="0.1" far="500" angle="90">

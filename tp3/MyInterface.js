@@ -97,14 +97,12 @@ export class MyInterface extends CGFinterface {
 		for (var key in views) {
 			if (views.hasOwnProperty(key)) {
 				viewValues.push(key)
+				viewValues.push("carCamera")
 			}
 		}
 		//setting the cameras dropdown 
 		this.gui.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera(val)).name("Camera");
 
-	}
-	addTrackCarCamera() {
-		this.gui.add(this.scene, "displayLights").onChange(val => this.scene.trackCarCamera()).name("Car Camera");
 	}
 
 	// adds a button that allows to show the location of the lights and hide it

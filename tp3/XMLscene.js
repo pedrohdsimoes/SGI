@@ -583,7 +583,8 @@ export class XMLscene extends CGFscene {
 
 			this.pushMatrix();
 			this.puHUD.apply();
-			this.translate(-4.8, 3, -4);
+			if (this.cameraID == "carCamera") this.translate(-3.7, 2.3, -8);
+			else this.translate(-4.8, 3, -4);
 			this.scale(5, 0.3, 1)
 			this.hud.display();
 			this.popMatrix();
@@ -595,7 +596,8 @@ export class XMLscene extends CGFscene {
 
 			this.pushMatrix();
 			this.oHUD.apply();
-			this.translate(-4.8, 2.7, -4);
+			if (this.cameraID == "carCamera") this.translate(-3.7, 1.9, -8);
+			else this.translate(-4.8, 2.7, -4);
 			this.scale(5, 0.3, 1)
 			this.hud.display();
 			this.popMatrix();

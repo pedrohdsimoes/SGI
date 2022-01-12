@@ -279,21 +279,25 @@ export class XMLscene extends CGFscene {
             // setTimeout('startCountdown()', 1000);
             this.tempo--;
             setTimeout(() => this.startCountDown(), 1000);
-        } else {
-            if(this.dif2On)
+        }
+        else {
+            if (this.dif2On)
                 this.tempo = 180;
-            else 
+            else
                 this.tempo = 150
-            this.startCountDown();
-        } 
+            // this.startCountDown();
+
+            this.startOn = false;
+            this.updateCamera("menu");
+        }
     }
 
 
-    getTime() {
-        var now = new Date().getTime();
-        this.minutes = 2;
-        this.seconds = Math.floor((now % (1000 * 60)) / 1000);
-    }
+    // getTime() {
+    //     var now = new Date().getTime();
+    //     this.minutes = 2;
+    //     this.seconds = Math.floor((now % (1000 * 60)) / 1000);
+    // }
 
 
     // trackCarCamera() {

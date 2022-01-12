@@ -32,7 +32,7 @@ export class MyVehicle extends CGFobject {
 
 		this.scene = scene;
 		this.track = "TrackMap.svg";
-
+		this.theta = 0;
 
 		// this.carbody = scene.displayComponent('carbody', null ,null , 1, 1);
 		// this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
@@ -66,13 +66,37 @@ export class MyVehicle extends CGFobject {
 		if (track2On) this.track = "TestTrackMap.svg";
 		if (!track2On) this.track = "TrackMap.svg";
 	}
+	placeCarOnStart(track2On,startOn) {
+		//sgi
+		if (track2On && startOn){ 
+			this.location = new vec3.fromValues(187.2,0,64.95);
+			this.trackRotate = "sgi";
+		}
+		//abu dhabi
+		if (!track2On && startOn) {
+			
+			this.location = new vec3.fromValues(215.7,0,230.3);
+			this.trackRotate = "abu dhabi";
+			
+		}
+	}
 
 	display() {
+	//	if(this.trackRotate == "abu dhabi"){ 
+			// this.theta = (-Math.PI / 1.2 )
+			// this.scene.rotate(this.theta,0,1,0)
+	//	}
+		
+
 		this.scene.pushMatrix();
 
 		this.scene.translate(this.location[0], this.location[1], this.location[2]);
 
+	
+
 		this.scene.rotate(this.direction * Math.PI / 180, 0, 1, 0);
+
+	
 
 		this.scene.scale(this.scale, this.scale, this.scale);
 
@@ -133,6 +157,7 @@ export class MyVehicle extends CGFobject {
 		this.wheel.display();
 		this.scene.popMatrix();
 
+		
 		this.scene.popMatrix();
 	}
 
@@ -210,7 +235,7 @@ export class MyVehicle extends CGFobject {
 		this.location[1] = 0;
 		this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);
 		if(this.velocity>=0){
-		this.locationFront[0] = this.location[0] + 14 * Math.sin(this.direction * Math.PI / 180);
+		this.locationFront[0] = this.location[0] + 14 * Math.sin(this.direction * Math.PI / 180 );
 		this.locationFront[1] = 1;
 		this.locationFront[2] = this.location[2] + 14 * Math.cos(this.direction * Math.PI / 180);
 		} else {
@@ -218,17 +243,6 @@ export class MyVehicle extends CGFobject {
 		this.locationFront[1] = 2;
 		this.locationFront[2] = this.location[2] + -3.5 * Math.cos(this.direction * Math.PI / 180);
 		}
-		// this.locationFront[0] = this.location[0] + (-1 * (this.location[0] * Math.cos(this.direction * Math.PI / 180) - (this.location[2] + 10) * Math.sin(this.direction * Math.PI / 180)));
-		// this.locationFront[1] = 1;
-		// this.locationFront[2] = this.location[2] + (this.location[0] * Math.sin(this.direction * Math.PI / 180) + (this.location[2] + 10) * Math.cos(this.direction * Math.PI / 180));
-		// this.directionFront = this.direction;
-		// if (this.directionFront == 0) this.directionFront = 1;
-		// this.previousDirectionFront = this.previousDirection;
-		// if (this.directionFront == 0) this.previousDirectionFront = 1;
-		// this.locationFront[0] = this.location[0] + (this.location[0] * Math.abs(this.directionFront) - this.previousLocation[0] * Math.abs(this.previousDirectionFront));
-		// this.locationFront[1] = 0;
-		// if (this.direction == 0) this.locationFront[2] = 15 + this.location[2];
-		// else this.locationFront[2] = this.location[2];
 		//Car telemetry
 		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + "), Front Location (" + this.locationFront);
 		// Track detection

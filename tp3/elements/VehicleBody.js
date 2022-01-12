@@ -516,6 +516,7 @@ export class VehicleBody extends CGFobject {
 
         // Base
         this.scene.pushMatrix();
+        this.redTex.apply();
         this.scene.scale(0.7, 1, 1.2);
         this.scene.translate(0, 0.05, -2);
         this.scene.rotate(-Math.PI / 6, 0, 1, 0);

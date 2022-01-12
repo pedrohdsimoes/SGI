@@ -26,15 +26,15 @@
 
         <!--Vista do meio campo para o cesto da esquerda -->
         <!-- <perspective id="basketView" near="0.1" far="500" angle="45">
-            <from x="0" y="1" z="-5" />
-            <to x="0" y="3" z="4" />
-        </perspective> -->
+			<from x="0" y="1" z="-5" />
+			<to x="0" y="3" z="4" />
+		</perspective> -->
 
         <!-- Vista que um fã teria de uma cadeira para os ecrãs gigantes e para o cesto -->
         <!-- <perspective id="fanView" near="0.8" far="100" angle="45">
-            <from x="10.5" y="2" z="-5" />
-            <to x="0" y="5" z="0" />
-        </perspective> -->
+			<from x="10.5" y="2" z="-5" />
+			<to x="0" y="5" z="0" />
+		</perspective> -->
 
 
     </views>
@@ -112,7 +112,7 @@
     <!-- ___________________________________MATERIALS______________________________________ -->
     <materials>
         <!-- the "MATERIAL" block may be repeated as required. Each defined material
-         requires a distinct "id". At least one material should be present. -->
+		 requires a distinct "id". At least one material should be present. -->
 
         <material id="material" shininess="100">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" /> <!-- emissive component -->
@@ -145,7 +145,7 @@
     <!-- ___________________________________TRANSFORMATIONS______________________________________ -->
     <transformations>
         <!-- the "transformations" block may be repeated as required. Each defined transformation
-         requires a distinct "id". At least one material should be present. -->
+		 requires a distinct "id". At least one material should be present. -->
 
         <transformation id="court">
             <!-- <rotate axis="y" angle="90" /> -->
@@ -1034,6 +1034,21 @@
             </children>
         </component>
 
+        <component id="carbody">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="material" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="cockpit" />
+                <componentref id="front_body" />
+                <componentref id="FrontWingConnection" />
+            </children>
+        </component>
+
         <!-- Component Root onde são chamados todos os outros componentes  -->
         <!-- ROOT -->
         <component id="demoRoot">
@@ -1046,82 +1061,9 @@
             </materials>
             <texture id="none" />
             <children>
-                <!-- <componentref id="track" /> -->
+                <!-- <componentref id="carbody" /> -->
             </children>
         </component>
 
     </components>
-
-    <vehicles>
-
-        <vehicle id="FrontWingConnection">
-            <transformation>
-                <transformationref id="FrontWingConnection" />
-            </transformation>
-            <materials>
-                <material id="floorMaterial" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id="FrontWingConnection" />
-            </children>
-        </vehicle>
-
-        <vehicle id="front_body">
-            <transformation>
-                <transformationref id="front_body" />
-            </transformation>
-            <materials>
-                <material id="floorMaterial" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id="front_body" />
-            </children>
-        </vehicle>
-
-        <vehicle id="cockpit">
-            <transformation>
-                <transformationref id="cockpit" />
-            </transformation>
-            <materials>
-                <material id="floorMaterial" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <primitiveref id="cockpit" />
-            </children>
-        </vehicle>
-
-        <vehicle id="carbody">
-            <transformation>
-                <translate x="0" y="0" z="0" />
-                <rotate axis="y" angle="90" />
-                <scale x="2" y="1.7" z="2" />
-            </transformation>
-            <materials>
-                <material id="material" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <componentref id="cockpit" />
-                <componentref id="front_body" />
-                <componentref id="FrontWingConnection" />
-            </children>
-        </vehicle>
-
-        <vehicle id="demoRoot">
-            <transformation>
-                <translate x="0" y="0" z="0" />
-            </transformation>
-            <materials>
-                <material id="material" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <componentref id="carbody" />
-            </children>
-        </vehicle>
-
-    </vehicles>
 </SXG>

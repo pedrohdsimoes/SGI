@@ -377,9 +377,10 @@ export class XMLscene extends CGFscene {
 		this.collision_detection(this.dif2On, this.track2On);
 		this.vehicle.trackSelection(this.track2On);
 		this.cam = new CGFcamera(0.8, 2, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 3.5, this.vehicle.location[2]), vec3.fromValues(this.vehicle.locationFront[0], this.vehicle.locationFront[1], this.vehicle.locationFront[2]));
-		if (this.cameraID == "carCamera") this.updateCamera("carCamera")
+		if (this.cameraID == "carCamera" ) this.updateCamera("carCamera")
+		if(this.interface.isKeyPressed(77)) this.updateCamera("menu");
 	}
-
+		
 	collision_detection(dif2On, track2On) {
 		var center_to_front = 10.7;
 		var center_to_back = 0.8;
@@ -567,7 +568,11 @@ export class XMLscene extends CGFscene {
 		//HUD
 		this.pushMatrix();
 		this.hudtex.apply();
-		this.translate(-4.8, 3.5, -4);
+		
+		//car camera view
+		if (this.cameraID == "carCamera") this.translate(-3.7, 2.8, -8);
+		//track view
+		else this.translate(-4.8, 3.5, -4);
 		this.scale(5, 1, 1)
 		this.hud.display();
 		this.popMatrix();
@@ -578,7 +583,8 @@ export class XMLscene extends CGFscene {
 
 			this.pushMatrix();
 			this.puHUD.apply();
-			this.translate(-4.8, 3, -4);
+			if (this.cameraID == "carCamera") this.translate(-3.7, 2.3, -8);
+			else this.translate(-4.8, 3, -4);
 			this.scale(5, 0.3, 1)
 			this.hud.display();
 			this.popMatrix();
@@ -590,7 +596,8 @@ export class XMLscene extends CGFscene {
 
 			this.pushMatrix();
 			this.oHUD.apply();
-			this.translate(-4.8, 2.7, -4);
+			if (this.cameraID == "carCamera") this.translate(-3.7, 1.9, -8);
+			else this.translate(-4.8, 2.7, -4);
 			this.scale(5, 0.3, 1)
 			this.hud.display();
 			this.popMatrix();
@@ -691,7 +698,11 @@ export class XMLscene extends CGFscene {
 		this.loadIdentity();
 
 		// transform as needed to place on screen
-		this.translate(-7.4, 3.5, -6);
+		
+		//car camera view
+		if (this.cameraID == "carCamera") this.translate(-7.7, 3.5, -12);
+		//track view
+		else this.translate(-7.4, 3.5, -6);
 
 		// set character to display to be in the Nth column, Mth line (0-based)
 		// the shader will take care of computing the correct texture coordinates 
@@ -727,7 +738,11 @@ export class XMLscene extends CGFscene {
 		});
 		this.quad.display();
 		//VELOCITY DISPLAY
-		this.translate(-9, 4.9, -6.5);
+		
+		//car camera view
+		if (this.cameraID == "carCamera")  this.translate(-7, 3.5, -12.5);
+		//track view
+		else this.translate(-9, 4.9, -6.5);
 		this.activeShader.setUniformsValues({
 			'charCoords': velocity1
 		}); // centenas

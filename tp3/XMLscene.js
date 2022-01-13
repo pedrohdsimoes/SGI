@@ -377,9 +377,10 @@ export class XMLscene extends CGFscene {
 
 		}
 		else {
-			if (this.dif2On)
-				this.tempo = 180
-			else this.tempo = 150;
+            if (this.dif2On && !this.track2On) this.tempo = 180;
+            else if (this.dif2On && this.track2On) this.tempo = 120;
+            else if (!this.dif2On && this.track2On) this.tempo = 90;
+            else this.tempo = 150;
 
 			// this.startCountDown();
 
@@ -488,11 +489,12 @@ export class XMLscene extends CGFscene {
                             console.log("Menu: START")
                             this.startOn = true;
                             this.vehicle.placeCarOnStart(this.track2On, this.startOn);
-                            if (this.dif2On)
-                                this.tempo = 180;
-                            else
-                                this.tempo = 150;
-                                this.cameraID = "carCamera"
+                            if (this.dif2On && !this.track2On) this.tempo = 180;
+                            else if (this.dif2On && this.track2On) this.tempo = 120;
+                            else if (!this.dif2On && this.track2On) this.tempo = 90;
+                            else this.tempo = 150;
+                            
+                            this.cameraID = "carCamera"
                             this.startCountDown();
                             
                             //this.updateCamera("carCamera")

@@ -19,6 +19,7 @@ import {
 import {
 	MyComponent
 } from "../MyComponent.js";
+import { MyInterface } from "../MyInterface.js";
 
 /**
  * 
@@ -33,6 +34,7 @@ export class MyVehicle extends CGFobject {
 		this.scene = scene;
 		this.track = "TrackMap.svg";
 		this.theta = 0;
+		this.gui = new MyInterface()
 
 		// this.carbody = scene.displayComponent('carbody', null ,null , 1, 1);
 		// this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
@@ -168,6 +170,8 @@ export class MyVehicle extends CGFobject {
 		if (event.keyCode == 83) this.keyBackward = true;
 		if (event.keyCode == 65) this.keyLeft = true;
 		if (event.keyCode == 68) this.keyRight = true;
+		//menu
+		if (event.keyCode == 77) this.keyM = true;
 	}
 	processKeyUp(event) {
 		//key is not being pushed
@@ -175,6 +179,8 @@ export class MyVehicle extends CGFobject {
 		if (event.keyCode == 83) this.keyBackward = false;
 		if (event.keyCode == 65) this.keyLeft = false;
 		if (event.keyCode == 68) this.keyRight = false;
+		//menu
+		if (event.keyCode == 77) this.keyM = false;
 	}
 
 	updateMovement(currTime) {

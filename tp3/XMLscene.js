@@ -259,7 +259,7 @@ export class XMLscene extends CGFscene {
     }
 
     startCountDown() {
-        if (this.tempo - 1 >= 0) {
+        if (this.tempo - 1 >= 0 && this.cameraID != "menu") {
             var min = parseInt(this.tempo / 60);
             var seg = this.tempo % 60;
 
@@ -279,32 +279,19 @@ export class XMLscene extends CGFscene {
             // setTimeout('startCountdown()', 1000);
             this.tempo--;
             setTimeout(() => this.startCountDown(), 1000);
+           
         }
         else {
             if (this.dif2On)
-                this.tempo = 180;
-            else
-                this.tempo = 150
+                this.tempo = 180
+            else this.tempo = 150;
+                
             // this.startCountDown();
 
             this.startOn = false;
             this.updateCamera("menu");
         }
     }
-
-
-    // getTime() {
-    //     var now = new Date().getTime();
-    //     this.minutes = 2;
-    //     this.seconds = Math.floor((now % (1000 * 60)) / 1000);
-    // }
-
-
-    // trackCarCamera() {
-    // 	this.cam = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 12, this.vehicle.location[2]), vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1], this.vehicle.location[2]));
-    // 	this.graph.views["carCamera"] = this.cam;
-    // 	this.interface.setActiveCamera(this.cam);
-    // }
 
     /**
      * Initializes the scene cameras.
@@ -321,7 +308,7 @@ export class XMLscene extends CGFscene {
      */
     updateCamera(newCamera) {
         this.cameraID = newCamera;
-        if (this.cameraID == "carCamera") this.camera = this.cam; //console.log("CAR CSMEA " + this.cam.position); // this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 12, this.vehicle.location[2]), vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1], this.vehicle.location[2]));
+        if (this.cameraID == "carCamera") this.camera = this.cam; 
         else this.camera = this.graph.views[this.cameraID];
         this.interface.setActiveCamera(this.camera);
     }
@@ -379,15 +366,16 @@ export class XMLscene extends CGFscene {
     }
 
     update(currTime) {
+       if(this.vehicle.keyM)this.cameraID = "menu";
         this.car_location = this.vehicle.updateMovement(currTime);
         this.collision_detection(this.dif2On, this.track2On);
         this.vehicle.trackSelection(this.track2On);
         this.cam = new CGFcamera(0.8, 2, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 3.5, this.vehicle.location[2]), vec3.fromValues(this.vehicle.locationFront[0], this.vehicle.locationFront[1], this.vehicle.locationFront[2]));
         if (this.cameraID == "carCamera") this.updateCamera("carCamera")
         if (this.cameraID == "menu") { this.vehicle.location = new vec3.fromValues(0, 0, 0); this.vehicle.direction = 0; }
-        if (this.interface.isKeyPressed(77)) this.updateCamera("menu");
-        //esc
-        if (this.interface.isKeyPressed(27)) this.startOn = false;
+         
+        // //esc
+        // if (this.interface.isKeyPressed(27)) this.startOn = false;
     }
 
     collision_detection(dif2On, track2On) {
@@ -491,11 +479,13 @@ export class XMLscene extends CGFscene {
                             this.startOn = true;
                             this.vehicle.placeCarOnStart(this.track2On, this.startOn);
                             if (this.dif2On)
-                                this.tempo = 180;
-                            else
                                 this.tempo = 150;
+                            else
+                                this.tempo = 180;
+                                this.cameraID = "carCamera"
                             this.startCountDown();
-                            this.updateCamera("carCamera")
+                            
+                            //this.updateCamera("carCamera")
 
                         }
                         //demo

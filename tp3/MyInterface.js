@@ -62,6 +62,11 @@ export class MyInterface extends CGFinterface {
 	};
 
 	isKeyPressed(keyCode) {
+		  //returns true if a key is marked as pressed, false otherwise
+		  if(this.activeKeys[keyCode] === true){
+			this.activeKeys[keyCode] = false;
+			return true;
+		  }  
 		return this.activeKeys[keyCode] || false;
 	}
 	/**
@@ -102,7 +107,8 @@ export class MyInterface extends CGFinterface {
 		}
 		//setting the cameras dropdown 
 		this.gui.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera(val)).name("Camera");
-
+		
+		
 	}
 
 	// adds a button that allows to show the location of the lights and hide it

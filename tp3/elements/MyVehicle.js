@@ -94,11 +94,7 @@ export class MyVehicle extends CGFobject {
 
 		this.scene.translate(this.location[0], this.location[1], this.location[2]);
 
-	
-
 		this.scene.rotate(this.direction * Math.PI / 180, 0, 1, 0);
-
-	
 
 		this.scene.scale(this.scale, this.scale, this.scale);
 
@@ -159,7 +155,6 @@ export class MyVehicle extends CGFobject {
 		this.wheel.display();
 		this.scene.popMatrix();
 
-		
 		this.scene.popMatrix();
 	}
 
@@ -171,7 +166,9 @@ export class MyVehicle extends CGFobject {
 		if (event.keyCode == 65) this.keyLeft = true;
 		if (event.keyCode == 68) this.keyRight = true;
 		//menu
-		if (event.keyCode == 77) this.keyM = true;
+        if (event.keyCode == 77) this.keyM = true;
+        //reset
+        if (event.keyCode == 82) this.keyR = true;
 	}
 	processKeyUp(event) {
 		//key is not being pushed
@@ -180,7 +177,9 @@ export class MyVehicle extends CGFobject {
 		if (event.keyCode == 65) this.keyLeft = false;
 		if (event.keyCode == 68) this.keyRight = false;
 		//menu
-		if (event.keyCode == 77) this.keyM = false;
+        if (event.keyCode == 77) this.keyM = false;
+        //reset
+        if (event.keyCode == 82) this.keyR = false;
 	}
 
 	updateMovement(currTime) {
@@ -304,7 +303,7 @@ export class MyVehicle extends CGFobject {
 	//car is faster
 	f1_powerup_effect1() {
 		this.powerupOn = true;
-		this.velocityMaxAux = 14;
+        this.velocityMaxAux = 14;
 		setTimeout(() => this.velocityMaxAux = 4.0, 15000);
 		console.log("F1 - PU1");
 	}

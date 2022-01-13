@@ -258,41 +258,6 @@ export class XMLscene extends CGFscene {
         }
     }
 
-    startCountDown() {
-        if (this.tempo - 1 >= 0 && this.cameraID != "menu") {
-            var min = parseInt(this.tempo / 60);
-            var seg = this.tempo % 60;
-
-            if (min < 10) {
-                min = "0" + min;
-                min = min.substr(0, 2);
-            }
-            if (seg <= 9)
-                seg = "0" + seg;
-
-            console.log("Time: " + min + "," + seg);
-
-            this.min = min;
-            this.seperator = 10;
-            this.seg = seg;
-
-            // setTimeout('startCountdown()', 1000);
-            this.tempo--;
-            setTimeout(() => this.startCountDown(), 1000);
-           
-        }
-        else {
-            if (this.dif2On)
-                this.tempo = 180
-            else this.tempo = 150;
-                
-            // this.startCountDown();
-
-            this.startOn = false;
-            this.updateCamera("menu");
-        }
-    }
-
     /**
      * Initializes the scene cameras.
      */
@@ -365,18 +330,63 @@ export class XMLscene extends CGFscene {
         this.sceneInited = true;
     }
 
-    update(currTime) {
-       if(this.vehicle.keyM)this.cameraID = "menu";
+	update(currTime) {
+		if (this.vehicle.keyM) this.cameraID = "menu";
+		if (this.vehicle.keyR && this.cameraID == "carCamera") {
+			this.startOn = true;
+			this.vehicle.direction = 0; this.vehicle.velocity = 0; this.vehicle.steeringAngle = 0;
+			this.vehicle.placeCarOnStart(this.track2On, this.startOn);
+			this.cameraID = "menu"
+			if (this.dif2On) this.tempo = 180;
+			else this.tempo = 150;
+			this.startCountDown();
+			this.cameraID = "carCamera"
+		}
         this.car_location = this.vehicle.updateMovement(currTime);
         this.collision_detection(this.dif2On, this.track2On);
         this.vehicle.trackSelection(this.track2On);
         this.cam = new CGFcamera(0.8, 2, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 3.5, this.vehicle.location[2]), vec3.fromValues(this.vehicle.locationFront[0], this.vehicle.locationFront[1], this.vehicle.locationFront[2]));
         if (this.cameraID == "carCamera") this.updateCamera("carCamera")
-        if (this.cameraID == "menu") { this.vehicle.location = new vec3.fromValues(0, 0, 0); this.vehicle.direction = 0; }
+		if (this.cameraID == "menu") { this.vehicle.location = new vec3.fromValues(0, 0, 0); this.vehicle.direction = 0; this.vehicle.velocity = 0; this.vehicle.steeringAngle = 0 }
          
-        // //esc
+        // esc
         // if (this.interface.isKeyPressed(27)) this.startOn = false;
-    }
+	}
+	
+	startCountDown() {
+		if (this.tempo - 1 >= 0 && this.cameraID != "menu") {
+			var min = parseInt(this.tempo / 60);
+			var seg = this.tempo % 60;
+
+			if (min < 10) {
+				min = "0" + min;
+				min = min.substr(0, 2);
+			}
+			if (seg <= 9)
+				seg = "0" + seg;
+
+			//console.log("Time: " + min + "," + seg);
+
+			this.min = min;
+			this.seperator = 10;
+			this.seg = seg;
+
+			// setTimeout('startCountdown()', 1000);
+			this.tempo--;
+			setTimeout(() => this.startCountDown(), 1000);
+
+		}
+		else {
+			if (this.dif2On)
+				this.tempo = 180
+			else this.tempo = 150;
+
+			// this.startCountDown();
+
+			this.startOn = false;
+			this.updateCamera("menu");
+		}
+	}
 
     collision_detection(dif2On, track2On) {
         var center_to_front = 10.7;
@@ -479,9 +489,9 @@ export class XMLscene extends CGFscene {
                             this.startOn = true;
                             this.vehicle.placeCarOnStart(this.track2On, this.startOn);
                             if (this.dif2On)
-                                this.tempo = 150;
-                            else
                                 this.tempo = 180;
+                            else
+                                this.tempo = 150;
                                 this.cameraID = "carCamera"
                             this.startCountDown();
                             
@@ -535,12 +545,12 @@ export class XMLscene extends CGFscene {
         if (!this.track2On) {
             this.animation = this.mysvgreader.send_route.store_route();
             // console.log("ROUTES_ABU: " + this.mysvgreader.send_route.routes);
-            console.log("INSTANT: " + this.animation);
+            //console.log("INSTANT: " + this.animation);
         }
         if (this.track2On) {
             this.animation = this.mysvgreader2.send_route.store_route();
             // console.log("ROUTES_SGI: " + this.mysvgreader.send_route.routes);
-            console.log("INSTANT: " + this.animation);
+           // console.log("INSTANT: " + this.animation);
         }
     }
 

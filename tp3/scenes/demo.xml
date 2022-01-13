@@ -19,19 +19,6 @@
             <to x="256" y="0" z="256" />
         </perspective>
 
-        <!--Vista do meio campo para o cesto da esquerda -->
-        <!-- <perspective id="basketView" near="0.1" far="500" angle="45">
-			<from x="0" y="1" z="-5" />
-			<to x="0" y="3" z="4" />
-		</perspective> -->
-
-        <!-- Vista que um fã teria de uma cadeira para os ecrãs gigantes e para o cesto -->
-        <!-- <perspective id="fanView" near="0.8" far="100" angle="45">
-			<from x="10.5" y="2" z="-5" />
-			<to x="0" y="5" z="0" />
-		</perspective> -->
-
-
     </views>
 
     <ambient>

@@ -4,6 +4,7 @@ import {
     CGFnurbsObject,
     CGFnurbsSurface
 } from "../../lib/CGF.js";
+import { MyCircle } from "../primitives/MyCircle.js";
 import {
     MyCylinder
 } from "../primitives/MyCylinder.js";
@@ -19,12 +20,12 @@ export class MyPowerUp extends CGFobject {
         super(scene);
         this.position = position;
         this.green = new CGFappearance(this.scene);
-        this.green.setAmbient(0, 1, 0, 1);
-        this.green.setDiffuse(0, 1, 0, 1);
+        this.green.setAmbient(0, 1, 0, 0.5);
+        this.green.setDiffuse(0, 1, 0, 0.5);
         this.green.setSpecular(0, 1, 0, 1);
         this.green.setShininess(10.0);
-        this.pu = new MyCylinder(scene, "powerup", 7, 3.3, 3.3, 50, 1);
-
+        this.pu = new MyCylinder(scene, "powerup", 2, 2.2, 2.2, 8, 1);
+        this.circle = new MyCircle(scene, "puCircle", 2.2, 8);
     }
     display() {
         this.green.apply();
@@ -33,6 +34,8 @@ export class MyPowerUp extends CGFobject {
         this.scene.translate(this.position[0], this.position[1], this.position[2]);
         this.scene.rotate(-Math.PI / 2, 1, 0, 0);
         this.pu.display();
+        this.scene.translate(0, 0, 2);
+        this.circle.display();
         this.scene.popMatrix();
 
     }

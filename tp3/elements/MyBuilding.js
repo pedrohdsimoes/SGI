@@ -43,7 +43,7 @@ export class MyBuilding extends CGFobject {
         this.roofTex.loadTexture('scenes/images/roof.jpg');
         this.roofTex.setTextureWrap('REPEAT', 'REPEAT');
 
-        this.side1 = new MyRectangle(this.scene, "s1", 0, 60, 0, 100);
+        this.side1 = new MyRectangle(this.scene, "s1", 0, 60, 0, 85);
         this.top = new MyRectangle(this.scene, "s1", 0, 60, 0, 60);
 
     }
@@ -76,7 +76,7 @@ export class MyBuilding extends CGFobject {
 
         this.scene.pushMatrix();
         this.roofTex.apply();
-        this.scene.translate(235, 100, 225);
+        this.scene.translate(235, 85, 225);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
         this.top.display();
         this.scene.popMatrix();

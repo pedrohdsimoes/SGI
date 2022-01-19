@@ -267,11 +267,12 @@ export class MyVehicle extends CGFobject {
 	}
 
 	// Difficulty F2
-	// Car turns more uncontrollably 
+
+	// Car stops when you stop pressing "W" 
 	f2_obstacle_effect1() {
 		this.obstacleOn = true;
-		this.steeringDelta = 7.5;
-		setTimeout(() => this.steeringDelta = 1, 10000);
+		this.velocityAtriction = 0.1;
+		setTimeout(() => this.velocityAtriction = 0.9, 15000);
 		console.log("F2 - OBS1");
 	}
 	//car gets bigger
@@ -290,15 +291,19 @@ export class MyVehicle extends CGFobject {
 	}
 	f2_powerup_effect2() {
 		this.powerupOn = true;
-		//escolher
+		//encolher
+		this.scale = 1.2;
+		setTimeout(() => this.scale = 1.5, 10000);
 		console.log("F2 - PU2");
 	}
 
 	// Difficulty F1
-	// Car stops when you stop pressing "W" 
+
+	// Car turns more uncontrollably 
 	f1_obstacle_effect1() {
 		this.obstacleOn = true;
-		this.velocityAtriction = 0.1;
+		this.steeringDelta = 7.5;
+		setTimeout(() => this.steeringDelta = 1, 15000);
 		console.log("F1 - OBS1");
 	}
 

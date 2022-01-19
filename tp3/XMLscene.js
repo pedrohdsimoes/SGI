@@ -56,8 +56,13 @@ export class XMLscene extends CGFscene {
         this.demoOn = false;
         this.tempo = new Number();
         this.tempo = 150;
-
-
+        this.laps = 0;
+        this.lap_aux = 0;
+        this.won = 0;
+        this.puCollision = 0;
+        this.obsCollision = 0;
+        this.powerupOn_aux = 0;
+        this.obstacleOn_aux = 0;
     }
 
     /**
@@ -78,6 +83,8 @@ export class XMLscene extends CGFscene {
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
+        // this.gl.enable(this.gl.BLEND);
+        // this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);  
 
         this.lightValues = [];
         this.route = [];
@@ -180,8 +187,29 @@ export class XMLscene extends CGFscene {
         this.timerTex.setSpecular(0, 0, 0, 1);
         this.timerTex.setShininess(100.0);
 
-        this.setPickEnabled(true);
+        this.lapTex = new CGFappearance(this);
+        this.lapTex.setAmbient(0, 0, 0, 1);
+        this.lapTex.setDiffuse(0, 0, 0, 1);
+        this.lapTex.setSpecular(0, 0, 0, 1);
+        this.lapTex.setShininess(100.0);
 
+        this.kimiWon = new CGFappearance(this);
+        this.kimiWon.setAmbient(1, 1, 1, 1);
+        this.kimiWon.setDiffuse(1, 1, 1, 1);
+        this.kimiWon.setSpecular(1, 1, 1, 1);
+        this.kimiWon.setShininess(100.0);
+        this.kimiWon.loadTexture('scenes/images/kimiWon.jpeg');
+        this.kimiWon.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.kimiLost = new CGFappearance(this);
+        this.kimiLost.setAmbient(1, 1, 1, 1);
+        this.kimiLost.setDiffuse(1, 1, 1, 1);
+        this.kimiLost.setSpecular(1, 1, 1, 1);
+        this.kimiLost.setShininess(100.0);
+        this.kimiLost.loadTexture('scenes/images/kimiLost.jpeg');
+        this.kimiLost.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.setPickEnabled(true);
         this.materials = [
             this.track,
             this.difficulty,
@@ -324,7 +352,6 @@ export class XMLscene extends CGFscene {
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
-
         //cameras
         this.initCameras();
         // this.trackCarCamera();
@@ -347,12 +374,46 @@ export class XMLscene extends CGFscene {
             this.vehicle.steeringAngle = 0;
             this.vehicle.placeCarOnStart(this.track2On, this.startOn);
             this.cameraID = "menu"
-            if (this.dif2On) this.tempo = 180;
-            else this.tempo = 150;
+            if (this.dif2On && !this.track2On) this.tempo = 150;
+            else if (this.dif2On && this.track2On) this.tempo = 90;
+            else if (!this.dif2On && this.track2On) this.tempo = 120;
+            else this.tempo = 180;
             this.startCountDown();
             this.cameraID = "carCamera"
         }
         this.car_location = this.vehicle.updateMovement(currTime);
+
+        var x_location = this.car_location[0];
+        var z_location = this.car_location[2];
+        // ABU DHABI
+        var min_x = 185.8;
+        var max_x = 220;
+        var min_z = 226.5;
+        var max_z = 230.2;
+        // SGI TRACK
+        if (this.track2On) {
+            var min_x = 91;
+            var max_x = 128;
+            var min_z = 231;
+            var max_z = 235;
+        }
+        // LAP COUNTER
+        if ((x_location > min_x && x_location < max_x) && (z_location > min_z && z_location < max_z) && this.lap_aux == 0) {
+            this.lap_aux = 1;
+            switch (this.laps) {
+                case 0:
+                    this.laps = 1;
+                    break;
+                case 1:
+                    this.laps = 2;
+                    break;
+                case 2:
+                    this.laps = 3;
+                    break;
+            }
+            setTimeout(() => this.lap_aux = 0, 15000);
+        }
+
         this.collision_detection(this.dif2On, this.track2On);
         this.vehicle.trackSelection(this.track2On);
         this.cam = new CGFcamera(0.8, 2, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 3.5, this.vehicle.location[2]), vec3.fromValues(this.vehicle.locationFront[0], this.vehicle.locationFront[1], this.vehicle.locationFront[2]));
@@ -363,9 +424,16 @@ export class XMLscene extends CGFscene {
             this.vehicle.velocity = 0;
             this.vehicle.steeringAngle = 0
         }
+        //console.log("LAPS:", this.laps);
+        if (this.laps == 3 && this.won == 0) {
+            this.won = 1;
+            console.log("GANHOUUUUUUU")
 
-        // esc
-        // if (this.interface.isKeyPressed(27)) this.startOn = false;
+            setTimeout(() => { this.cameraID = "menu", this.laps = 0 }, 10000);
+            setTimeout(() => this.won = 0, 15000);
+
+        }
+
     }
 
     startCountDown() {
@@ -388,10 +456,10 @@ export class XMLscene extends CGFscene {
             setTimeout(() => this.startCountDown(), 1000);
 
         } else { // Back to the menu 
-            if (this.dif2On && !this.track2On) this.tempo = 180;
+            if (this.dif2On && !this.track2On) this.tempo = 150;
             else if (this.dif2On && this.track2On) this.tempo = 90;
             else if (!this.dif2On && this.track2On) this.tempo = 120;
-            else this.tempo = 150;
+            else this.tempo = 180;
 
 
             this.startOn = false;
@@ -424,27 +492,42 @@ export class XMLscene extends CGFscene {
             let y_circle = this.puCircleCoord[i][2] * scale;
             let radius = this.puCircleCoord[i][3] * scale;
             //distance beetween car location and circles
-            let distanceFL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
-            let distanceFR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
-            let distanceBR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
-            let distanceBL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
-            let threshold = Math.pow(radius, 2) * 0.9;
+            let distanceBL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
+            let distanceBR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2) + 40;
+            let distanceFR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2) + 10;
+            let distanceFL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
+            let threshold = 70;
+            // console.log("THRESHOLD: " + threshold);            
+            // console.log("BR: " + distanceBR);
+            // console.log("BL: " + distanceBL);
+            // console.log("FR: " + distanceFR);
+            // console.log("FL: " + distanceFL);
+            // console.log("\n");
+
             //when there is collision
-            if (distanceBR <= threshold ||
+            if ((distanceBR <= threshold ||
                 distanceBL <= threshold ||
                 distanceFR <= threshold ||
-                distanceFL <= threshold) {
+                distanceFL <= threshold) && this.puCollision == 0) {
 
-                console.log("BATEU")
-                //this.puflag++;
-                this.puflag = 1;
-                if (this.puflag == 1) {
-                    if (!dif2On) this.vehicle.f2_powerup_effect1();
-                    else this.vehicle.f1_powerup_effect1();
-                } else if (this.puflag > 10) {
-                    // if (!dif2On) this.vehicle.f2_powerup_effect2();
-                    this.puflag = 1;
+                console.log("BATEU PU")
+                this.puCollision = 1;
+                setTimeout(() => this.puCollision = 0, 2000);
+                // this.puflag++;
+                // this.puflag = 1;
+                // if (this.puflag == 1) {
+                //     if (!dif2On) this.vehicle.f2_powerup_effect1();
+                //     else this.vehicle.f1_powerup_effect1();
+                // } else if (this.puflag > 10) {
+                //     // if (!dif2On) this.vehicle.f2_powerup_effect2();
+                //     this.puflag = 1;
+                // }
+
+                if (!dif2On) {
+                    if (i % 2 == 0) { this.vehicle.f2_powerup_effect1(); }
+                    else this.vehicle.f2_powerup_effect2()
                 }
+                else this.vehicle.f1_powerup_effect1();
             }
 
         }
@@ -456,30 +539,44 @@ export class XMLscene extends CGFscene {
             let radius = this.oCircleCoord[i][3] * scale;
             // distance between car location and circles
             let distanceFL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
-            let distanceFR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
-            let distanceBR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
+            let distanceFR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2) + 40;
+            let distanceBR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2) + 10;
             let distanceBL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
-            let threshold = Math.pow(radius, 2) * 0.9;
+            let threshold = 70;
+            // console.log("THRESHOLD: " + threshold);            
+            // console.log("BR: " + distanceBR);
+            // console.log("BL: " + distanceBL);
+            // console.log("FR: " + distanceFR);
+            // console.log("FL: " + distanceFL);
+            // console.log("\n");
+
             // when there is collision
-            if (distanceBR <= threshold ||
+            if ((distanceBR <= threshold ||
                 distanceBL <= threshold ||
                 distanceFR <= threshold ||
-                distanceFL <= threshold) {
+                distanceFL <= threshold) && this.obsCollision == 0) {
 
-                console.log("BATEU")
-                this.oflag++;
-                //this.oflag = 1;
-                if (this.oflag == 1) {
-                    if (!dif2On) this.vehicle.f2_obstacle_effect1();
-                    else this.vehicle.f1_obstacle_effect1();
+                console.log("BATEU OBS")
+                this.obsCollision = 1;
+                setTimeout(() => this.obsCollision = 0, 2000);
+                // this.oflag++;
+                // this.oflag = 1;
+                // if (this.oflag == 1) {
+                //     if (!dif2On) this.vehicle.f2_obstacle_effect1();
+                //     else this.vehicle.f1_obstacle_effect1();
 
-                } else if (this.oflag > 10) {
-                    if (!dif2On) this.vehicle.f2_obstacle_effect2();
+                // } else if (this.oflag > 10) {
+                //     if (!dif2On) this.vehicle.f2_obstacle_effect2();
 
 
-                    this.oflag = 1;
+                //     this.oflag = 1;
+                // }
+
+                if (!dif2On) {
+                    if (i % 2 == 0) { this.vehicle.f2_obstacle_effect1(); }
+                    else this.vehicle.f2_obstacle_effect2()
                 }
-
+                else this.vehicle.f1_obstacle_effect1();
 
             }
         }
@@ -604,8 +701,14 @@ export class XMLscene extends CGFscene {
         this.popMatrix();
 
         if (this.vehicle.powerupOn) {
-            setTimeout(() => this.vehicle.powerupOn = false, 10000);
-
+            if (this.powerupOn_aux == 0) {
+                setTimeout(() => this.vehicle.powerupOn = false, 10000);
+                setTimeout(() => this.powerupOn_aux = 0, 10000);
+                console.log("TIMEOUT PU")
+                console.log("TIMEOUT PU")
+                console.log("TIMEOUT PU\n \n")
+            }
+            this.powerupOn_aux = 1;
 
             this.pushMatrix();
             this.puHUD.apply();
@@ -614,10 +717,18 @@ export class XMLscene extends CGFscene {
             this.scale(5, 0.3, 1)
             this.hud.display();
             this.popMatrix();
-
         }
+
         if (this.vehicle.obstacleOn) {
-            setTimeout(() => this.vehicle.obstacleOn = false, 10000);
+            if (this.obstacleOn_aux == 0) {
+                setTimeout(() => this.vehicle.obstacleOn = false, 10000);
+                setTimeout(() => this.obstacleOn_aux = 0, 10000);
+                console.log("TIMEOUT OBS")
+                console.log("TIMEOUT OBS")
+                console.log("TIMEOUT OBS\n \n")
+            }
+            this.obstacleOn_aux = 1;
+
             this.pushMatrix();
             this.oHUD.apply();
             if (this.cameraID == "carCamera") this.translate(-3.7, 1.9, -8);
@@ -636,7 +747,7 @@ export class XMLscene extends CGFscene {
             this.popMatrix();
         }
 
-        if (this.vehicle.keyP) { //&& this.cameraID == "carCamera") {
+        if (this.vehicle.keyP) {
             this.vehicle.velocity = 0;
             this.pushMatrix();
             this.pause.apply();
@@ -646,6 +757,37 @@ export class XMLscene extends CGFscene {
             this.popMatrix();
 
         }
+        //AVISO GANHOU
+        if (this.laps == 3) {
+            this.vehicle.keyForward = this.vehicle.keyBackward = false;
+
+            this.pushMatrix();
+            this.kimiWon.apply();
+            this.translate(0, 0, -6);
+            this.scale(6, 5, 1)
+            this.hud.display();
+            this.popMatrix();
+        }
+
+        if (this.tempo == 0 && this.laps != 3 && this.cameraID != "menu") {
+            this.vehicle.keyForward = this.vehicle.keyBackward = false;
+
+            this.pushMatrix();
+            this.kimiLost.apply();
+            this.translate(0, 0, -3);
+            this.scale(3, 2, 1)
+            this.hud.display();
+            this.popMatrix();
+        }
+
+        //HUD LAPS
+        this.pushMatrix();
+        this.lapTex.apply();
+        if (this.cameraID == "carCamera") this.translate(4.15, 2.7, -8);
+        else this.translate(3.8, 3.5, -4);
+        this.scale(1.1, 1.1, 1)
+        this.hud.display();
+        this.popMatrix();
 
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
@@ -924,8 +1066,45 @@ export class XMLscene extends CGFscene {
             }); // A
             this.quad.display();
 
-
         }
+        //VOLTAS
+        if (this.vehicle.color == 255) this.translate(6.1, 1, 0);
+        else this.translate(15, 1, 0);
+
+        this.translate(0.3, 0, 0);
+        this.activeShader.setUniformsValues({
+            'charCoords': [6, 5]
+        }); // V
+        this.quad.display();
+        this.translate(0.5, 0, 0);
+        this.activeShader.setUniformsValues({
+            'charCoords': [15, 4]
+        }); // O
+        this.quad.display();
+        this.translate(0.6, 0, 0);
+        this.activeShader.setUniformsValues({
+            'charCoords': [12, 4]
+        }); // L
+        this.quad.display();
+
+        this.translate(0.5, 0, 0);
+        this.activeShader.setUniformsValues({
+            'charCoords': [4, 5]
+        }); // T
+        this.quad.display();
+
+        this.translate(0.5, 0, 0);
+        this.activeShader.setUniformsValues({
+            'charCoords': [1, 4]
+        }); // A
+        this.quad.display();
+
+        this.translate(-1, -1, 0);
+        this.activeShader.setUniformsValues({
+            'charCoords': [this.laps, 3]
+        }); // volta n
+        this.quad.display();
+
         this.popMatrix();
 
         // re-enable depth test 

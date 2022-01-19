@@ -154,6 +154,14 @@ export class XMLscene extends CGFscene {
         this.hudtex.loadTexture('scenes/images/HUD.png');
         this.hudtex.setTextureWrap('REPEAT', 'REPEAT');
 
+        this.pause = new CGFappearance(this);
+        this.pause.setAmbient(1, 1, 1, 1);
+        this.pause.setDiffuse(1, 1, 1, 1);
+        this.pause.setSpecular(1, 1, 1, 1);
+        this.pause.setShininess(100.0);
+        this.pause.loadTexture('scenes/images/pause2.jpeg');
+        this.pause.setTextureWrap('REPEAT', 'REPEAT');
+
         this.puHUD = new CGFappearance(this);
         this.puHUD.setAmbient(0, 1, 0, 1);
         this.puHUD.setDiffuse(0, 1, 0, 1);
@@ -273,7 +281,7 @@ export class XMLscene extends CGFscene {
      */
     updateCamera(newCamera) {
         this.cameraID = newCamera;
-        if (this.cameraID == "carCamera") this.camera = this.cam; 
+        if (this.cameraID == "carCamera") this.camera = this.cam;
         else this.camera = this.graph.views[this.cameraID];
         this.interface.setActiveCamera(this.camera);
     }
@@ -330,64 +338,66 @@ export class XMLscene extends CGFscene {
         this.sceneInited = true;
     }
 
-	update(currTime) {
-		if (this.vehicle.keyM) this.cameraID = "menu";
-		if (this.vehicle.keyR && this.cameraID == "carCamera") {
-			this.startOn = true;
-			this.vehicle.direction = 0; this.vehicle.velocity = 0; this.vehicle.steeringAngle = 0;
-			this.vehicle.placeCarOnStart(this.track2On, this.startOn);
-			this.cameraID = "menu"
-			if (this.dif2On) this.tempo = 180;
-			else this.tempo = 150;
-			this.startCountDown();
-			this.cameraID = "carCamera"
-		}
+    update(currTime) {
+        if (this.vehicle.keyM) this.cameraID = "menu";
+        if (this.vehicle.keyR && this.cameraID == "carCamera") {
+            this.startOn = true;
+            this.vehicle.direction = 0;
+            this.vehicle.velocity = 0;
+            this.vehicle.steeringAngle = 0;
+            this.vehicle.placeCarOnStart(this.track2On, this.startOn);
+            this.cameraID = "menu"
+            if (this.dif2On) this.tempo = 180;
+            else this.tempo = 150;
+            this.startCountDown();
+            this.cameraID = "carCamera"
+        }
         this.car_location = this.vehicle.updateMovement(currTime);
         this.collision_detection(this.dif2On, this.track2On);
         this.vehicle.trackSelection(this.track2On);
         this.cam = new CGFcamera(0.8, 2, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 3.5, this.vehicle.location[2]), vec3.fromValues(this.vehicle.locationFront[0], this.vehicle.locationFront[1], this.vehicle.locationFront[2]));
         if (this.cameraID == "carCamera") this.updateCamera("carCamera")
-		if (this.cameraID == "menu") { this.vehicle.location = new vec3.fromValues(0, 0, 0); this.vehicle.direction = 0; this.vehicle.velocity = 0; this.vehicle.steeringAngle = 0 }
-         
+        if (this.cameraID == "menu") {
+            this.vehicle.location = new vec3.fromValues(0, 0, 0);
+            this.vehicle.direction = 0;
+            this.vehicle.velocity = 0;
+            this.vehicle.steeringAngle = 0
+        }
+
         // esc
         // if (this.interface.isKeyPressed(27)) this.startOn = false;
-	}
-	
-	startCountDown() {
-		if (this.tempo - 1 >= 0 && this.cameraID != "menu") {
-			var min = parseInt(this.tempo / 60);
-			var seg = this.tempo % 60;
+    }
 
-			if (min < 10) {
-				min = "0" + min;
-				min = min.substr(0, 2);
-			}
-			if (seg <= 9)
-				seg = "0" + seg;
+    startCountDown() {
+        if (this.tempo - 1 >= 0 && this.cameraID != "menu") {
+            var min = parseInt(this.tempo / 60);
+            var seg = this.tempo % 60;
 
-			//console.log("Time: " + min + "," + seg);
+            if (min < 10) {
+                min = "0" + min;
+                min = min.substr(0, 2);
+            }
+            if (seg <= 9)
+                seg = "0" + seg;
 
-			this.min = min;
-			this.seperator = 10;
-			this.seg = seg;
+            this.min = min;
+            this.seperator = 10;
+            this.seg = seg;
 
-			// setTimeout('startCountdown()', 1000);
-			this.tempo--;
-			setTimeout(() => this.startCountDown(), 1000);
+            if (!this.vehicle.keyP) this.tempo--;
+            setTimeout(() => this.startCountDown(), 1000);
 
-		}
-		else {
+        } else { // Back to the menu 
             if (this.dif2On && !this.track2On) this.tempo = 180;
-            else if (this.dif2On && this.track2On) this.tempo = 120;
-            else if (!this.dif2On && this.track2On) this.tempo = 90;
+            else if (this.dif2On && this.track2On) this.tempo = 90;
+            else if (!this.dif2On && this.track2On) this.tempo = 120;
             else this.tempo = 150;
 
-			// this.startCountDown();
 
-			this.startOn = false;
-			this.updateCamera("menu");
-		}
-	}
+            this.startOn = false;
+            this.updateCamera("menu");
+        }
+    }
 
     collision_detection(dif2On, track2On) {
         var center_to_front = 10.7;
@@ -433,7 +443,6 @@ export class XMLscene extends CGFscene {
                     else this.vehicle.f1_powerup_effect1();
                 } else if (this.puflag > 10) {
                     // if (!dif2On) this.vehicle.f2_powerup_effect2();
-                    // else this.vehicle.f1_powerup_effect2();
                     this.puflag = 1;
                 }
             }
@@ -466,7 +475,7 @@ export class XMLscene extends CGFscene {
 
                 } else if (this.oflag > 10) {
                     if (!dif2On) this.vehicle.f2_obstacle_effect2();
-                    else this.vehicle.f1_obstacle_effect2();
+
 
                     this.oflag = 1;
                 }
@@ -489,15 +498,15 @@ export class XMLscene extends CGFscene {
                             console.log("Menu: START")
                             this.startOn = true;
                             this.vehicle.placeCarOnStart(this.track2On, this.startOn);
-                            if (this.dif2On && !this.track2On) this.tempo = 180;
-                            else if (this.dif2On && this.track2On) this.tempo = 120;
-                            else if (!this.dif2On && this.track2On) this.tempo = 90;
-                            else this.tempo = 150;
-                            
+                            if (this.dif2On && !this.track2On) this.tempo = 150;
+                            else if (this.dif2On && this.track2On) this.tempo = 90;
+                            else if (!this.dif2On && this.track2On) this.tempo = 120;
+                            else this.tempo = 180;
+
                             this.cameraID = "carCamera"
                             this.startCountDown();
-                            
-                            //this.updateCamera("carCamera")
+
+
 
                         }
                         //demo
@@ -552,7 +561,7 @@ export class XMLscene extends CGFscene {
         if (this.track2On) {
             this.animation = this.mysvgreader2.send_route.store_route();
             // console.log("ROUTES_SGI: " + this.mysvgreader.send_route.routes);
-           // console.log("INSTANT: " + this.animation);
+            // console.log("INSTANT: " + this.animation);
         }
     }
 
@@ -596,21 +605,19 @@ export class XMLscene extends CGFscene {
 
         if (this.vehicle.powerupOn) {
             setTimeout(() => this.vehicle.powerupOn = false, 10000);
-            this.puTime = 0.5;
+
 
             this.pushMatrix();
             this.puHUD.apply();
-            if (this.cameraID == "carCamera") this.translate(-3.7, 2.3, -8);
+            if (this.cameraID == "carCamera") this.translate(-3.7, 2.2, -8);
             else this.translate(-4.8, 3, -4);
             this.scale(5, 0.3, 1)
             this.hud.display();
             this.popMatrix();
-            this.puTime += 0.5;
+
         }
         if (this.vehicle.obstacleOn) {
             setTimeout(() => this.vehicle.obstacleOn = false, 10000);
-            this.puTime = 0.5;
-
             this.pushMatrix();
             this.oHUD.apply();
             if (this.cameraID == "carCamera") this.translate(-3.7, 1.9, -8);
@@ -618,7 +625,6 @@ export class XMLscene extends CGFscene {
             this.scale(5, 0.3, 1)
             this.hud.display();
             this.popMatrix();
-            this.puTime += 0.5;
         }
         if (this.vehicle.color == 255) {
             this.pushMatrix();
@@ -628,6 +634,17 @@ export class XMLscene extends CGFscene {
             this.scale(2.6, 0.3, 1)
             this.hud.display();
             this.popMatrix();
+        }
+
+        if (this.vehicle.keyP) { //&& this.cameraID == "carCamera") {
+            this.vehicle.velocity = 0;
+            this.pushMatrix();
+            this.pause.apply();
+            this.translate(0, 0, -3);
+            this.scale(3, 2, 1)
+            this.hud.display();
+            this.popMatrix();
+
         }
 
         // Apply transformations corresponding to the camera position relative to the origin

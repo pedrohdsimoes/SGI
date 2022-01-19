@@ -19,7 +19,9 @@ import {
 import {
 	MyComponent
 } from "../MyComponent.js";
-import { MyInterface } from "../MyInterface.js";
+import {
+	MyInterface
+} from "../MyInterface.js";
 
 /**
  * 
@@ -68,27 +70,27 @@ export class MyVehicle extends CGFobject {
 		if (track2On) this.track = "TestTrackMap.svg";
 		if (!track2On) this.track = "TrackMap.svg";
 	}
-	placeCarOnStart(track2On,startOn) {
+	placeCarOnStart(track2On, startOn) {
 		//sgi
-		if (track2On && startOn){ 
-			this.location = new vec3.fromValues(187.2,0,64.95);
+		if (track2On && startOn) {
+			this.location = new vec3.fromValues(105.3, 0, 240.8);
 			this.trackRotate = "sgi";
 		}
 		//abu dhabi
 		if (!track2On && startOn) {
-			
-			this.location = new vec3.fromValues(215.7,0,230.3);
+
+			this.location = new vec3.fromValues(215.7, 0, 230.3);
 			this.trackRotate = "abu dhabi";
-			
+
 		}
 	}
 
 	display() {
-	//	if(this.trackRotate == "abu dhabi"){ 
-			// this.theta = (-Math.PI / 1.2 )
-			// this.scene.rotate(this.theta,0,1,0)
-	//	}
-		
+		//	if(this.trackRotate == "abu dhabi"){ 
+		// this.theta = (-Math.PI / 1.2 )
+		// this.scene.rotate(this.theta,0,1,0)
+		//	}
+
 
 		this.scene.pushMatrix();
 
@@ -98,15 +100,12 @@ export class MyVehicle extends CGFobject {
 
 		this.scene.scale(this.scale, this.scale, this.scale);
 
-		if (this.track == "TestTrackMap.svg") {
+		// if (this.trackRotate == "abu dhabi") {
+		// 	this.theta = (-Math.PI / 1.2)
+		// 	this.scene.rotate(this.theta, 0, 1, 0)
+		// 	this.direction = this.theta;
+		// }
 
-
-		}
-		if (this.track == "TrackMap.svg") {
-
-
-
-		}
 
 		//car body
 		this.scene.pushMatrix();
@@ -166,9 +165,12 @@ export class MyVehicle extends CGFobject {
 		if (event.keyCode == 65) this.keyLeft = true;
 		if (event.keyCode == 68) this.keyRight = true;
 		//menu
-        if (event.keyCode == 77) this.keyM = true;
-        //reset
-        if (event.keyCode == 82) this.keyR = true;
+		if (event.keyCode == 77) this.keyM = true;
+		//reset
+		if (event.keyCode == 82) this.keyR = true;
+		//pause
+		if (event.keyCode == 80 && !this.keyP) this.keyP = true;
+		else if (event.keyCode == 80 && this.keyP) this.keyP = false;
 	}
 	processKeyUp(event) {
 		//key is not being pushed
@@ -177,9 +179,9 @@ export class MyVehicle extends CGFobject {
 		if (event.keyCode == 65) this.keyLeft = false;
 		if (event.keyCode == 68) this.keyRight = false;
 		//menu
-        if (event.keyCode == 77) this.keyM = false;
-        //reset
-        if (event.keyCode == 82) this.keyR = false;
+		if (event.keyCode == 77) this.keyM = false;
+		//reset
+		if (event.keyCode == 82) this.keyR = false;
 	}
 
 	updateMovement(currTime) {
@@ -212,7 +214,8 @@ export class MyVehicle extends CGFobject {
 
 		//forward
 		if (this.keyForward && !this.keyBackward) {
-			this.velocity = this.velocity + this.velocityDelta;
+			if (!this.keyP) this.velocity = this.velocity + this.velocityDelta;
+			else this.velocity = 0;
 			if (this.velocity > this.velocityMax) this.velocity = this.velocityMax;
 			direction = 1;
 		} else
@@ -233,20 +236,20 @@ export class MyVehicle extends CGFobject {
 
 		// direction
 		if (Math.abs(this.velocity) > 0)
-		this.direction += this.steeringAngle;
+			this.direction += this.steeringAngle;
 
 		// vehicle location 
 		this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
 		this.location[1] = 0;
 		this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);
-		if(this.velocity>=0){
-		this.locationFront[0] = this.location[0] + 14 * Math.sin(this.direction * Math.PI / 180 );
-		this.locationFront[1] = 1;
-		this.locationFront[2] = this.location[2] + 14 * Math.cos(this.direction * Math.PI / 180);
+		if (this.velocity >= 0) {
+			this.locationFront[0] = this.location[0] + 14 * Math.sin(this.direction * Math.PI / 180);
+			this.locationFront[1] = 1;
+			this.locationFront[2] = this.location[2] + 14 * Math.cos(this.direction * Math.PI / 180);
 		} else {
-		this.locationFront[0] = this.location[0] + -3.5 * Math.sin(this.direction * Math.PI / 180);
-		this.locationFront[1] = 2;
-		this.locationFront[2] = this.location[2] + -3.5 * Math.cos(this.direction * Math.PI / 180);
+			this.locationFront[0] = this.location[0] + -3.5 * Math.sin(this.direction * Math.PI / 180);
+			this.locationFront[1] = 2;
+			this.locationFront[2] = this.location[2] + -3.5 * Math.cos(this.direction * Math.PI / 180);
 		}
 		//Car telemetry
 		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + "), Front Location (" + this.locationFront);
@@ -271,9 +274,10 @@ export class MyVehicle extends CGFobject {
 		setTimeout(() => this.steeringDelta = 1, 10000);
 		console.log("F2 - OBS1");
 	}
+	//car gets bigger
 	f2_obstacle_effect2() {
 		this.obstacleOn = true;
-		this.scale = 4;
+		this.scale = 2.3;
 		setTimeout(() => this.scale = 1.5, 10000);
 		console.log("F2 - OBS2");
 	}
@@ -286,31 +290,26 @@ export class MyVehicle extends CGFobject {
 	}
 	f2_powerup_effect2() {
 		this.powerupOn = true;
+		//escolher
 		console.log("F2 - PU2");
 	}
 
 	// Difficulty F1
+	// Car stops when you stop pressing "W" 
 	f1_obstacle_effect1() {
 		this.obstacleOn = true;
+		this.velocityAtriction = 0.1;
 		console.log("F1 - OBS1");
 	}
-	f1_obstacle_effect2() {
-		this.obstacleOn = true;
-		this.scale = 7;
-		setTimeout(() => this.scale = 1.5, 10000);
-		console.log("F1 - OBS2");
-	}
-	//car is faster
+
+	//car is even faster
 	f1_powerup_effect1() {
 		this.powerupOn = true;
-        this.velocityMaxAux = 14;
+		this.velocityMaxAux = 14;
 		setTimeout(() => this.velocityMaxAux = 4.0, 15000);
 		console.log("F1 - PU1");
 	}
-	f1_powerup_effect2() {
-		this.powerupOn = true;
-		console.log("F1 - PU2");
-	}
+
 
 
 }

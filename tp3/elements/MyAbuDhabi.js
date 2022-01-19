@@ -6,15 +6,27 @@ import {
     CGFappearance,
     CGFobject
 } from '../../lib/CGF.js';
-import { MyQuad } from '../../TextExample/MyQuad.js';
-import { MyCylinder } from '../primitives/MyCylinder.js';
+import {
+    MyQuad
+} from '../../TextExample/MyQuad.js';
+import {
+    MyCylinder
+} from '../primitives/MyCylinder.js';
 import {
     MyPlane
 } from '../primitives/MyPlane.js';
-import { MyRectangle } from '../primitives/MyRectangle.js';
-import { MyBuilding } from './MyBuilding.js';
-import { MyBuilding2 } from './MyBuilding2.js';
-import { MyTree } from './MyTree.js';
+import {
+    MyRectangle
+} from '../primitives/MyRectangle.js';
+import {
+    MyBuilding
+} from './MyBuilding.js';
+import {
+    MyBuilding2
+} from './MyBuilding2.js';
+import {
+    MyTree
+} from './MyTree.js';
 
 
 
@@ -126,7 +138,7 @@ export class MyAbuDhabi extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.fans2.apply();
+        this.fans.apply();
         this.scene.rotate(-Math.PI / 2, 0, 1, 0);
         this.scene.translate(256, 40, -512);
         this.scene.scale(512, 80, 1);

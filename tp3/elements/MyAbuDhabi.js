@@ -211,13 +211,13 @@ export class MyAbuDhabi extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.translate(105, 0, 180);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(1.5, 1.5, 1.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(290, 0, 265);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(1.5, 1.5, 1.5);
         this.tree.display();
         this.scene.popMatrix();
 

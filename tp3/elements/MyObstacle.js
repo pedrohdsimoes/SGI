@@ -4,7 +4,9 @@ import {
     CGFnurbsObject,
     CGFnurbsSurface
 } from "../../lib/CGF.js";
-import { MyCircle } from "../primitives/MyCircle.js";
+import {
+    MyCircle
+} from "../primitives/MyCircle.js";
 import {
     MyCylinder
 } from "../primitives/MyCylinder.js";
@@ -20,10 +22,12 @@ export class MyObstacle extends CGFobject {
         super(scene);
         this.position = position;
         this.red = new CGFappearance(this.scene);
-        this.red.setAmbient(1, 0, 0, 1);
-        this.red.setDiffuse(1, 0, 0, 1);
-        this.red.setSpecular(1, 0, 0, 1);
+        this.red.setAmbient(1, 0, 0, 0.1);
+        this.red.setDiffuse(0.4, 0, 0, 1);
+        this.red.setSpecular(1, 0.5, 0.1, 1);
         this.red.setShininess(10.0);
+        this.red.loadTexture('scenes/images/danger.jpg')
+        this.red.setTextureWrap('REPEAT', 'REPEAT');
         this.obs = new MyCylinder(scene, "obstacle", 2, 2.2, 2.2, 8, 1);
         this.circle = new MyCircle(scene, "obsCircle", 2.2, 8);
     }

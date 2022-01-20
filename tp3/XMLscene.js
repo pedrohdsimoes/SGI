@@ -109,6 +109,7 @@ export class XMLscene extends CGFscene {
         this.start.setAmbient(1, 1, 1, 1);
         this.start.setDiffuse(1, 1, 1, 1);
         this.start.setSpecular(1, 1, 1, 1);
+        this.start.setEmission(1, 1, 1, 1);
         this.start.setShininess(10.0);
         this.start.loadTexture('scenes/images/menu/start.png');
         this.start.setTextureWrap('REPEAT', 'REPEAT');
@@ -117,6 +118,7 @@ export class XMLscene extends CGFscene {
         this.demoTex.setAmbient(1, 1, 1, 1);
         this.demoTex.setDiffuse(1, 1, 1, 1);
         this.demoTex.setSpecular(1, 1, 1, 1);
+        this.demoTex.setEmission(1, 1, 1, 1);
         this.demoTex.setShininess(100.0);
         this.demoTex.loadTexture('scenes/images/menu/demo.png');
         this.demoTex.setTextureWrap('REPEAT', 'REPEAT');
@@ -125,6 +127,7 @@ export class XMLscene extends CGFscene {
         this.difficulty.setAmbient(1, 1, 1, 1);
         this.difficulty.setDiffuse(1, 1, 1, 1);
         this.difficulty.setSpecular(1, 1, 1, 1);
+        this.difficulty.setEmission(1, 1, 1, 1);
         this.difficulty.setShininess(100.0);
         this.difficulty.loadTexture('scenes/images/menu/f2dif.jpeg');
         this.difficulty.setTextureWrap('REPEAT', 'REPEAT');
@@ -133,6 +136,7 @@ export class XMLscene extends CGFscene {
         this.track.setAmbient(1, 1, 1, 1);
         this.track.setDiffuse(1, 1, 1, 1);
         this.track.setSpecular(1, 1, 1, 1);
+        this.track.setEmission(1, 1, 1, 1);
         this.track.setShininess(100.0);
         this.track.loadTexture('scenes/images/menu/adtrack.jpeg');
         this.track.setTextureWrap('REPEAT', 'REPEAT');
@@ -141,6 +145,7 @@ export class XMLscene extends CGFscene {
         this.track2tex.setAmbient(1, 1, 1, 1);
         this.track2tex.setDiffuse(1, 1, 1, 1);
         this.track2tex.setSpecular(1, 1, 1, 1);
+        this.track2tex.setEmission(1, 1, 1, 1);
         this.track2tex.setShininess(10.0);
         this.track2tex.loadTexture('scenes/images/menu/SGItrack.png');
         this.track2tex.setTextureWrap('REPEAT', 'REPEAT');
@@ -149,6 +154,7 @@ export class XMLscene extends CGFscene {
         this.dif2tex.setAmbient(1, 1, 1, 1);
         this.dif2tex.setDiffuse(1, 1, 1, 1);
         this.dif2tex.setSpecular(1, 1, 1, 1);
+        this.dif2tex.setEmission(1, 1, 1, 1);
         this.dif2tex.setShininess(10.0);
         this.dif2tex.loadTexture('scenes/images/menu/f1dif.png');
         this.dif2tex.setTextureWrap('REPEAT', 'REPEAT');
@@ -157,6 +163,7 @@ export class XMLscene extends CGFscene {
         this.hudtex.setAmbient(1, 1, 1, 1);
         this.hudtex.setDiffuse(1, 1, 1, 1);
         this.hudtex.setSpecular(1, 1, 1, 1);
+        this.hudtex.setEmission(1, 1, 1, 1);
         this.hudtex.setShininess(100.0);
         this.hudtex.loadTexture('scenes/images/HUD.png');
         this.hudtex.setTextureWrap('REPEAT', 'REPEAT');
@@ -165,6 +172,7 @@ export class XMLscene extends CGFscene {
         this.pause.setAmbient(1, 1, 1, 1);
         this.pause.setDiffuse(1, 1, 1, 1);
         this.pause.setSpecular(1, 1, 1, 1);
+        this.pause.setEmission(1, 1, 1, 1);
         this.pause.setShininess(100.0);
         this.pause.loadTexture('scenes/images/pause2.jpeg');
         this.pause.setTextureWrap('REPEAT', 'REPEAT');
@@ -197,6 +205,7 @@ export class XMLscene extends CGFscene {
         this.kimiWon.setAmbient(1, 1, 1, 1);
         this.kimiWon.setDiffuse(1, 1, 1, 1);
         this.kimiWon.setSpecular(1, 1, 1, 1);
+        this.kimiWon.setEmission(1, 1, 1, 1);
         this.kimiWon.setShininess(100.0);
         this.kimiWon.loadTexture('scenes/images/kimiWon.jpeg');
         this.kimiWon.setTextureWrap('REPEAT', 'REPEAT');
@@ -205,6 +214,7 @@ export class XMLscene extends CGFscene {
         this.kimiLost.setAmbient(1, 1, 1, 1);
         this.kimiLost.setDiffuse(1, 1, 1, 1);
         this.kimiLost.setSpecular(1, 1, 1, 1);
+        this.kimiLost.setEmission(1, 1, 1, 1);
         this.kimiLost.setShininess(100.0);
         this.kimiLost.loadTexture('scenes/images/kimiLost.jpeg');
         this.kimiLost.setTextureWrap('REPEAT', 'REPEAT');
@@ -387,7 +397,7 @@ export class XMLscene extends CGFscene {
         var z_location = this.car_location[2];
         // ABU DHABI
         var min_x = 185.8;
-        var max_x = 220;
+        var max_x = 230;
         var min_z = 226.5;
         var max_z = 230.2;
         // SGI TRACK
@@ -429,7 +439,9 @@ export class XMLscene extends CGFscene {
             this.won = 1;
             console.log("GANHOUUUUUUU")
 
-            setTimeout(() => { this.cameraID = "menu", this.laps = 0 }, 10000);
+            setTimeout(() => {
+                this.cameraID = "menu", this.laps = 0
+            }, 10000);
             setTimeout(() => this.won = 0, 15000);
 
         }
@@ -492,8 +504,8 @@ export class XMLscene extends CGFscene {
             let y_circle = this.puCircleCoord[i][2] * scale;
             let radius = this.puCircleCoord[i][3] * scale;
             //distance beetween car location and circles
-            let distanceBL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
-            let distanceBR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2) + 40;
+            let distanceBL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2) + 100;
+            let distanceBR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2) + 140;
             let distanceFR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2) + 10;
             let distanceFL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
             let threshold = 70;
@@ -506,9 +518,9 @@ export class XMLscene extends CGFscene {
 
             //when there is collision
             if ((distanceBR <= threshold ||
-                distanceBL <= threshold ||
-                distanceFR <= threshold ||
-                distanceFL <= threshold) && this.puCollision == 0) {
+                    distanceBL <= threshold ||
+                    distanceFR <= threshold ||
+                    distanceFL <= threshold) && this.puCollision == 0) {
 
                 console.log("BATEU PU")
                 this.puCollision = 1;
@@ -524,10 +536,10 @@ export class XMLscene extends CGFscene {
                 // }
 
                 if (!dif2On) {
-                    if (i % 2 == 0) { this.vehicle.f2_powerup_effect1(); }
-                    else this.vehicle.f2_powerup_effect2()
-                }
-                else this.vehicle.f1_powerup_effect1();
+                    if (i % 2 == 0) {
+                        this.vehicle.f2_powerup_effect1();
+                    } else this.vehicle.f2_powerup_effect2()
+                } else this.vehicle.f1_powerup_effect1();
             }
 
         }
@@ -538,8 +550,8 @@ export class XMLscene extends CGFscene {
             let y_circle = this.oCircleCoord[i][2] * scale;
             let radius = this.oCircleCoord[i][3] * scale;
             // distance between car location and circles
-            let distanceFL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2);
-            let distanceFR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2) + 40;
+            let distanceFL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2) + 100;
+            let distanceFR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car + center_to_front)), 2) + 140;
             let distanceBR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2) + 10;
             let distanceBL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
             let threshold = 70;
@@ -552,9 +564,9 @@ export class XMLscene extends CGFscene {
 
             // when there is collision
             if ((distanceBR <= threshold ||
-                distanceBL <= threshold ||
-                distanceFR <= threshold ||
-                distanceFL <= threshold) && this.obsCollision == 0) {
+                    distanceBL <= threshold ||
+                    distanceFR <= threshold ||
+                    distanceFL <= threshold) && this.obsCollision == 0) {
 
                 console.log("BATEU OBS")
                 this.obsCollision = 1;
@@ -573,10 +585,10 @@ export class XMLscene extends CGFscene {
                 // }
 
                 if (!dif2On) {
-                    if (i % 2 == 0) { this.vehicle.f2_obstacle_effect1(); }
-                    else this.vehicle.f2_obstacle_effect2()
-                }
-                else this.vehicle.f1_obstacle_effect1();
+                    if (i % 2 == 0) {
+                        this.vehicle.f2_obstacle_effect1();
+                    } else this.vehicle.f2_obstacle_effect2()
+                } else this.vehicle.f1_obstacle_effect1();
 
             }
         }
@@ -763,8 +775,8 @@ export class XMLscene extends CGFscene {
 
             this.pushMatrix();
             this.kimiWon.apply();
-            this.translate(0, 0, -6);
-            this.scale(6, 5, 1)
+            this.translate(0, 0, -3);
+            this.scale(3, 2, 1)
             this.hud.display();
             this.popMatrix();
         }

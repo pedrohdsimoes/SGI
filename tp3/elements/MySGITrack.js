@@ -31,7 +31,7 @@ export class MySGITrack extends CGFobject {
         this.trackText.setAmbient(1, 1, 1, 1);
         this.trackText.setDiffuse(1, 1, 1, 1);
         this.trackText.setSpecular(1, 1, 1, 1);
-        this.trackText.setShininess(10.0);
+        this.trackText.setShininess(100.0);
         this.trackText.loadTexture('scenes/images/testTrackBackground.png');
         this.trackText.setTextureWrap('REPEAT', 'REPEAT');
 
@@ -109,67 +109,67 @@ export class MySGITrack extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.translate(210, 0, 110);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(300, 0, 130);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(210, 0, 350);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(225, 0, 300);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(240, 0, 200);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(300, 0, 200);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(300, 0, 250);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(340, 0, 180);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(310, 0, 370);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(280, 0, 280);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(155, 0, 260);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(0.5, 0.5, 0.5);
         this.tree.display();
         this.scene.popMatrix();
 

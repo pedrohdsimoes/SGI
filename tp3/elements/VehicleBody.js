@@ -36,10 +36,10 @@ export class VehicleBody extends CGFobject {
         super(scene);
 
         this.body2Tex = new CGFappearance(this.scene);
-        this.body2Tex.setAmbient(1, 1, 1, 1);
-        this.body2Tex.setDiffuse(1, 1, 1, 1);
+        this.body2Tex.setAmbient(1, 1, 1, 0.2);
+        this.body2Tex.setDiffuse(1, 1, 1, 0.1);
         this.body2Tex.setSpecular(1, 1, 1, 1);
-        this.body2Tex.setShininess(100.0);
+        this.body2Tex.setShininess(10.0);
         this.body2Tex.loadTexture('scenes/images/fwcSponsor.png');
         this.body2Tex.setTextureWrap('REPEAT', 'REPEAT');
 
@@ -69,9 +69,9 @@ export class VehicleBody extends CGFobject {
         // this.rectRWTex.setTextureWrap('REPEAT', 'REPEAT');
 
         this.frontwingTex = new CGFappearance(this.scene);
-        this.frontwingTex.setAmbient(1, 1, 1, 1);
-        this.frontwingTex.setDiffuse(1, 1, 1, 1);
-        this.frontwingTex.setSpecular(1, 1, 1, 1);
+        this.frontwingTex.setAmbient(0.7, 0.7, 0.7, 1);
+        this.frontwingTex.setDiffuse(0.7, 0.7, 0.7, 1);
+        this.frontwingTex.setSpecular(0.228, 0.207, 0.178, 1);
         this.frontwingTex.setShininess(100.0);
         this.frontwingTex.loadTexture('scenes/images/frontwingSponsor.jpeg');
         this.frontwingTex.setTextureWrap('REPEAT', 'REPEAT');
@@ -93,10 +93,10 @@ export class VehicleBody extends CGFobject {
         this.rearwingBackTex.setTextureWrap('REPEAT', 'REPEAT');
 
         this.redTex = new CGFappearance(this.scene);
-        this.redTex.setAmbient(1, 1, 1, 1);
-        this.redTex.setDiffuse(1, 1, 1, 1);
-        this.redTex.setSpecular(1, 1, 1, 1);
-        this.redTex.setShininess(100.0);
+        this.redTex.setAmbient(0, 1, 0, 0.1);
+        this.redTex.setDiffuse(0.6, 0.6, 0.6, 1);
+        this.redTex.setSpecular(0.228, 0.207, 0.178, 1);
+        this.redTex.setShininess(10.0);
         this.redTex.loadTexture('scenes/images/red.png');
         this.redTex.setTextureWrap('REPEAT', 'REPEAT');
 
@@ -125,12 +125,10 @@ export class VehicleBody extends CGFobject {
         this.floorTex.setTextureWrap('REPEAT', 'REPEAT');
 
         this.helmetTex = new CGFappearance(this.scene);
-        this.helmetTex.setAmbient(0, 0, 0, 1);
-        this.helmetTex.setDiffuse(0, 0, 0, 1);
-        this.helmetTex.setSpecular(0, 0, 0, 1);
+        this.helmetTex.setAmbient(0.01, 0.01, 0.01, 0.1);
+        this.helmetTex.setDiffuse(0.1, 0.1, 0.1, 0.1);
+        this.helmetTex.setSpecular(0.228, 0.207, 0.178, 1);
         this.helmetTex.setShininess(100.0);
-        this.helmetTex.loadTexture('scenes/images/helmet.png');
-        this.helmetTex.setTextureWrap('REPEAT', 'REPEAT');
 
 
         this.body1 = new MyCylinder(scene, "cockpit", 0.9, 0.5, 0.5, 4, 1);
@@ -142,7 +140,7 @@ export class VehicleBody extends CGFobject {
         this.fwrectangle = new MyRectangle(scene, "frontwingRect", 0, 0.43, 0, 0.29);
         this.wheelSuport = new MyCylinder(scene, "suport", 0.7, 0.045, 0.045, 70, 4);
         this.base = new MyCylinder(scene, "base", 0.6, 1.5, 2, 3, 70);
-        this.helmet = new MySphere(scene, "helmet", 0.3, 40, 50);
+        this.helmet = new MySphere(scene, "helmet", 0.3, 70, 100);
         this.body2rect = new MyRectangle(scene, "b2rect", 0, 1.06, 0, 0.715);
 
 

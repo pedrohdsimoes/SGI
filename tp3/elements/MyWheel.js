@@ -20,9 +20,9 @@ export class MyWheel extends CGFobject {
         super(scene);
 
         this.side = new CGFappearance(this.scene);
-        this.side.setAmbient(1, 1, 1, 1);
-        this.side.setDiffuse(1, 1, 1, 1);
-        this.side.setSpecular(1, 1, 1, 1);
+        this.side.setAmbient(0.6, 0.6, 0.6, 1);
+        this.side.setDiffuse(0.8, 0.8, 0.8, 1);
+        this.side.setSpecular(0.228, 0.207, 0.178, 1);
         this.side.setShininess(100.0);
         this.side.loadTexture('scenes/images/pneu.png');
         this.side.setTextureWrap('REPEAT', 'REPEAT');

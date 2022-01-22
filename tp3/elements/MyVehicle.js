@@ -63,7 +63,10 @@ export class MyVehicle extends CGFobject {
 		this.steeringAngleMax = 15;
 		this.steeringAtriction = 0.8;
 		this.scale = 1.5;
-		this.powerupOn = false;
+        this.powerupOn = false;
+
+        this.route = [];
+        this.key = -1;
 
 	}
 	trackSelection(track2On) {
@@ -86,12 +89,6 @@ export class MyVehicle extends CGFobject {
 	}
 
 	display() {
-		//	if(this.trackRotate == "abu dhabi"){ 
-		// this.theta = (-Math.PI / 1.2 )
-		// this.scene.rotate(this.theta,0,1,0)
-		//	}
-
-
 		this.scene.pushMatrix();
 
 		this.scene.translate(this.location[0], this.location[1], this.location[2]);
@@ -99,13 +96,6 @@ export class MyVehicle extends CGFobject {
 		this.scene.rotate(this.direction * Math.PI / 180, 0, 1, 0);
 
 		this.scene.scale(this.scale, this.scale, this.scale);
-
-		// if (this.trackRotate == "abu dhabi") {
-		// 	this.theta = (-Math.PI / 1.2)
-		// 	this.scene.rotate(this.theta, 0, 1, 0)
-		// 	this.direction = this.theta;
-		// }
-
 
 		//car body
 		this.scene.pushMatrix();
@@ -171,6 +161,8 @@ export class MyVehicle extends CGFobject {
 		//pause
 		if (event.keyCode == 80 && !this.keyP) this.keyP = true;
 		else if (event.keyCode == 80 && this.keyP) this.keyP = false;
+		//esc
+		if(event.keyCode == 27) this.esc = true;
 	}
 	processKeyUp(event) {
 		//key is not being pushed
@@ -182,6 +174,8 @@ export class MyVehicle extends CGFobject {
 		if (event.keyCode == 77) this.keyM = false;
 		//reset
 		if (event.keyCode == 82) this.keyR = false;
+		//esc
+		if(event.keyCode == 27) this.esc = false;
 	}
 
 	updateMovement(currTime) {
@@ -264,7 +258,48 @@ export class MyVehicle extends CGFobject {
 		if (this.color == 255) this.velocityMax = 1.45;
 
 		return this.location;
-	}
+    }
+    
+    updateDemo(t) {
+		console.log("DEMO POINTS " + this.route)
+        var vecDirection;
+
+        this.key = (this.key + 1) % (this.route.length);
+		console.log("KEY " + this.key)
+
+        // update direction
+        if (this.key == this.route.length - 1) {
+            vecDirection = this.subVector(this.route[this.key], this.route[0]);
+            this.direction = -Math.atan2(vecDirection[1], vecDirection[0]);
+        }
+        else if (this.route[0] != null) {
+            vecDirection = this.subVector(this.route[this.key], this.route[this.key + 1]);
+            this.direction = -Math.atan2(vecDirection[1], vecDirection[0]);
+        }
+
+        // update velocity
+        if (this.key == this.route.length - 1)
+            this.velocity = this.distanceVector(this.route[this.key], this.route[0])/10;
+        
+        else
+            this.velocity = this.distanceVector(this.route[this.key], this.route[this.key + 1])/10;
+            
+        this.location[0] += (Math.sin(this.direction) * this.velocity);
+		this.location[1] = 0;
+		this.location[2] += (Math.cos(this.direction) * this.velocity);
+
+    }
+
+    subVector(vec1,vec2) {
+		console.log("vec2 0 " + vec2[0] + " , " + vec2[1])
+        return [vec1[0] - vec2[0], vec1[1] - vec2[1]];
+    }
+
+    distanceVector(vec1, vec2) {
+        return Math.sqrt(Math.pow((vec2[0] - vec1[0]), 2) + Math.pow((vec2[1] - vec1[1]), 2));
+    }
+
+
 
 	// Difficulty F2
 

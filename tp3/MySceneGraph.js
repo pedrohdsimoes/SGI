@@ -1174,126 +1174,11 @@ export class MySceneGraph {
             var component = new MyComponent(this.scene, componentID, transformation, materialID, textureID, textureLenghtS, textureLenghtT, componentchildren, leaves);
 
             this.components[componentID] = component;
+
+            if (componentID == "carbody")
+                this.vehicle = new MyVehicle(this.scene, component);    
         }
         this.log("Parsed components");
-    }
-
-
-    parseVehicle(componentsNode) {
-        var child; // id of the child
-        var transformation;
-        var children = componentsNode.children;
-
-        this.vehicle = [];
-        var grandChildren = [];
-        var grandgrandChildren = [];
-        var nodeNames = [];
-
-        // Any number of components.
-        for (let i = 0; i < children.length; i++) {
-            var x;
-            if (children[i].nodeName != "vehicle") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
-                continue;
-            }
-
-            // Get id of the current component.
-            var componentID = this.reader.getString(children[i], "id");
-            if (componentID == null)
-                return "no ID defined for componentID";
-
-            // Checks for repeated IDs.
-            if (this.vehicle[componentID] != null)
-                return ("ID must be unique for each component (conflict: ID = " + componentID + ")");
-
-
-
-            grandChildren = children[i].children;
-            nodeNames = [];
-
-            for (let j = 0; j < grandChildren.length; j++) {
-                nodeNames.push(grandChildren[j].nodeName);
-            }
-
-            var transformationIndex = nodeNames.indexOf("transformation");
-            var materialsIndex = nodeNames.indexOf("materials");
-            var textureIndex = nodeNames.indexOf("texture");
-            var childrenIndex = nodeNames.indexOf("children");
-
-            // Transformations
-            if (transformationIndex != 0)
-                this.onXMLError("Transformations for component " + componentID + " not found");
-
-            if (grandChildren[transformationIndex].children.length == 0) {
-                transformation = mat4.create();
-            } else if (grandChildren[transformationIndex].children[0].nodeName == "transformationref") {
-                var id = this.reader.getString(grandChildren[transformationIndex].children[0], "id");
-
-                if (this.transformations[id] != null) {
-                    transformation = this.transformations[id];
-                } else this.onXMLMinorError("No transformation for ID : " + id);
-            } else
-                transformation = this.parseTransformationsAux(grandChildren[transformationIndex].children);
-
-
-            // Materials
-            if (materialsIndex != 1 && materialsIndex != 2)
-                this.onXMLError("Material for component " + componentID + " not found");
-
-            var materialID = [];
-
-            for (x = 0; x < grandChildren[materialsIndex].children.length; x++) {
-                materialID[x] = this.reader.getString(grandChildren[materialsIndex].children[x], "id");
-
-                if (materialID[x] != "inherit" && this.materials[materialID[x]] == null) {
-                    this.onXMLMinorError("No material for ID : " + materialID[x]);
-                }
-            }
-
-            // Texture
-            if (textureIndex != 2 && textureIndex != 3)
-                this.onXMLError("Texture for component " + componentID + " not found");
-
-            var textureID = this.reader.getString(grandChildren[textureIndex], "id");
-
-            if (textureID != "none" && textureID != "inherit" && this.textures[textureID] == null) {
-                this.onXMLMinorError("No texture for ID : " + textureID);
-            }
-
-            var textureLenghtS = this.reader.getFloat(grandChildren[textureIndex], "length_s", false);
-            var textureLenghtT = this.reader.getFloat(grandChildren[textureIndex], "length_t", false);
-
-            // Children
-            if (childrenIndex != 3 && childrenIndex != 4)
-                this.onXMLError("Children for component " + componentID + " not found");
-
-            grandgrandChildren = grandChildren[childrenIndex].children;
-            var leaves = [];
-            var componentchildren = [];
-
-            for (x = 0; x < grandgrandChildren.length; x++) {
-                if (grandgrandChildren[x].nodeName == "componentref") {
-                    child = this.reader.getString(grandgrandChildren[x], "id");
-                    componentchildren.push(child);
-                } else if (grandgrandChildren[x].nodeName == "primitiveref") {
-                    child = this.reader.getString(grandgrandChildren[x], "id");
-                    if (this.primitives[child] == null)
-                        this.onXMLMinorError("No primitive for ID : " + child);
-                    leaves.push(child);
-                } else {
-                    this.onXMLMinorError("unknown tag <" + grandgrandChildren[x].nodeName + ">");
-                }
-            }
-
-            // var vehicleBody = new MyVehicle(this.scene, componentID, transformation, materialID, textureID, textureLenghtS, textureLenghtT, componentchildren, leaves);
-            var component = new MyComponent(this.scene, componentID, transformation, materialID, textureID, textureLenghtS, textureLenghtT, componentchildren, leaves);
-
-            this.vehicle[componentID] = component;
-            console.log("VEHICLE: " + this.vehicle)
-        
-        }
-        this.vehicle = new MyVehicle(this.scene, this.vehicle)
-        this.log("Parsed vehicle");
     }
 
     /**
@@ -1411,61 +1296,7 @@ export class MySceneGraph {
 
     displayScene() {
         this.displayComponent(this.idRoot, null, null, 1, 1);
-       // this.displayVehicle(this.idRoot, null, null, 1, 1);
     }
-
-    displayVehicle(componentID, material, texture, s, t) {
-        let i;
-        if (this.components[componentID] == null)
-            this.onXMLMinorError("No component for ID : " + componentID);
-
-        var component = this.vehicle[componentID];
-
-        this.scene.pushMatrix();
-        this.scene.multMatrix(component.transformation);
-
-        if (component.currentMaterialID != "inherit")
-            material = this.materials[component.currentMaterialID];
-
-        if (component.texture == "inherit") {
-            material.setTexture(this.textures[texture]);
-            component.length_s = s;
-            component.length_t = t;
-        }
-        else if (component.texture == "none")
-            material.setTexture(null);
-
-        else {
-            texture = component.texture;
-            material.setTexture(this.textures[texture]);
-        }
-
-        material.apply();
-
-        for (i in component.leaves) {
-            if (component.length_s == null && component.length_t == null)
-                this.primitives[component.leaves[i]].updateTexCoords(1, 1);
-            else if (component.length_s == null)
-                this.primitives[component.leaves[i]].updateTexCoords(1, component.length_t);
-            else if (component.length_t == null)
-                this.primitives[component.leaves[i]].updateTexCoords(component.length_s, 1);
-            else
-                this.primitives[component.leaves[i]].updateTexCoords(component.length_s, component.length_t);
-
-            this.primitives[component.leaves[i]].display();
-        }
-
-        for (i in component.children)
-            this.displayVehicle(component.children[i], material, texture, s, t);
-
-        this.scene.popMatrix();
-    }
-
-    changeTexture() {
-        for (let i in this.components)
-            this.components[i].updateMaterial();
-    }
-
 
     displayComponent(componentID, material, texture, s, t) {
         let i;

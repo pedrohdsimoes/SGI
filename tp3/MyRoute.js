@@ -30,23 +30,16 @@ export class MyRoute extends CGFobject {
     // que guarda toda a animação
     store_route() {
         var splitedR = [];
+        var splitedC = [];
         let coord = this.d;
-        let instant = 0;
-        var keyframe = new KeyFrame();
-        var animation = new KeyFrameAnimation(this.scene);
 
         splitedR = coord.split(" ");
         for (let c = 1; c < splitedR.length - 1; c++) {
             let coordR = splitedR[c].split(",");
-            this.routes[c] = [coordR[0], 0, coordR[1]];
-
-            keyframe.instant = instant;
-            keyframe.translation = [coordR[0], 0, coordR[1]];
-            animation.addKeyFrame(keyframe); // the new keyframe is added to the array
-            instant += 5;
+            this.routes[c-1] = [coordR[0]*3.77, coordR[1]*3.77];
         }
 
         // console.log("COORD=" + this.routes);
-        return animation
+        return this.routes;
     }
 }

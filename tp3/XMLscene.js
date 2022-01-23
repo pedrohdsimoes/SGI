@@ -82,6 +82,7 @@ export class XMLscene extends CGFscene {
         this.displayLights = false;
         this.vehicle = new MyVehicle(this);
         this.mysvgreader = new MySVGReader("TrackMap.svg", this);
+        this.mysvgreader2 = new MySVGReader("TestTrackMap.svg", this);
         this.objects = [
             new MyQuad(this),
             new MyQuad(this),
@@ -365,7 +366,7 @@ export class XMLscene extends CGFscene {
 
     update(currTime) {
         // Goes to menu when ESC is pressed in DEMO MODE
-        if (this.vehicle.esc) {
+        if (this.vehicle.esc && this.demoOn) {
             this.updateCamera("menu")
             this.demoOn = false;
             this.vehicle.key = -1;
@@ -461,7 +462,9 @@ export class XMLscene extends CGFscene {
                 this.updateCamera("menu"), this.laps = 0
             }, 10000);
             setTimeout(() => this.won = 0, 15000);
-
+            
+            if (this.demoOn)
+                this.demoOn = false;
         }
 
     }
@@ -666,8 +669,8 @@ export class XMLscene extends CGFscene {
                             //TestTrackMap
                             if (!this.track2On) {
                                 console.log("TRACK: SGI ")
-                                this.mysvgreader2 = new MySVGReader("TestTrackMap.svg", this);
-                                //  this.vehicle.route = this.mysvgreader2.send_route.store_route();
+                                //this.mysvgreader2 = new MySVGReader("TestTrackMap.svg", this);
+                                //this.vehicle.route = this.mysvgreader2.send_route.store_route();
                                 this.track2On = true;
                             }
                             //TrackMap - Abu Dhabi (Default)
@@ -849,7 +852,8 @@ export class XMLscene extends CGFscene {
                 //parses SGI Track and displays it
                 this.mysvgreader2.displayScene();
                 this.sgiTrack.display();
-                setTimeout(() => this.vehicle.route = this.mysvgreader2.send_route.routes, 10000);
+                this.vehicle.route = this.mysvgreader2.send_route.routes;
+                //setTimeout(() => this.vehicle.route = this.mysvgreader2.send_route.routes, 1500);
             }
 
         }

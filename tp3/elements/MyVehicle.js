@@ -265,8 +265,6 @@ export class MyVehicle extends CGFobject {
 	}
 
 	updateDemo(t) {
-
-
 		this.prevDirection = this.direction
 
 		console.log("DEMO POINTS " + this.route[this.key])

@@ -2,12 +2,6 @@ import {
     CGFobject
 } from "../../lib/CGF.js";
 
-import {
-    KeyFrameAnimation
-} from "./KeyFrameAnimation.js";
-import {
-    KeyFrame
-} from "./KeyFrame.js";
 
 /**
  * MyRoute

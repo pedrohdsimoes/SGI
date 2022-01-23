@@ -17,23 +17,12 @@ import {
     MySGITrack
 } from './elements/MySGITrack.js';
 import {
-    MyStartLine
-} from './elements/MyStartLine.js';
-import {
     MyVehicle
 } from './elements/MyVehicle.js';
 import {
     MySVGReader
 } from './MySVGReader.js';
-import {
-    KeyFrameAnimation
-} from './KeyFrameAnimation.js';
-import {
-    KeyFrame
-} from './KeyFrame.js';
-import {
-    MyRectangle
-} from './primitives/MyRectangle.js';
+
 
 var DEGREE_TO_RAD = Math.PI / 180;
 
@@ -84,8 +73,6 @@ export class XMLscene extends CGFscene {
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
-        // this.gl.enable(this.gl.BLEND);
-        // this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);  
 
         this.lightValues = [];
         this.route = [];
@@ -377,24 +364,36 @@ export class XMLscene extends CGFscene {
     }
 
     update(currTime) {
+        // Goes to menu when ESC is pressed in DEMO MODE
         if (this.vehicle.esc) {
             this.updateCamera("menu")
             this.demoOn = false;
+            this.vehicle.key = -1;
         }
-
+        // DEMO MODE is Activated
         if (this.demoOn) {
             this.demo_aux++;
+            //every second demo coordinates are updated
             if (this.demo_aux % 10 == 0) {
                 this.vehicle.demoVelocity = true;
                 this.vehicle.updateDemo(currTime)
+
+                //Demo Cameras
                 console.log("CAMERA DEMO " + this.vehicle.route[this.vehicle.key])
-                if (this.vehicle.route[this.vehicle.key] == "328.22318,177.26256") this.updateCamera("trackView")
+                if (this.vehicle.route[this.vehicle.key] == "395.0505,94.212402") this.updateCamera("carCamera")
+                if (this.vehicle.route[this.vehicle.key] == "57.77131,200.27272") this.updateCamera("demoCam1")
+                if (this.vehicle.route[this.vehicle.key] == "53.30471,232.12842") this.updateCamera("demoCam2")
+                if (this.vehicle.route[this.vehicle.key] == "38.335839,415.11111") this.updateCamera("demoCam3")
+                if (this.vehicle.route[this.vehicle.key] == "145.25041,194.2482") this.updateCamera("carCamera")
+                if (this.vehicle.route[this.vehicle.key] == "339.94653,321.69028") this.updateCamera("trackView")
                 this.demo_aux = 0;
+
             }
         } else
             this.vehicle.demoVelocity = false;
-
+        // M key goes to MENU
         if (this.vehicle.keyM) this.cameraID = "menu";
+        // R key restarts the game
         if (this.vehicle.keyR && this.cameraID == "carCamera") {
             this.startOn = true;
             this.vehicle.direction = 0;
@@ -413,12 +412,12 @@ export class XMLscene extends CGFscene {
 
         var x_location = this.car_location[0];
         var z_location = this.car_location[2];
-        // ABU DHABI
+        // ABU DHABI FINISH LINE COORDINATES
         var min_x = 185.8;
         var max_x = 230;
         var min_z = 226.5;
         var max_z = 230.2;
-        // SGI TRACK
+        // SGI TRACK FINISH LINE COORDINATES
         if (this.track2On) {
             var min_x = 91;
             var max_x = 128;
@@ -444,28 +443,29 @@ export class XMLscene extends CGFscene {
 
         this.collision_detection(this.dif2On, this.track2On);
         this.vehicle.trackSelection(this.track2On);
+        // First Person Camera
         this.cam = new CGFcamera(0.8, 2, 500, vec3.fromValues(this.vehicle.location[0], this.vehicle.location[1] + 3.5, this.vehicle.location[2]), vec3.fromValues(this.vehicle.locationFront[0], this.vehicle.locationFront[1], this.vehicle.locationFront[2]));
         if (this.cameraID == "carCamera") this.updateCamera("carCamera")
+        // Sets car next to menu and car is static
         if (this.cameraID == "menu") {
             this.vehicle.location = new vec3.fromValues(0, 0, 0);
             this.vehicle.direction = 0;
             this.vehicle.velocity = 0;
             this.vehicle.steeringAngle = 0
         }
-        //console.log("LAPS:", this.laps);
+        // When Player completes 3 laps in time - WIN display and then goes to menu
         if (this.laps == 3 && this.won == 0) {
             this.won = 1;
             console.log("GANHOUUUUUUU")
-
             setTimeout(() => {
-                this.cameraID = "menu", this.laps = 0
+                this.updateCamera("menu"), this.laps = 0
             }, 10000);
             setTimeout(() => this.won = 0, 15000);
 
         }
 
     }
-
+    // Time Countdown
     startCountDown() {
         if (this.tempo - 1 >= 0 && this.cameraID != "menu") {
             var min = parseInt(this.tempo / 60);
@@ -496,7 +496,7 @@ export class XMLscene extends CGFscene {
             this.updateCamera("menu");
         }
     }
-
+    // Detects collision with objects 
     collision_detection(dif2On, track2On) {
         var center_to_front = 10.7;
         var center_to_back = 0.8;
@@ -612,7 +612,7 @@ export class XMLscene extends CGFscene {
         }
     }
 
-
+    // MENU: Click Input
     logPicking() {
         if (this.pickMode == false) {
             if (this.pickResults != null && this.pickResults.length > 0) {
@@ -640,10 +640,10 @@ export class XMLscene extends CGFscene {
                         //demo
                         if (customId == 3) {
                             console.log("Menu: DEMO")
-
+                            //this.vehicle.key = 0;
                             this.demoOn = true;
                             this.vehicle.placeCarOnStart(this.track2On, this.demoOn);
-                            this.cameraID = "carCamera"
+                            this.updateCamera("trackView")
 
                         }
                         //difficulty
@@ -685,19 +685,6 @@ export class XMLscene extends CGFscene {
         }
     }
 
-    // getAnimation() { // Recebe a animação do MyRoute
-    //     if (!this.track2On) {
-    //         this.animation = this.mysvgreader.send_route.store_route();
-    //         // console.log("ROUTES_ABU: " + this.mysvgreader.send_route.routes);
-    //         //console.log("INSTANT: " + this.animation);
-    //     }
-    //     if (this.track2On) {
-    //         this.animation = this.mysvgreader2.send_route.store_route();
-    //         // console.log("ROUTES_SGI: " + this.mysvgreader.send_route.routes);
-    //         // console.log("INSTANT: " + this.animation);
-    //     }
-    // }
-
     /**
      * Displays the scene.
      */
@@ -724,25 +711,23 @@ export class XMLscene extends CGFscene {
         this.updateProjectionMatrix();
         this.loadIdentity();
 
-        //HUD
+        //HUD (VISUALS)
         this.pushMatrix();
         this.hudtex.apply();
 
-        //car camera view
+        //car camera view (VISUALS)
         if (this.cameraID == "carCamera") this.translate(-3.7, 2.8, -8);
-        //track view
+        //track view (VISUALS)
         else this.translate(-4.8, 3.5, -4);
         this.scale(5, 1, 1)
         this.hud.display();
         this.popMatrix();
 
-
+        // Player collided with powerUp (VISUALS)
         if (this.vehicle.powerupOn) {
             if (this.powerupOn_aux == 0) {
                 setTimeout(() => this.vehicle.powerupOn = false, 10000);
                 setTimeout(() => this.powerupOn_aux = 0, 10000);
-                console.log("TIMEOUT PU")
-                console.log("TIMEOUT PU")
                 console.log("TIMEOUT PU\n \n")
             }
             this.powerupOn_aux = 1;
@@ -755,13 +740,11 @@ export class XMLscene extends CGFscene {
             this.hud.display();
             this.popMatrix();
         }
-
+        // Player collided with obstacle (VISUALS)
         if (this.vehicle.obstacleOn) {
             if (this.obstacleOn_aux == 0) {
                 setTimeout(() => this.vehicle.obstacleOn = false, 10000);
                 setTimeout(() => this.obstacleOn_aux = 0, 10000);
-                console.log("TIMEOUT OBS")
-                console.log("TIMEOUT OBS")
                 console.log("TIMEOUT OBS\n \n")
             }
             this.obstacleOn_aux = 1;
@@ -774,6 +757,7 @@ export class XMLscene extends CGFscene {
             this.hud.display();
             this.popMatrix();
         }
+        // Player is out of track (VISUALS)
         if (this.vehicle.color == 255) {
             this.pushMatrix();
             this.oHUD.apply();
@@ -783,7 +767,7 @@ export class XMLscene extends CGFscene {
             this.hud.display();
             this.popMatrix();
         }
-
+        // P key was pressed and PAUSE MODE is activated (VISUALS)
         if (this.vehicle.keyP) {
             this.vehicle.velocity = 0;
             this.pushMatrix();
@@ -794,7 +778,7 @@ export class XMLscene extends CGFscene {
             this.popMatrix();
 
         }
-        //AVISO GANHOU
+        // WIN (VISUALS)
         if (this.laps == 3) {
             this.vehicle.keyForward = this.vehicle.keyBackward = false;
 
@@ -805,7 +789,7 @@ export class XMLscene extends CGFscene {
             this.hud.display();
             this.popMatrix();
         }
-
+        // LOST (VISUALS)
         if (this.tempo == 0 && this.laps != 3 && this.cameraID != "menu") {
             this.vehicle.keyForward = this.vehicle.keyBackward = false;
 
@@ -817,7 +801,7 @@ export class XMLscene extends CGFscene {
             this.popMatrix();
         }
 
-        //HUD LAPS
+        //HUD LAPS (VISUALS)
         this.pushMatrix();
         this.lapTex.apply();
         if (this.cameraID == "carCamera") this.translate(4.15, 2.7, -8);
@@ -856,12 +840,13 @@ export class XMLscene extends CGFscene {
             this.vehicle.display();
 
             this.popMatrix();
-
+            //parses Abu Dhabi Track and displays it
             if (!this.track2On) {
                 this.vehicle.route = this.mysvgreader.send_route.routes;
                 this.mysvgreader.displayScene();
                 this.abuDhabi.display();
             } else {
+                //parses SGI Track and displays it
                 this.mysvgreader2.displayScene();
                 this.sgiTrack.display();
                 setTimeout(() => this.vehicle.route = this.mysvgreader2.send_route.routes, 10000);
@@ -884,7 +869,7 @@ export class XMLscene extends CGFscene {
             this.objects[i].display();
             this.popMatrix();
         }
-        // track 2
+        // track 2 (VISUALS)
         if (this.track2On) {
             this.pushMatrix();
             this.track2tex.apply();
@@ -898,7 +883,7 @@ export class XMLscene extends CGFscene {
             this.track2.display();
             this.popMatrix();
         }
-        // difficulty 2
+        // difficulty 2 (VISUALS)
         if (this.dif2On) {
             this.pushMatrix();
             this.dif2tex.apply();
@@ -938,6 +923,8 @@ export class XMLscene extends CGFscene {
         // the shader will take care of computing the correct texture coordinates 
         // of that character inside the font texture (check shaders/font.vert )
         // Homework: This should be wrapped in a function/class for displaying a full string
+
+        // ------------------------- WORDS AND NUMBERS DISPLAYED ON SCREEN -------------------------//
         let velocity1 = [Math.trunc(Math.abs(this.vehicle.velocity) * 80 / 100), 3];
         let velocity2 = [Math.trunc((Math.abs(this.vehicle.velocity) * 80 / 10) % 10), 3];
         let velocity3 = [Math.trunc(Math.abs(this.vehicle.velocity) * 80 % 10), 3];
@@ -1015,7 +1002,7 @@ export class XMLscene extends CGFscene {
         this.quad.display();
 
 
-
+        // CLOCK DISPLAY
         this.translate(5, 0, 0);
         this.activeShader.setUniformsValues({
             'charCoords': [this.min, 3]
@@ -1036,6 +1023,8 @@ export class XMLscene extends CGFscene {
             'charCoords': [this.seg % 10, 3]
         }); // seg2
         this.timerquad.display();
+
+        // OUT OF TRACK DISPLAY
         if (this.vehicle.color == 255) {
             this.translate(3, 0, 0);
             this.activeShader.setUniformsValues({

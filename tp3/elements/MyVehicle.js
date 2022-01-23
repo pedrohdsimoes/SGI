@@ -250,7 +250,7 @@ export class MyVehicle extends CGFobject {
 			this.locationFront[2] = this.location[2] + -3.5 * Math.cos(this.direction * Math.PI / 180);
 		}
 		//Car telemetry
-		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + ")");
+		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location[0].toFixed(4) + "," + this.location[2].toFixed(4) + " )");
 		// Track detection
 		if (this.track == "TrackMap.svg") this.simpleImage = "SimpleImage/trackMap.png";
 		if (this.track == "TestTrackMap.svg") this.simpleImage = "SimpleImage/testTrackMap.png";
@@ -269,7 +269,6 @@ export class MyVehicle extends CGFobject {
 
 		this.prevDirection = this.direction
 
-		console.log(" POINTS " + this.route)
 		console.log("DEMO POINTS " + this.route[this.key])
 		var vecDirection;
 
@@ -288,16 +287,14 @@ export class MyVehicle extends CGFobject {
 
 		// update velocity
 		if (this.key == this.route.length - 1) {
-			this.velocity = this.distanceVector(this.route[this.key], this.route[0]) / 9;
-			console.log("VELo " + this.velocity)
+			this.velocity = this.distanceVector(this.route[this.key], this.route[0]) / 10;
 		} else {
-			this.velocity = this.distanceVector(this.route[this.key], this.route[this.key + 1]) / 9;
-			console.log("VELo " + this.velocity)
+			this.velocity = this.distanceVector(this.route[this.key], this.route[this.key + 1]) / 10;
 		}
-		//wheels turning
+		// //wheels turning
 		if (this.velocity < 4) {
-			if (this.direction > this.prevDirection) this.steeringAngle = 1 / this.velocity * 10
-			if (this.direction < this.prevDirection) this.steeringAngle = -1 / this.velocity * 10
+			if (this.direction > this.prevDirection) this.steeringAngle = 1 / this.velocity * 7
+			if (this.direction < this.prevDirection) this.steeringAngle = -1 / this.velocity * 7
 		}
 
 		this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
@@ -307,7 +304,6 @@ export class MyVehicle extends CGFobject {
 	}
 
 	subVector(vec1, vec2) {
-		//console.log("[0] = " + vec2[0] + " - " + vec1[0] + "[1] = " + vec2[1] + " - " + vec1[1])
 		return [vec2[1] - vec1[1], vec2[0] - vec1[0]];
 	}
 
@@ -319,7 +315,7 @@ export class MyVehicle extends CGFobject {
 
 	// Difficulty F2
 
-	// Car stops when you stop pressing "W" 
+	// Car stops when you stop pressing "W" (no attriction)
 	f2_obstacle_effect1() {
 		this.obstacleOn = true;
 		this.velocityAtriction = 0.1;
@@ -340,9 +336,9 @@ export class MyVehicle extends CGFobject {
 		setTimeout(() => this.velocityMaxAux = 4.0, 10000);
 		console.log("F2 - PU1");
 	}
+	//Car gets smaller
 	f2_powerup_effect2() {
 		this.powerupOn = true;
-		//encolher
 		this.scale = 1.2;
 		setTimeout(() => this.scale = 1.5, 10000);
 		console.log("F2 - PU2");

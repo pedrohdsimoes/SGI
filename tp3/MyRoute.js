@@ -36,7 +36,7 @@ export class MyRoute extends CGFobject {
         splitedR = coord.split(" ");
         for (let c = 1; c < splitedR.length - 1; c++) {
             let coordR = splitedR[c].split(",");
-            this.routes[c-1] = [coordR[0]*3.77, coordR[1]*3.77];
+            this.routes[c - 1] = [coordR[0], coordR[1]];
         }
 
         // console.log("COORD=" + this.routes);

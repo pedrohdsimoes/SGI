@@ -63,6 +63,7 @@ export class XMLscene extends CGFscene {
         this.obsCollision = 0;
         this.powerupOn_aux = 0;
         this.obstacleOn_aux = 0;
+        this.demo_aux = 0;
     }
 
     /**
@@ -376,17 +377,23 @@ export class XMLscene extends CGFscene {
     }
 
     update(currTime) {
-        if(this.vehicle.esc) {
-      this.updateCamera("menu")
-        this.demoOn = false;
-    }
-
-        if(this.demoOn){ 
-            this.vehicle.updateDemo(currTime)
+        if (this.vehicle.esc) {
+            this.updateCamera("menu")
+            this.demoOn = false;
         }
-       
-            
-           
+
+        if (this.demoOn) {
+            this.demo_aux++;
+            if (this.demo_aux % 10 == 0) {
+                this.vehicle.demoVelocity = true;
+                this.vehicle.updateDemo(currTime)
+                console.log("CAMERA DEMO " + this.vehicle.route[this.vehicle.key])
+                if (this.vehicle.route[this.vehicle.key] == "328.22318,177.26256") this.updateCamera("trackView")
+                this.demo_aux = 0;
+            }
+        } else
+            this.vehicle.demoVelocity = false;
+
         if (this.vehicle.keyM) this.cameraID = "menu";
         if (this.vehicle.keyR && this.cameraID == "carCamera") {
             this.startOn = true;
@@ -604,7 +611,7 @@ export class XMLscene extends CGFscene {
             }
         }
     }
-    
+
 
     logPicking() {
         if (this.pickMode == false) {
@@ -633,11 +640,11 @@ export class XMLscene extends CGFscene {
                         //demo
                         if (customId == 3) {
                             console.log("Menu: DEMO")
-                           
+
                             this.demoOn = true;
                             this.vehicle.placeCarOnStart(this.track2On, this.demoOn);
                             this.cameraID = "carCamera"
-                            
+
                         }
                         //difficulty
                         if (customId == 2) {
@@ -660,7 +667,7 @@ export class XMLscene extends CGFscene {
                             if (!this.track2On) {
                                 console.log("TRACK: SGI ")
                                 this.mysvgreader2 = new MySVGReader("TestTrackMap.svg", this);
-                              //  this.vehicle.route = this.mysvgreader2.send_route.store_route();
+                                //  this.vehicle.route = this.mysvgreader2.send_route.store_route();
                                 this.track2On = true;
                             }
                             //TrackMap - Abu Dhabi (Default)

@@ -63,10 +63,10 @@ export class MyVehicle extends CGFobject {
 		this.steeringAngleMax = 15;
 		this.steeringAtriction = 0.8;
 		this.scale = 1.5;
-        this.powerupOn = false;
-
-        this.route = [];
-        this.key = -1;
+		this.powerupOn = false;
+		this.demoVelocity = false;
+		this.route = [];
+		this.key = -1;
 
 	}
 	trackSelection(track2On) {
@@ -81,7 +81,7 @@ export class MyVehicle extends CGFobject {
 		}
 		//abu dhabi
 		if (!track2On && startOn) {
-
+			//	this.location = new vec3.fromValues(314.20187344, 0, 331.29235412);
 			this.location = new vec3.fromValues(215.7, 0, 230.3);
 			this.trackRotate = "abu dhabi";
 
@@ -162,7 +162,7 @@ export class MyVehicle extends CGFobject {
 		if (event.keyCode == 80 && !this.keyP) this.keyP = true;
 		else if (event.keyCode == 80 && this.keyP) this.keyP = false;
 		//esc
-		if(event.keyCode == 27) this.esc = true;
+		if (event.keyCode == 27) this.esc = true;
 	}
 	processKeyUp(event) {
 		//key is not being pushed
@@ -175,7 +175,7 @@ export class MyVehicle extends CGFobject {
 		//reset
 		if (event.keyCode == 82) this.keyR = false;
 		//esc
-		if(event.keyCode == 27) this.esc = false;
+		if (event.keyCode == 27) this.esc = false;
 	}
 
 	updateMovement(currTime) {
@@ -200,8 +200,10 @@ export class MyVehicle extends CGFobject {
 		else {
 			//wheels going back to place when keys aren´t being pressed
 			if (!this.keyLeft && !this.keyRight) {
-				if (Math.abs(this.steeringAngle) > 0.001) this.steeringAngle = this.steeringAngle * this.steeringAtriction;
-				if (Math.abs(this.steeringAngle) < 0.001) this.steeringAngle = 0;
+				if (!this.demoVelocity) {
+					if (Math.abs(this.steeringAngle) > 0.001) this.steeringAngle = this.steeringAngle * this.steeringAtriction;
+					if (Math.abs(this.steeringAngle) < 0.001) this.steeringAngle = 0;
+				}
 			}
 		}
 
@@ -223,14 +225,16 @@ export class MyVehicle extends CGFobject {
 		//not going forward or backward
 		if (!this.keyForward && !this.keyBackward) {
 			if (Math.abs(this.velocity) > 0) {
-				this.velocity = this.velocity * this.velocityAtriction;
+				if (!this.demoVelocity)
+					this.velocity = this.velocity * this.velocityAtriction;
 				if (Math.abs(this.velocity) < 0.001) this.velocity = 0;
 			}
 		}
 
 		// direction
-		if (Math.abs(this.velocity) > 0)
-			this.direction += this.steeringAngle;
+		if (!this.demoVelocity)
+			if (Math.abs(this.velocity) > 0)
+				this.direction += this.steeringAngle;
 
 		// vehicle location 
 		this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
@@ -246,7 +250,7 @@ export class MyVehicle extends CGFobject {
 			this.locationFront[2] = this.location[2] + -3.5 * Math.cos(this.direction * Math.PI / 180);
 		}
 		//Car telemetry
-		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + "), Front Location (" + this.locationFront);
+		console.log("velocidade = " + this.velocity + " steering = " + this.steeringAngle + " deg, direction = " + this.direction + " deg, location ( " + this.location + ")");
 		// Track detection
 		if (this.track == "TrackMap.svg") this.simpleImage = "SimpleImage/trackMap.png";
 		if (this.track == "TestTrackMap.svg") this.simpleImage = "SimpleImage/testTrackMap.png";
@@ -258,46 +262,58 @@ export class MyVehicle extends CGFobject {
 		if (this.color == 255) this.velocityMax = 1.45;
 
 		return this.location;
-    }
-    
-    updateDemo(t) {
-		console.log("DEMO POINTS " + this.route)
-        var vecDirection;
+	}
 
-        this.key = (this.key + 1) % (this.route.length);
+	updateDemo(t) {
+
+
+		this.prevDirection = this.direction
+
+		console.log(" POINTS " + this.route)
+		console.log("DEMO POINTS " + this.route[this.key])
+		var vecDirection;
+
+		this.key = (this.key + 1) % (this.route.length);
 		console.log("KEY " + this.key)
 
-        // update direction
-        if (this.key == this.route.length - 1) {
-            vecDirection = this.subVector(this.route[this.key], this.route[0]);
-            this.direction = -Math.atan2(vecDirection[1], vecDirection[0]);
-        }
-        else if (this.route[0] != null) {
-            vecDirection = this.subVector(this.route[this.key], this.route[this.key + 1]);
-            this.direction = -Math.atan2(vecDirection[1], vecDirection[0]);
-        }
+		// update direction
+		if (this.key == this.route.length - 1) {
+			vecDirection = this.subVector(this.route[this.key], this.route[0]);
+			this.direction = Math.atan2(vecDirection[1], vecDirection[0]) * 180 / Math.PI;
+		} else if (this.route[0] != null) {
+			vecDirection = this.subVector(this.route[this.key], this.route[this.key + 1]);
+			console.log("VEC DIR " + vecDirection)
+			this.direction = Math.atan2(vecDirection[1], vecDirection[0]) * 180 / Math.PI;
+		}
 
-        // update velocity
-        if (this.key == this.route.length - 1)
-            this.velocity = this.distanceVector(this.route[this.key], this.route[0])/10;
-        
-        else
-            this.velocity = this.distanceVector(this.route[this.key], this.route[this.key + 1])/10;
-            
-        this.location[0] += (Math.sin(this.direction) * this.velocity);
+		// update velocity
+		if (this.key == this.route.length - 1) {
+			this.velocity = this.distanceVector(this.route[this.key], this.route[0]) / 9;
+			console.log("VELo " + this.velocity)
+		} else {
+			this.velocity = this.distanceVector(this.route[this.key], this.route[this.key + 1]) / 9;
+			console.log("VELo " + this.velocity)
+		}
+		//wheels turning
+		if (this.velocity < 4) {
+			if (this.direction > this.prevDirection) this.steeringAngle = 1 / this.velocity * 10
+			if (this.direction < this.prevDirection) this.steeringAngle = -1 / this.velocity * 10
+		}
+
+		this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
 		this.location[1] = 0;
-		this.location[2] += (Math.cos(this.direction) * this.velocity);
+		this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);
 
-    }
+	}
 
-    subVector(vec1,vec2) {
-		console.log("vec2 0 " + vec2[0] + " , " + vec2[1])
-        return [vec1[0] - vec2[0], vec1[1] - vec2[1]];
-    }
+	subVector(vec1, vec2) {
+		//console.log("[0] = " + vec2[0] + " - " + vec1[0] + "[1] = " + vec2[1] + " - " + vec1[1])
+		return [vec2[1] - vec1[1], vec2[0] - vec1[0]];
+	}
 
-    distanceVector(vec1, vec2) {
-        return Math.sqrt(Math.pow((vec2[0] - vec1[0]), 2) + Math.pow((vec2[1] - vec1[1]), 2));
-    }
+	distanceVector(vec1, vec2) {
+		return Math.sqrt(Math.pow((vec2[0] - vec1[0]), 2) + Math.pow((vec2[1] - vec1[1]), 2));
+	}
 
 
 

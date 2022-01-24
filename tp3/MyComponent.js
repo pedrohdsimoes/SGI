@@ -1,4 +1,6 @@
-import { CGFobject } from "../lib/CGF.js";
+import {
+	CGFobject
+} from "../lib/CGF.js";
 /**
  * MyComponent
  * @constructor
@@ -35,4 +37,5 @@ export class MyComponent extends CGFobject {
 
 		this.currentMaterialID = this.materials[this.currentMaterialIndex];
 	}
+
 }

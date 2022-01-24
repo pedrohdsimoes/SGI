@@ -98,14 +98,6 @@ export class MyAbuDhabi extends CGFobject {
         this.roofTex.loadTexture('scenes/images/roof.jpg');
         this.roofTex.setTextureWrap('REPEAT', 'REPEAT');
 
-        this.roof2Tex = new CGFappearance(this.scene);
-        this.roof2Tex.setAmbient(1, 1, 1, 1);
-        this.roof2Tex.setDiffuse(1, 1, 1, 1);
-        this.roof2Tex.setSpecular(1, 1, 1, 1);
-        this.roof2Tex.setShininess(10.0);
-        this.roof2Tex.loadTexture('scenes/images/roof2.jpg');
-        this.roof2Tex.setTextureWrap('REPEAT', 'REPEAT');
-
         this.track = new MyPlane(this.scene, "AbuDhabi", 50, 50);
         this.tree = new MyTree(this.scene, "tree");
         this.building = new MyBuilding(this.scene, "building");

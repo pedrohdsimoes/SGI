@@ -33,11 +33,6 @@ import {
 import {
     MyComponent
 } from "./MyComponent.js";
-import {
-    MyObstacle
-} from "./elements/MyObstacle.js";
-import { VehicleBody } from "./elements/VehicleBody.js";
-import { MyVehicle } from "./elements/MyVehicle.js";
 var DEGREE_TO_RAD = Math.PI / 180;
 
 // Order of the groups in the XML document.
@@ -50,7 +45,6 @@ var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
 var PRIMITIVES_INDEX = 7;
 var COMPONENTS_INDEX = 8;
-var VEHICLE_INDEX = 9;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -227,18 +221,6 @@ export class MySceneGraph {
             if ((error = this.parseComponents(nodes[index])) != null) return error;
 
         }
-
-        // <vehicles>
-        // if ((index = nodeNames.indexOf("vehicles")) == -1)
-        //     return "tag <vehicles> missing";
-        // else {
-        //     if (index != VEHICLE_INDEX)
-        //         this.onXMLMinorError("tag <vehicles> out of order");
-
-        //     //Parse components block
-        //     if ((error = this.parseVehicle(nodes[index])) != null) return error;
-
-        // }
 
         this.log("All parsed");
     }
@@ -1174,9 +1156,6 @@ export class MySceneGraph {
             var component = new MyComponent(this.scene, componentID, transformation, materialID, textureID, textureLenghtS, textureLenghtT, componentchildren, leaves);
 
             this.components[componentID] = component;
-
-            if (componentID == "carbody")
-                this.vehicle = new MyVehicle(this.scene, component);    
         }
         this.log("Parsed components");
     }
@@ -1296,6 +1275,7 @@ export class MySceneGraph {
 
     displayScene() {
         this.displayComponent(this.idRoot, null, null, 1, 1);
+
     }
 
     displayComponent(componentID, material, texture, s, t) {

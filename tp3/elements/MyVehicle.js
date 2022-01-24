@@ -13,16 +13,6 @@ import {
 import {
 	MyWheel
 } from "./MyWheel.js";
-import {
-	VehicleBody
-} from "./VehicleBody.js";
-import {
-	MyComponent
-} from "../MyComponent.js";
-import {
-	MyInterface
-} from "../MyInterface.js";
-
 /**
  * 
  * @constructor
@@ -35,13 +25,7 @@ export class MyVehicle extends CGFobject {
 
 		this.scene = scene;
 		this.track = "TrackMap.svg";
-		this.theta = 0;
-		this.gui = new MyInterface()
-
-		// this.carbody = scene.displayComponent('carbody', null ,null , 1, 1);
-		// this.car = new MyCylinder(scene, "carss", 1, 0.5, 0.5, 50, 1);
 		this.simpleImage = "";
-		this.carbody = new VehicleBody(scene);
 		this.wheel = new MyWheel(scene);
 		this.keyForward = false;
 		this.keyBackward = false;
@@ -51,7 +35,6 @@ export class MyVehicle extends CGFobject {
 		this.previousLocation = new vec3.fromValues(0, 0, 0);
 		this.locationFront = new vec3.fromValues(0, 0, 5);
 		this.locationWing = new vec3.fromValues(0, 0, 10);
-		//if(this.track=="TrackMap.svg")this.location = new vec3.fromValues(221.7,0,259.6);
 		this.velocity = 0;
 		this.velocityAtriction = 0.9;
 		this.velocityDelta = 0.2;
@@ -68,6 +51,7 @@ export class MyVehicle extends CGFobject {
 		this.route = [];
 		this.key = -1;
 
+
 	}
 	trackSelection(track2On) {
 		if (track2On) this.track = "TestTrackMap.svg";
@@ -81,7 +65,6 @@ export class MyVehicle extends CGFobject {
 		}
 		//abu dhabi
 		if (!track2On && startOn) {
-			//	this.location = new vec3.fromValues(314.20187344, 0, 331.29235412);
 			this.location = new vec3.fromValues(215.7, 0, 230.3);
 			this.trackRotate = "abu dhabi";
 
@@ -97,10 +80,7 @@ export class MyVehicle extends CGFobject {
 
 		this.scene.scale(this.scale, this.scale, this.scale);
 
-		//car body
-		this.scene.pushMatrix();
-		this.carbody.display();
-		this.scene.popMatrix();
+
 
 		// FL Wheel
 		this.scene.pushMatrix();
@@ -294,17 +274,17 @@ export class MyVehicle extends CGFobject {
 			if (this.direction > this.prevDirection) this.steeringAngle = 1 / this.velocity * 7
 			if (this.direction < this.prevDirection) this.steeringAngle = -1 / this.velocity * 7
 		}
-
+		//update location
 		this.location[0] += (Math.sin(this.direction * Math.PI / 180) * this.velocity);
 		this.location[1] = 0;
 		this.location[2] += (Math.cos(this.direction * Math.PI / 180) * this.velocity);
 
 	}
-
+	// calculates direction vector
 	subVector(vec1, vec2) {
 		return [vec2[1] - vec1[1], vec2[0] - vec1[0]];
 	}
-
+	// calculates distance between two vectors
 	distanceVector(vec1, vec2) {
 		return Math.sqrt(Math.pow((vec2[0] - vec1[0]), 2) + Math.pow((vec2[1] - vec1[1]), 2));
 	}
@@ -359,7 +339,4 @@ export class MyVehicle extends CGFobject {
 		setTimeout(() => this.velocityMaxAux = 4.0, 15000);
 		console.log("F1 - PU1");
 	}
-
-
-
 }

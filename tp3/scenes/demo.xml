@@ -114,7 +114,6 @@
         <texture id="sideWingTex" file="./scenes/images/santanderSponsor.png" />
         <texture id="wingTex" file="./scenes/images/wingSponsor.png" />
         <texture id="floorTex" file="./scenes/images/carbonFiber.jpeg" />
-        <texture id="helmetTex" file="./scenes/images/helmet.png" />
 
     </textures>
     <!-- ___________________________________MATERIALS______________________________________ -->
@@ -128,17 +127,22 @@
             <diffuse r="1" g="1.0" b="1.0" a="1.0" /> <!-- diffuse reflection -->
             <specular r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- specular reflection -->
         </material>
-
+        <material id="helmetMaterial" shininess="100">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.01" g="0.01" b="0.01" a="0.1" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="0.1" />
+            <specular r="0.228" g="0.207" b="0.178" a="1.0" />
+        </material>
         <material id="redMaterial" shininess="10">
             <emission r="0" g="0" b="0" a="1.0" />
-            <ambient r="0.199" g="0.019" b="0.043" a="1.0" />
-            <diffuse r="0.199" g="0.019" b="0.043" a="1.0" />
+            <ambient r="0" g="1" b="0" a="0.1" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
             <specular r="0.228" g="0.207" b="0.178" a="1.0" />
         </material>
 
         <material id="whiteMaterial" shininess="100">
-            <emission r="0" g="0" b="0" a="1.0" />
-            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1" g="1" b="1" a="1.0" />
             <diffuse r="0.255" g="0.255" b="0.255" a="1.0" />
             <specular r="0.7" g="0.7" b="0.7" a="1.0" />
         </material>
@@ -165,214 +169,216 @@
 
         <!-- CARBODY -->
         <transformation id="leftSurface">
-            <rotate axis="z" angle="-90" />
-            <rotate axis="y" angle="90" />
             <translate x="0.044" y="1.65" z="-1.4" />
+            <rotate axis="y" angle="90" />
+            <rotate axis="z" angle="-90" />
         </transformation>
 
         <transformation id="rightSurface">
-            <rotate axis="z" angle="-90" />
-            <rotate axis="y" angle="-90" />
             <translate x="-0.044" y="1.65" z="-3.9" />
+            <rotate axis="y" angle="-90" />
+            <rotate axis="z" angle="-90" />
         </transformation>
 
         <transformation id="rightsideSupportRW">
-            <rotate axis="y" angle="-90" />
-            <rotate axis="x" angle="90" />
             <translate x="-0.8" y="1.8" z="-4.6" />
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="-90" />
         </transformation>
 
         <transformation id="rightsideSupportRW1">
-            <rotate axis="y" angle="90" />
-            <rotate axis="x" angle="90" />
             <translate x="-0.8" y="0.8" z="-4.6" />
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="90" />
         </transformation>
 
         <transformation id="leftsideSupportRW">
-            <rotate axis="y" angle="-90" />
-            <rotate axis="x" angle="90" />
             <translate x="0.8" y="1.8" z="-4.6" />
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="-90" />
         </transformation>
 
         <transformation id="leftsideSupportRW1">
-            <rotate axis="y" angle="90" />
-            <rotate axis="x" angle="90" />
             <translate x="0.8" y="0.8" z="-4.6" />
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="90" />
         </transformation>
 
         <transformation id="leftsideRW">
-            <rotate axis="x" angle="45" />
             <translate x="0.6" y="0.8" z="-4.6" />
+            <rotate axis="x" angle="45" />
         </transformation>
 
         <transformation id="rightsideRW">
-            <rotate axis="x" angle="45" />
             <translate x="-0.6" y="0.8" z="-4.6" />
+            <rotate axis="x" angle="45" />
         </transformation>
 
         <transformation id="rearwingFront">
-            <scale x="0.6" y="1.6" z="1" />
-            <rotate axis="z" angle="-90" />
             <translate x="-0.8" y="1.76" z="-4.45" />
+            <rotate axis="z" angle="-90" />
+            <scale x="0.6" y="1.6" z="1" />
         </transformation>
 
         <transformation id="rearwingBack">
-            <rotate axis="y" angle="180" />
             <translate x="0.8" y="1.05" z="-4.6" />
+            <rotate axis="y" angle="180" />
         </transformation>
 
         <transformation id="helmet">
-            <scale x="1" y="1" z="1.1" />
             <translate x="-0" y="1.1" z="-1" />
+            <scale x="1" y="1" z="1.1" />
         </transformation>
 
         <transformation id="leftFrontWheelSupport1">
-            <rotate axis="x" angle="8.99" />
-            <rotate axis="y" angle="62.937" />
-            <translate x="0.15" y="0.43" z="1.38" />
             <scale x="1.2" y="1.2" z="1.2" />
+            <translate x="0.15" y="0.43" z="1.38" />
+            <rotate axis="y" angle="62.937" />
+            <rotate axis="x" angle="8.99" />
         </transformation>
 
         <transformation id="leftFrontWheelSupport2">
-            <rotate axis="y" angle="90" />
             <translate x="0.2" y="0.4" z="2" />
+            <rotate axis="y" angle="90" />
         </transformation>
 
         <transformation id="leftFrontWheelSupport3">
-            <rotate axis="x" angle="2" />
-            <rotate axis="y" angle="119.999" />
-            <translate x="0.12" y="0.35" z="1.97" />
             <scale x="1.22" y="1.22" z="1.22" />
+            <translate x="0.12" y="0.35" z="1.97" />
+            <rotate axis="y" angle="119.999" />
+            <rotate axis="x" angle="2" />
         </transformation>
 
         <transformation id="rightFrontWheelSupport1">
-            <rotate axis="x" angle="8.99" />
-            <rotate axis="y" angle="-62.937" />
-            <translate x="-0.15" y="0.43" z="1.38" />
             <scale x="1.2" y="1.2" z="1.2" />
+            <translate x="-0.15" y="0.43" z="1.38" />
+            <rotate axis="y" angle="-62.937" />
+            <rotate axis="x" angle="8.99" />
         </transformation>
 
         <transformation id="rightFrontWheelSupport2">
-            <rotate axis="y" angle="90" />
             <translate x="-0.9" y="0.4" z="2" />
+            <rotate axis="y" angle="90" />
         </transformation>
 
         <transformation id="rightFrontWheelSupport3">
-            <rotate axis="x" angle="2" />
-            <rotate axis="y" angle="-119.999" />
+            <scale x="1.22" y="1.22" z="1.22" />
             <translate x="-0.12" y="0.35" z="1.97" />
-            <scale x="1.22" y="1.22" z="1.22" />
-        </transformation>
-
-        <transformation id="leftBackWheelSupport1">
-            <rotate axis="x" angle="8.99" />
-            <rotate axis="y" angle="75" />
-            <translate x="0.15" y="0.43" z="-3.65" />
-            <scale x="1.2" y="1.2" z="1.2" />
-        </transformation>
-
-        <transformation id="leftBackWheelSupport2">
-            <rotate axis="y" angle="90" />
-            <translate x="0.2" y="0.4" z="-4.2" />
-        </transformation>
-
-        <transformation id="leftBackWheelSupport3">
+            <rotate axis="y" angle="-119.999" />
             <rotate axis="x" angle="2" />
-            <rotate axis="y" angle="119.999" />
-            <translate x="0.12" y="0.35" z="-3.11" />
+        </transformation>
+
+        <transformation id="leftbackwheelSupport1">
+            <scale x="1.2" y="1.2" z="1.2" />
+            <translate x="0.15" y="0.43" z="-3.65" />
+            <rotate axis="y" angle="75" />
+            <rotate axis="x" angle="8.99" />
+        </transformation>
+
+        <transformation id="leftbackwheelSupport2">
+            <translate x="0.2" y="0.4" z="-4.2" />
+            <rotate axis="y" angle="90" />
+        </transformation>
+
+        <transformation id="leftbackwheelSupport3">
             <scale x="1.22" y="1.22" z="1.22" />
+            <translate x="0.12" y="0.35" z="-3.11" />
+            <rotate axis="y" angle="119.999" />
+            <rotate axis="x" angle="2" />
         </transformation>
 
         <transformation id="rightBackWheelSupport1">
-            <rotate axis="x" angle="8.99" />
-            <rotate axis="y" angle="-62.937" />
-            <translate x="-0.15" y="0.43" z="-3.65" />
             <scale x="1.2" y="1.2" z="1.2" />
+            <translate x="-0.15" y="0.43" z="-3.65" />
+            <rotate axis="y" angle="-62.937" />
+            <rotate axis="x" angle="8.99" />
         </transformation>
 
         <transformation id="rightBackWheelSupport2">
-            <rotate axis="y" angle="90" />
             <translate x="-0.9" y="0.4" z="-4.2" />
+            <rotate axis="y" angle="90" />
         </transformation>
 
         <transformation id="rightBackWheelSupport3">
-            <rotate axis="x" angle="2" />
-            <rotate axis="y" angle="-119.999" />
-            <translate x="-0.12" y="0.35" z="-3.11" />
             <scale x="1.22" y="1.22" z="1.22" />
+            <translate x="-0.12" y="0.35" z="-3.11" />
+            <rotate axis="y" angle="-119.999" />
+            <rotate axis="x" angle="2" />
         </transformation>
 
         <transformation id="floor">
-            <rotate axis="x" angle="-90" />
             <translate x="-1.1" y="0.05" z="-0.9" />
+            <rotate axis="x" angle="-90" />
         </transformation>
 
         <transformation id="insideFloor">
-            <rotate axis="x" angle="90" />
             <translate x="-1.1" y="0.05" z="-3.8" />
+            <rotate axis="x" angle="90" />
         </transformation>
 
+        <!-- REVER -->
         <transformation id="FrontWingConnection">
-            <rotate axis="z" angle="45" />
-            <rotate axis="z" angle="180" />
-            <rotate axis="x" angle="45" />
-            <translate x="0" y="0.65" z="0.17" />
             <scale x="1.5" y="1" z="1" />
+            <translate x="0" y="0.65" z="0.17" />
+            <rotate axis="x" angle="6.9230769231" />
+            <rotate axis="z" angle="180" />
+            <rotate axis="z" angle="45" />
         </transformation>
+        <!-- REVER -->
 
         <transformation id="frontwingRect">
-            <rotate axis="x" angle="6.923" />
-            <translate x="-0.22" y="0.3" z="4.04" />
             <scale x="0.75" y="0.7" z="0.75" />
+            <translate x="-0.22" y="0.3" z="4.04" />
+            <rotate axis="x" angle="6.923" />
         </transformation>
 
         <transformation id="rightsideFW">
-            <rotate axis="y" angle="-90" />
-            <scale x="0.7" y="0.25" z="0.6" />
             <translate x="-1.5" y="0.2" z="3.2" />
+            <scale x="0.7" y="0.25" z="0.6" />
+            <rotate axis="y" angle="-90" />
         </transformation>
 
         <transformation id="leftsideFW">
-            <rotate axis="y" angle="90" />
-            <scale x="0.7" y="0.25" z="0.6" />
             <translate x="1.5" y="0.2" z="3.2" />
+            <scale x="0.7" y="0.25" z="0.6" />
+            <rotate axis="y" angle="90" />
         </transformation>
 
         <transformation id="insiderightsideFW">
-            <rotate axis="y" angle="90" />
-            <scale x="0.7" y="0.25" z="0.6" />
             <translate x="-1.5" y="0.2" z="3.2" />
+            <scale x="0.7" y="0.25" z="0.6" />
+            <rotate axis="y" angle="90" />
         </transformation>
 
         <transformation id="insideleftsideFW">
-            <rotate axis="y" angle="-90" />
-            <scale x="0.7" y="0.25" z="0.6" />
             <translate x="1.5" y="0.2" z="3.2" />
+            <scale x="0.7" y="0.25" z="0.6" />
+            <rotate axis="y" angle="-90" />
         </transformation>
 
         <transformation id="wing">
-            <rotate axis="x" angle="-90" />
-            <scale x="3" y="0" z="0.5" />
             <translate x="0" y="0.2" z="3.2" />
+            <scale x="3" y="0" z="0.5" />
+            <rotate axis="x" angle="-90" />
         </transformation>
 
         <transformation id="insideWing">
-            <rotate axis="x" angle="90" />
-            <scale x="3" y="0" z="0.5" />
             <translate x="0" y="0.2" z="3.2" />
+            <scale x="3" y="0" z="0.5" />
+            <rotate axis="x" angle="90" />
         </transformation>
 
         <transformation id="front_body">
-            <rotate axis="z" angle="180" />
-            <rotate axis="z" angle="45" />
-            <translate x="0" y="0.65" z="-0.5" />
             <scale x="1.5" y="1" z="1" />
+            <translate x="0" y="0.65" z="-0.5" />
+            <rotate axis="z" angle="45" />
+            <rotate axis="z" angle="180" />
         </transformation>
 
         <transformation id="cockpit">
-            <rotate axis="z" angle="45" />
-            <translate x="0" y="0.65" z="-1.4" />
             <scale x="1.5" y="1" z="1" />
+            <translate x="0" y="0.65" z="-1.4" />
+            <rotate axis="z" angle="45" />
         </transformation>
 
         <transformation id="b2rect">
@@ -381,15 +387,15 @@
         </transformation>
 
         <transformation id="topbase">
-            <rotate axis="x" angle="-90" />
             <translate x="-0.915" y="0.65" z="-1.5" />
+            <rotate axis="x" angle="-90" />
         </transformation>
 
         <transformation id="base">
-            <rotate axis="x" angle="-90" />
-            <rotate axis="y" angle="-29.999" />
-            <translate x="0" y="0.05" z="-2" />
             <scale x="0.7" y="1" z="1.2" />
+            <translate x="0" y="0.05" z="-2" />
+            <rotate axis="y" angle="-29.999" />
+            <rotate axis="x" angle="-90" />
         </transformation>
 
     </transformations>
@@ -483,10 +489,10 @@
             <patch npointsU="3" npointsV="2" npartsU="10" npartsV="10">
                 <controlpoint xx="0" yy="0.0" zz="-0.133" />
                 <controlpoint xx="0" yy="1.0" zz="-0.133" />
-                <controlpoint xx="0" yy="0.0" zz="-0.222" />
-                <controlpoint xx="0" yy="1.0" zz="-0.222" />
+                <controlpoint xx="0.5" yy="0.0" zz="-0.222" />
+                <controlpoint xx="0.5" yy="1.0" zz="-0.222" />
                 <controlpoint xx="1" yy="0.0" zz="0.333" />
-                <controlpoint xx="1" yy="0.0" zz="-0.333" />
+                <controlpoint xx="1" yy="1.0" zz="0.333" />
             </patch>
         </primitive>
 
@@ -531,7 +537,6 @@
         <!-- bloco "transformation" e' obrigatorio -->
 
 
-        <!-- CHÃO -->
         <component id="track">
             <transformation>
                 <transformationref id="court" />
@@ -552,7 +557,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="surfaceLTex" />
             <children>
                 <primitiveref id="surface" />
             </children>
@@ -565,7 +570,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="surfaceRTex" />
             <children>
                 <primitiveref id="surface" />
             </children>
@@ -578,6 +583,7 @@
             <materials>
                 <material id="material" />
             </materials>
+            <!-- SEM TEXTURA -->
             <texture id="none" />
             <children>
                 <primitiveref id="supportRW" />
@@ -591,6 +597,7 @@
             <materials>
                 <material id="material" />
             </materials>
+            <!-- SEM TEXTURA -->
             <texture id="none" />
             <children>
                 <primitiveref id="supportRW1" />
@@ -604,6 +611,7 @@
             <materials>
                 <material id="material" />
             </materials>
+            <!-- SEM TEXTURA -->
             <texture id="none" />
             <children>
                 <primitiveref id="supportRW" />
@@ -617,6 +625,7 @@
             <materials>
                 <material id="material" />
             </materials>
+            <!-- SEM TEXTURA -->
             <texture id="none" />
             <children>
                 <primitiveref id="supportRW1" />
@@ -630,7 +639,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="sideRW" />
             </children>
@@ -643,7 +652,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="sideRW" />
             </children>
@@ -656,7 +665,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="rearwingFrontTex" />
             <children>
                 <primitiveref id="rearwingFront" />
             </children>
@@ -669,7 +678,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="rearwingBackTex" />
             <children>
                 <primitiveref id="rearwingBack" />
             </children>
@@ -680,7 +689,7 @@
                 <transformationref id="helmet" />
             </transformation>
             <materials>
-                <material id="material" />
+                <material id="helmetMaterial" />
             </materials>
             <texture id="none" />
             <children>
@@ -695,7 +704,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -708,7 +717,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -721,7 +730,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -734,7 +743,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -747,7 +756,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -760,7 +769,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -773,7 +782,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -786,7 +795,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -799,7 +808,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -812,7 +821,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -825,7 +834,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -838,7 +847,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="wheelSupport" />
             </children>
@@ -851,7 +860,7 @@
             <materials>
                 <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="floorTex" />
             <children>
                 <primitiveref id="Floor" />
             </children>
@@ -876,9 +885,9 @@
                 <transformationref id="FrontWingConnection" />
             </transformation>
             <materials>
-                <material id="floorMaterial" />
+                <material id="material" />
             </materials>
-            <texture id="none" />
+            <texture id="wingTex" />
             <children>
                 <primitiveref id="FrontWingConnection" />
             </children>
@@ -889,9 +898,9 @@
                 <transformationref id="frontwingRect" />
             </transformation>
             <materials>
-                <material id="material" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="sideWingTex" />
             <children>
                 <primitiveref id="frontWingRect" />
             </children>
@@ -902,9 +911,9 @@
                 <transformationref id="leftsideFW" />
             </transformation>
             <materials>
-                <material id="material" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="sideWingTex" />
             <children>
                 <primitiveref id="sideWing" />
             </children>
@@ -915,9 +924,9 @@
                 <transformationref id="rightsideFW" />
             </transformation>
             <materials>
-                <material id="material" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="sideWingTex" />
             <children>
                 <primitiveref id="sideWing" />
             </children>
@@ -928,9 +937,9 @@
                 <transformationref id="insiderightsideFW" />
             </transformation>
             <materials>
-                <material id="material" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="sideWingTex" />
             <children>
                 <primitiveref id="sideWing" />
             </children>
@@ -941,9 +950,9 @@
                 <transformationref id="insideleftsideFW" />
             </transformation>
             <materials>
-                <material id="material" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="sideWingTex" />
             <children>
                 <primitiveref id="sideWing" />
             </children>
@@ -954,9 +963,9 @@
                 <transformationref id="wing" />
             </transformation>
             <materials>
-                <material id="material" />
+                <material id="whiteMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="frontwingTex" />
             <children>
                 <primitiveref id="wing" />
             </children>
@@ -967,9 +976,9 @@
                 <transformationref id="insideWing" />
             </transformation>
             <materials>
-                <material id="material" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="frontwingTex" />
             <children>
                 <primitiveref id="wing" />
             </children>
@@ -981,9 +990,9 @@
                 <transformationref id="front_body" />
             </transformation>
             <materials>
-                <material id="floorMaterial" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="b2rectTex" />
             <children>
                 <primitiveref id="front_body" />
             </children>
@@ -995,9 +1004,9 @@
                 <transformationref id="cockpit" />
             </transformation>
             <materials>
-                <material id="floorMaterial" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="redTex" />
             <children>
                 <primitiveref id="cockpit" />
             </children>
@@ -1008,9 +1017,9 @@
                 <transformationref id="b2rect" />
             </transformation>
             <materials>
-                <material id="floorMaterial" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="b2rectTex" />
             <children>
                 <primitiveref id="b2rect" />
             </children>
@@ -1021,9 +1030,9 @@
                 <transformationref id="topbase" />
             </transformation>
             <materials>
-                <material id="floorMaterial" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="redTex" />
             <children>
                 <primitiveref id="topbase" />
             </children>
@@ -1034,9 +1043,9 @@
                 <transformationref id="base" />
             </transformation>
             <materials>
-                <material id="floorMaterial" />
+                <material id="redMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="redTex" />
             <children>
                 <primitiveref id="base" />
             </children>
@@ -1044,16 +1053,45 @@
 
         <component id="carbody">
             <transformation>
-                <translate x="0" y="0" z="0" />
+                <scale x="1.5" y="1.5" z="1.5" />
+                <translate x="0" y="0" z="3.5" />
             </transformation>
             <materials>
                 <material id="material" />
             </materials>
             <texture id="none" />
             <children>
+                <componentref id="base" />
                 <componentref id="cockpit" />
+                <componentref id="topbase" />
                 <componentref id="front_body" />
+                <componentref id="insideWing" />
+                <componentref id="wing" />
+                <componentref id="insideleftsideFW" />
+                <componentref id="insiderightsideFW" />
+                <componentref id="leftsideFW" />
+                <componentref id="rightsideFW" />
+                <componentref id="frontwingRect" />
                 <componentref id="FrontWingConnection" />
+                <componentref id="insideFloor" />
+                <componentref id="floor" />
+                <componentref id="rightfrontwheelSupport2" />
+                <componentref id="rightfrontwheelSupport3" />
+                <componentref id="rightfrontwheelSupport1" />
+                <componentref id="leftfrontwheelSupport3" />
+                <componentref id="leftfrontwheelSupport2" />
+                <componentref id="leftfrontwheelSupport1" />
+                <componentref id="helmet" />
+                <componentref id="rearwingBack" />
+                <componentref id="rearwingFront" />
+                <componentref id="rightsideRW" />
+                <componentref id="leftsideRW" />
+                <componentref id="leftsideSupportRW1" />
+                <componentref id="leftsideSupportRW" />
+                <componentref id="rightsideSupportRW1" />
+                <componentref id="rightsideSupportRW" />
+                <componentref id="rightSurface" />
+                <componentref id="leftSurface" />
             </children>
         </component>
 

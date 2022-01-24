@@ -462,7 +462,7 @@ export class XMLscene extends CGFscene {
                 this.updateCamera("menu"), this.laps = 0
             }, 10000);
             setTimeout(() => this.won = 0, 15000);
-            
+
             if (this.demoOn)
                 this.demoOn = false;
         }
@@ -537,7 +537,7 @@ export class XMLscene extends CGFscene {
             // console.log("FL: " + distanceFL);
             // console.log("\n");
 
-            //when there is collision
+            // when there is collision
             if ((distanceBR <= threshold ||
                     distanceBL <= threshold ||
                     distanceFR <= threshold ||
@@ -546,20 +546,11 @@ export class XMLscene extends CGFscene {
                 console.log("BATEU PU")
                 this.puCollision = 1;
                 setTimeout(() => this.puCollision = 0, 2000);
-                // this.puflag++;
-                // this.puflag = 1;
-                // if (this.puflag == 1) {
-                //     if (!dif2On) this.vehicle.f2_powerup_effect1();
-                //     else this.vehicle.f1_powerup_effect1();
-                // } else if (this.puflag > 10) {
-                //     // if (!dif2On) this.vehicle.f2_powerup_effect2();
-                //     this.puflag = 1;
-                // }
 
                 if (!dif2On) {
                     if (i % 2 == 0) {
                         this.vehicle.f2_powerup_effect1();
-                    } else this.vehicle.f2_powerup_effect2()
+                    } else this.tempo += 15;
                 } else this.vehicle.f1_powerup_effect1();
             }
 
@@ -576,12 +567,7 @@ export class XMLscene extends CGFscene {
             let distanceBR = Math.pow((x_circle - (x_car - center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2) + 10;
             let distanceBL = Math.pow((x_circle - (x_car + center_to_wheel)), 2) + Math.pow((y_circle - (y_car - center_to_back)), 2);
             let threshold = 70;
-            // console.log("THRESHOLD: " + threshold);            
-            // console.log("BR: " + distanceBR);
-            // console.log("BL: " + distanceBL);
-            // console.log("FR: " + distanceFR);
-            // console.log("FL: " + distanceFL);
-            // console.log("\n");
+
 
             // when there is collision
             if ((distanceBR <= threshold ||
@@ -592,23 +578,11 @@ export class XMLscene extends CGFscene {
                 console.log("BATEU OBS")
                 this.obsCollision = 1;
                 setTimeout(() => this.obsCollision = 0, 2000);
-                // this.oflag++;
-                // this.oflag = 1;
-                // if (this.oflag == 1) {
-                //     if (!dif2On) this.vehicle.f2_obstacle_effect1();
-                //     else this.vehicle.f1_obstacle_effect1();
-
-                // } else if (this.oflag > 10) {
-                //     if (!dif2On) this.vehicle.f2_obstacle_effect2();
-
-
-                //     this.oflag = 1;
-                // }
 
                 if (!dif2On) {
                     if (i % 2 == 0) {
                         this.vehicle.f2_obstacle_effect1();
-                    } else this.vehicle.f2_obstacle_effect2()
+                    } else this.tempo -= 15;
                 } else this.vehicle.f1_obstacle_effect1();
 
             }
@@ -643,7 +617,6 @@ export class XMLscene extends CGFscene {
                         //demo
                         if (customId == 3) {
                             console.log("Menu: DEMO")
-                            //this.vehicle.key = 0;
                             this.demoOn = true;
                             this.vehicle.placeCarOnStart(this.track2On, this.demoOn);
                             this.updateCamera("trackView")
@@ -669,15 +642,12 @@ export class XMLscene extends CGFscene {
                             //TestTrackMap
                             if (!this.track2On) {
                                 console.log("TRACK: SGI ")
-                                //this.mysvgreader2 = new MySVGReader("TestTrackMap.svg", this);
-                                //this.vehicle.route = this.mysvgreader2.send_route.store_route();
                                 this.track2On = true;
                             }
                             //TrackMap - Abu Dhabi (Default)
                             else if (this.track2On) {
                                 console.log("TRACK: Abu Dhabi")
                                 this.track2On = false;
-                                //this.vehicle.route = this.mysvgreader.send_route.store_route();
                             }
 
                         }
@@ -837,9 +807,15 @@ export class XMLscene extends CGFscene {
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
 
+            //car body from XML
+            this.pushMatrix();
+            this.translate(this.vehicle.location[0], this.vehicle.location[1], this.vehicle.location[2]);
+            this.rotate(this.vehicle.direction * Math.PI / 180, 0, 1, 0);
+            this.graph.displayComponent("carbody", null, null, 1, 1);
+            this.popMatrix();
+
             this.pushMatrix();
 
-            //	if(this.vehicle.trackRotate=="abu dhabi")this.rotate(Math.PI / 2,0,1,0)
             this.vehicle.display();
 
             this.popMatrix();
@@ -853,7 +829,6 @@ export class XMLscene extends CGFscene {
                 this.mysvgreader2.displayScene();
                 this.sgiTrack.display();
                 this.vehicle.route = this.mysvgreader2.send_route.routes;
-                //setTimeout(() => this.vehicle.route = this.mysvgreader2.send_route.routes, 1500);
             }
 
         }

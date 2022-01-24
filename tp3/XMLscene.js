@@ -53,6 +53,8 @@ export class XMLscene extends CGFscene {
         this.powerupOn_aux = 0;
         this.obstacleOn_aux = 0;
         this.demo_aux = 0;
+        this.puTime = false;
+        this.oTime = false;
     }
 
     /**
@@ -371,8 +373,9 @@ export class XMLscene extends CGFscene {
             this.demoOn = false;
             this.vehicle.key = -1;
         }
-        // DEMO MODE is Activated
+        // DEMO MODE is Activated, disabling Menu, Reset and Pause keys
         if (this.demoOn) {
+            this.vehicle.keyP = false;
             this.demo_aux++;
             //every second demo coordinates are updated
             if (this.demo_aux % 10 == 0) {
@@ -393,9 +396,9 @@ export class XMLscene extends CGFscene {
         } else
             this.vehicle.demoVelocity = false;
         // M key goes to MENU
-        if (this.vehicle.keyM) this.cameraID = "menu";
+        if (this.vehicle.keyM && !this.demoOn) this.cameraID = "menu";
         // R key restarts the game
-        if (this.vehicle.keyR && this.cameraID == "carCamera") {
+        if (this.vehicle.keyR && this.cameraID == "carCamera" && !this.demoOn) {
             this.startOn = true;
             this.vehicle.direction = 0;
             this.vehicle.velocity = 0;
@@ -539,9 +542,9 @@ export class XMLscene extends CGFscene {
 
             // when there is collision
             if ((distanceBR <= threshold ||
-                    distanceBL <= threshold ||
-                    distanceFR <= threshold ||
-                    distanceFL <= threshold) && this.puCollision == 0) {
+                distanceBL <= threshold ||
+                distanceFR <= threshold ||
+                distanceFL <= threshold) && this.puCollision == 0) {
 
                 console.log("BATEU PU")
                 this.puCollision = 1;
@@ -550,7 +553,10 @@ export class XMLscene extends CGFscene {
                 if (!dif2On) {
                     if (i % 2 == 0) {
                         this.vehicle.f2_powerup_effect1();
-                    } else this.tempo += 15;
+                    } else {
+                        this.tempo += 15;
+                        this.puTime = true;
+                    }
                 } else this.vehicle.f1_powerup_effect1();
             }
 
@@ -571,9 +577,9 @@ export class XMLscene extends CGFscene {
 
             // when there is collision
             if ((distanceBR <= threshold ||
-                    distanceBL <= threshold ||
-                    distanceFR <= threshold ||
-                    distanceFL <= threshold) && this.obsCollision == 0) {
+                distanceBL <= threshold ||
+                distanceFR <= threshold ||
+                distanceFL <= threshold) && this.obsCollision == 0) {
 
                 console.log("BATEU OBS")
                 this.obsCollision = 1;
@@ -582,7 +588,10 @@ export class XMLscene extends CGFscene {
                 if (!dif2On) {
                     if (i % 2 == 0) {
                         this.vehicle.f2_obstacle_effect1();
-                    } else this.tempo -= 15;
+                    } else {
+                        this.tempo -= 15;
+                        this.oTime = true;
+                    }
                 } else this.vehicle.f1_obstacle_effect1();
 
             }
@@ -697,11 +706,11 @@ export class XMLscene extends CGFscene {
         this.popMatrix();
 
         // Player collided with powerUp (VISUALS)
+        // 10 sec green bar
         if (this.vehicle.powerupOn) {
             if (this.powerupOn_aux == 0) {
                 setTimeout(() => this.vehicle.powerupOn = false, 10000);
                 setTimeout(() => this.powerupOn_aux = 0, 10000);
-                console.log("TIMEOUT PU\n \n")
             }
             this.powerupOn_aux = 1;
 
@@ -713,12 +722,45 @@ export class XMLscene extends CGFscene {
             this.hud.display();
             this.popMatrix();
         }
+        // 1.5 sec green bar
+        if (this.puTime) {
+            if (this.powerupOn_aux == 0) {
+                setTimeout(() => this.puTime = false, 1400);
+                setTimeout(() => this.powerupOn_aux = 0, 3000);
+            }
+            this.powerupOn_aux = 1;
+
+            this.pushMatrix();
+            this.puHUD.apply();
+            if (this.cameraID == "carCamera") this.translate(-3.7, 2.2, -8);
+            else this.translate(-4.8, 3, -4);
+            this.scale(5, 0.3, 1)
+            this.hud.display();
+            this.popMatrix();
+        }
+
         // Player collided with obstacle (VISUALS)
+        // 10 sec red bar
         if (this.vehicle.obstacleOn) {
             if (this.obstacleOn_aux == 0) {
                 setTimeout(() => this.vehicle.obstacleOn = false, 10000);
                 setTimeout(() => this.obstacleOn_aux = 0, 10000);
-                console.log("TIMEOUT OBS\n \n")
+            }
+            this.obstacleOn_aux = 1;
+
+            this.pushMatrix();
+            this.oHUD.apply();
+            if (this.cameraID == "carCamera") this.translate(-3.7, 1.9, -8);
+            else this.translate(-4.8, 2.7, -4);
+            this.scale(5, 0.3, 1)
+            this.hud.display();
+            this.popMatrix();
+        }
+        // 1.5 sec green bar
+        if (this.oTime) {
+            if (this.obstacleOn_aux == 0) {
+                setTimeout(() => this.oTime = false, 1400);
+                setTimeout(() => this.obstacleOn_aux = 0, 3000);
             }
             this.obstacleOn_aux = 1;
 
@@ -741,7 +783,7 @@ export class XMLscene extends CGFscene {
             this.popMatrix();
         }
         // P key was pressed and PAUSE MODE is activated (VISUALS)
-        if (this.vehicle.keyP) {
+        if (this.vehicle.keyP && !this.demoOn) {
             this.vehicle.velocity = 0;
             this.pushMatrix();
             this.pause.apply();
@@ -981,27 +1023,31 @@ export class XMLscene extends CGFscene {
         this.quad.display();
 
 
-        // CLOCK DISPLAY
+        // CLOCK DISPLAY -> Disabled in Demo Mode
         this.translate(5, 0, 0);
         this.activeShader.setUniformsValues({
             'charCoords': [this.min, 3]
         }); // min
-        this.timerquad.display();
+        if (!this.demoOn)
+            this.timerquad.display();
         this.translate(0.5, 0, 0);
         this.activeShader.setUniformsValues({
             'charCoords': [this.seperator, 3]
         }); // :
-        this.timerquad.display();
+        if (!this.demoOn)
+            this.timerquad.display();
         this.translate(0.5, 0, 0);
         this.activeShader.setUniformsValues({
             'charCoords': [Math.trunc(this.seg / 10), 3]
         }); // seg2
-        this.timerquad.display();
+        if (!this.demoOn)
+            this.timerquad.display();
         this.translate(0.5, 0, 0);
         this.activeShader.setUniformsValues({
             'charCoords': [this.seg % 10, 3]
         }); // seg2
-        this.timerquad.display();
+        if (!this.demoOn)
+            this.timerquad.display();
 
         // OUT OF TRACK DISPLAY
         if (this.vehicle.color == 255) {

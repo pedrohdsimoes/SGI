@@ -1,1 +1,1 @@
-# SGI
+# Interactive Graphics Systems Course @FEUP
